@@ -2,7 +2,7 @@
 % Please edit documentation in R/ans.R
 \name{ans}
 \alias{ans}
-\title{Returns the last value. Shorter version of \code{.Last.value}}
+\title{Return last value}
 \usage{
 ans()
 }
