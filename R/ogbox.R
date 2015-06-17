@@ -478,7 +478,7 @@ snowman = function(x){
 # merges regex's with an or clause. search for multiple regexes
 #' @export
 regexMerge = function(regexList){
-    paste0('(',paste0(gsmFind('GSE65135', 'lymph'),collapse=')|('), ')')
+    paste0('(',paste0(regexList,collapse=')|('),')')
 }
 
 # http://stackoverflow.com/questions/2261079/how-to-trim-leading-and-trailing-whitespace-in-r
