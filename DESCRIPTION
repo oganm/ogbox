@@ -1,0 +1,9 @@
+Package: ogbox
+Type: Package
+Title: Stuff and things
+Version: 1.0
+Date: 2015-06-16
+Author: Who wrote it
+Maintainer: Ogan Mancarci <ogan.mancarci@gmail.com>
+Description: Stuff and things
+License: GPL-2
