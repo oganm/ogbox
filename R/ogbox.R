@@ -1,6 +1,6 @@
 
 #' Trim first line comments
-#' Deletes the comments added to the first lines. Useful when comment char is 
+#' @description Deletes the comments added to the first lines. Useful when comment char is 
 #' only a comment char in the beginning of the file
 #' @param fileName name of the file
 #' @param commentChar comment indicator
@@ -25,8 +25,13 @@ trimHeadComment = function(fileName, commentChar = '#',outFile = NULL){
     }
 }
 
-# list.celfiles from oligo package. it's better than affy since it has listGzipped 
-# option but I don't want to import the whole thing for that
+#' List cel files
+#' @description list.celfiles from oligo package. it's better than affy since it 
+#' has listGzipped option.
+#' @param ... arguments to pass to \code{list.files}
+#' @param listGzipped logical. If true adds gzipped files to the results
+#' @return A string vector, listing files
+#' @export
 celFiles = function (..., listGzipped = FALSE) 
 {
     files <- list.files(...)
@@ -40,8 +45,9 @@ celFiles = function (..., listGzipped = FALSE)
 }
 
 
-# clears display
-# http://stackoverflow.com/questions/14260340/function-to-clear-the-console-in-r
+#' Clear display
+#' @description clear display, taken from http://stackoverflow.com/questions/14260340/function-to-clear-the-console-in-r
+#' @export
 clc = function(){
     cat("\014") 
 }
@@ -49,7 +55,10 @@ clc = function(){
 
 # allows directly assigning list outputs to variables
 # http://stackoverflow.com/questions/1826519/function-returning-more-than-one-value
+#' @export
 list <- structure(NA,class="result")
+
+#' @export
 "[<-.result" <- function(x,...,value) {
     args <- as.list(match.call())
     args <- args[-c(1:2,length(args))]
@@ -62,37 +71,40 @@ list <- structure(NA,class="result")
 }
 
 
-# just a lazy way to get the last value
-ans = function(){
-    .Last.value
-}
 
-
-# clears all variables and functions
+#' Delete everything
+#' @description Clear global environment
+#' @export
 purge =   function() {
     rm(list = ls(.GlobalEnv, all.names = T), envir = .GlobalEnv)
 }
 
 
-# reads specific lines from a file. for some reason it is kinda slow. works much
-# faster from command line. it then places the lines to a function and returns
-# the output
-# modified from
-# http://stackoverflow.com/questions/18235269/efficiently-reading-specific-lines-from-large-files-into-r
-checkLines = function(daFile,lines,fun = readLines, ...){
+#' Read specific lines from a file
+#' @description Creates a text connection for specific lines of a file and
+#' returns them as an output of \code{fun}. Modified from  http://stackoverflow.com/questions/18235269/efficiently-reading-specific-lines-from-large-files-into-r
+#' @param file the name of the file which lines will be read from
+#' @param fun function that will process each line
+#' @return A list containing the outputs per line
+#' @export
+checkLines = function(file,lines,fun = readLines, ...){
     outAll = vector(mode= 'list',length = length(lines))
     for (i in 1:length(lines)){
-        con = pipe(paste0("sed -n -e'",lines[i],"p' ",daFile))
+        con = pipe(paste0("sed -n -e'",lines[i],"p' ",file))
         out = fun(con, ...)
         outAll[[i]] = out
     }
     return(outAll)
 }
 
-
-# remember to match the cases. 
-# defaults to .R if extension not given
-# no need to use quotes
+#' Source R files from github
+#' @description sources R files from github
+#' @param user username
+#' @param repo repository name
+#' @param script name of the script
+#' @details Does not require \code{user}, \code{repo} or \code{script} to be 
+#' strings. Defaults to capitalized .R if extension not provided
+#' @export
 sourceGithub = function(user, repo, script){
     user = substitute(user)
     user = as.character(user)
@@ -113,6 +125,7 @@ sourceGithub = function(user, repo, script){
 
 # multiple iterations of gsub in a single line. it replaces every element in patterns
 # with matching elements at replacements. Starts from the first
+#' @export
 gsubMult = function(patterns, replacements, x,
                     ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE) {
     for (i in 1:length(patterns)){
@@ -123,6 +136,7 @@ gsubMult = function(patterns, replacements, x,
 }
 
 # returns parent directory.
+#' @export
 getParent = function(step = 1){
     wd = getwd()
     for (i in 1:step){
@@ -132,6 +146,7 @@ getParent = function(step = 1){
 }
 
 #merges lists by their common names. adds non common ones.
+#' @export
 mergeList = function(aList,bList,forceUnique=T){
     allNames = unique(c(names(aList),names(bList)))
     outList = vector(mode= "list",length = length(allNames))
@@ -147,6 +162,7 @@ mergeList = function(aList,bList,forceUnique=T){
 }
 
 # seeks for a given object in a single layered list
+#' @export
 findInList = function(object, aList){
     indices = vector()
     for (i in 1:length(aList)){
@@ -158,21 +174,25 @@ findInList = function(object, aList){
 }
 
 # counts total no of elements in a single layered list
+#' @export
 listCount = function(aList){
     length(unlist(aList))
 }
 
 # removes NAs in a vector by shortening it
+#' @export
 trimNAs = function(aVector) {
     return(aVector[!is.na(aVector)])
 }
 
 # removes given elements in a vector by shortening it
+#' @export
 trimElement = function (aVector,e){
     return(aVector[!(aVector %in% e)])
 }
 
 # finds total depth of a list which is assumed to be symmetrical
+#' @export
 listDepth = function(deList){
     step = 1
     while (T){
@@ -185,6 +205,7 @@ listDepth = function(deList){
 
 #source
 #http://www.r-bloggers.com/a-quick-way-to-do-row-repeat-and-col-repeat-rep-row-rep-col/
+#' @export
 repRow<-function(x,n){
     matrix(rep(x,each=n),nrow=n)
 }
@@ -193,6 +214,7 @@ repCol<-function(x,n){
 }
 
 # repeats every element in the vector n times
+#' @export
 repIndiv = function (aVector, n){
     output = vector(length = length(aVector) * n)
     step = 1
@@ -204,6 +226,7 @@ repIndiv = function (aVector, n){
 }
 
 # http://stackoverflow.com/questions/6513378/create-a-variable-capturing-the-most-frequent-occurence-by-group
+#' @export
 mode <- function(x) {
     ux <- unique(x)
     ux[which.max(tabulate(match(x, ux)))]
@@ -211,6 +234,7 @@ mode <- function(x) {
 
 # load that bloody function no matter what
 # doesn't seems to work all that well...
+#' @export
 insist = function(name){
     name = substitute(name)
     name = as.character(name)
@@ -224,12 +248,14 @@ insist = function(name){
 
 
 #direct text eval
+#' @export
 teval = function(daString){
     eval(parse(text=daString))
 }
 
 
 # for navigating through list of lists with teval
+#' @export
 listParse = function (daList,daArray){
     out = ''
     for (i in daArray){
@@ -239,6 +265,7 @@ listParse = function (daList,daArray){
 }
 
 #returns the final step as a list
+#' @export
 listParseW = function (daList,daArray){
     out = ''
     if (length(daArray) > 1){
@@ -251,6 +278,7 @@ listParseW = function (daList,daArray){
 }
 
 # sets the list element
+#' @export
 listSet = function(daList,daArray ,something){
     name = substitute(daList)
     name = as.character(name)
@@ -264,6 +292,7 @@ listSet = function(daList,daArray ,something){
 
 # > listStr(c(1,2,3))
 # [1] "[[1]][[2]][[3]]"
+#' @export
 listStr = function(daArray){
     out = ''
     for (i in daArray[1 : length(daArray)]){
@@ -276,6 +305,7 @@ listStr = function(daArray){
 # the last element is returned with a singe "["
 # > listStrW(c(1,2,3))
 # [1] "[[1]][[2]][3]"
+#' @export
 listStrW = function(daArray){
     out = ''
     if (length(daArray) > 1){
@@ -290,6 +320,7 @@ listStrW = function(daArray){
 
 
 #concatanate to preallocated. initiate vectors with NAs to make it work
+#' @export
 "%c%" = function (x, y){
     start = which(is.na(x))[1]
     x[start:(start+length(y) - 1)]= y
@@ -299,6 +330,7 @@ listStrW = function(daArray){
 
 
 # turn every member of daList to a color from the palette
+#' @export
 toColor = function(daList, palette = NULL){
     daList = as.factor(daList)
     uniq = unique(daList)
@@ -326,6 +358,7 @@ toColor = function(daList, palette = NULL){
 }
 
 # creates a color gradient from a continuous variable. returns assigned color values and the legend
+#' @export
 toColorGrad = function(daList, startCol = 'white', endCol = 'red', fine = 0.01){
     colorGrad =  colorRampPalette(c(startCol, endCol))
     colorLegend = data.frame(value=seq(min(daList),max(daList),fine),
@@ -341,6 +374,7 @@ toColorGrad = function(daList, startCol = 'white', endCol = 'red', fine = 0.01){
 }
 
 #to use with ggplot violins. adapted from http://stackoverflow.com/questions/17319487/median-and-quartile-on-violin-plots-in-ggplot2
+#' @export
 median.quartile <- function(x){
     out <- quantile(x, probs = c(0.25,0.5,0.75))
     ICR = out[3] - out[1]
@@ -354,7 +388,7 @@ median.quartile <- function(x){
     names(out) <- c("whisDown","ymin","y","ymax","whisUp")
     return(out)
 }
-
+#' @export
 threeQuartile <- function(x){
     out <- quantile(x, probs = c(0.25,0.5,0.75))
     names(out) <- c("ymin","y","ymax")
@@ -362,6 +396,7 @@ threeQuartile <- function(x){
 }
 
 # for intersecting more than one sets
+#' @export
 intersectMult = function (...){
     targets = list(...)
     
@@ -374,6 +409,7 @@ intersectMult = function (...){
     return(out)
 }
 # does 0-1 scaling
+#' @export
 scale01 = function(x){
     x = (x - min(x))/(max(x)-min(x))
     return(x)
@@ -381,6 +417,7 @@ scale01 = function(x){
 
 # to add a color gradient legend to plots
 # https://aurelienmadouasse.wordpress.com/2012/01/13/legend-for-a-continuous-color-scale-in-r/
+#' @export
 legendGrad <- function(col, lev){
     
     opar <- par
@@ -417,6 +454,7 @@ legendGrad <- function(col, lev){
 }
 
 # to use instead of "head" with bidimentially huge matrices
+#' @export
 corner = function(x){
     row = 10
     col = 10
@@ -430,80 +468,22 @@ corner = function(x){
 }
 
 # http://codegolf.stackexchange.com/questions/49671/do-you-want-to-code-a-snowman/49780#49780
+#' @export
 snowman = function(x){
     W =c("_===_"," ___\n .....","  _\n  /_\\"," ___\n (_*_)",",",".","_"," ",".","o","O","-"," ","\\"," "," ","<"," ","/"," "," ","/"," ","",">"," ","\\",""," : ","] [","> <","   "," : ","\" \"","___","   ")
     i=as.integer(strsplit(x,"")[[1]]);cat(" ",W[i[1]],"\n",W[i[5]+12],"(",W[i[3]+8],W[i[2]+4],W[i[4]+8],")",W[i[6]+20],"\n",W[i[5]+16],"(",W[i[7]+28],")",W[i[6]+24],"\n"," (",W[i[8]+32], ")",sep="")
 }
 
-# to separate microarray expression data into two data frames, one containing
-# gene information other containing expression values. Most people seem to use
-# this kind of output. use as list[gene,expression] = sepExpr(data) to get to
-# dfs in one go
-sepExpr = function(allDataPre){
-    for (i in 1:ncol(allDataPre)){
-        if ('double'==typeof(allDataPre[,i])){
-            expBound = i
-            break
-        }
-    }
-    geneData = allDataPre[,1:(expBound-1)]
-    exprData = allDataPre[,expBound:ncol(allDataPre)]
-    return(list(geneData,exprData))
-}
-
-
-# common read-write functions for data analysis -----
-write.design = function(x, file){
-    write.table(x,file= file, sep = '\t', quote=F, row.names = F)
-}
-
-read.design  = function(x){
-    read.table(x,header=T,sep='\t',stringsAsFactors=F,quote="")
-}
-
-read.exp = function(x){
-    read.csv(x,header = T,stringsAsFactors=F)
-}
-
-# seperates expression values from gene information
-sepExpr = function(allDataPre){
-    if (class(allDataPre)[1] =='data.frame'){
-        for (i in 1:ncol(allDataPre)){
-            if ('double'==typeof(allDataPre[,i])){
-                expBound = i
-                break
-            }
-        }
-        geneData = allDataPre[,1:(expBound-1)]
-        exprData = allDataPre[,expBound:ncol(allDataPre)]
-        return(list(geneData,exprData))
-    } else if (class(allDataPre)[1] =='data.table'){
-        for (i in 1:ncol(allDataPre)){
-            if ('double'==typeof(allDataPre[[i]])){
-                expBound = i
-                break
-            }
-        }
-        geneData = allDataPre[,1:(expBound-1),with=F]
-        exprData = allDataPre[,expBound:ncol(allDataPre), with = F]
-        return(list(geneData,exprData))
-    }
-}
 
 # merges regex's with an or clause. search for multiple regexes
+#' @export
 regexMerge = function(regexList){
     paste0('(',paste0(gsmFind('GSE65135', 'lymph'),collapse=')|('), ')')
 }
 
 # http://stackoverflow.com/questions/2261079/how-to-trim-leading-and-trailing-whitespace-in-r
+#' @export
 trimWS <- function (x) gsub("^\\s+|\\s+$", "", x)
 
-# function acronyms ----
-len = length
-as.char = as.character
-as.df = as.data.frame
-as.num = as.numeric
-rn = rownames
-cn = colnames
-
+#' @export
 coVar = function(x) ( 100*sd(x)/mean(x) )

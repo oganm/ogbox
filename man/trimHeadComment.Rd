@@ -2,9 +2,7 @@
 % Please edit documentation in R/ogbox.R
 \name{trimHeadComment}
 \alias{trimHeadComment}
-\title{Trim first line comments
-Deletes the comments added to the first lines. Useful when comment char is
-only a comment char in the beginning of the file}
+\title{Trim first line comments}
 \usage{
 trimHeadComment(fileName, commentChar = "#", outFile = NULL)
 }
@@ -19,7 +17,6 @@ trimHeadComment(fileName, commentChar = "#", outFile = NULL)
 a textConnection object
 }
 \description{
-Trim first line comments
 Deletes the comments added to the first lines. Useful when comment char is
 only a comment char in the beginning of the file
 }
