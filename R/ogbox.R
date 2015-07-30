@@ -518,7 +518,7 @@ mycircle <- function(coords, v=NULL, params) {
 }
 
 #' @export
-.onLoad() = function(){
+.onLoad = function(){
     add.vertex.shape("fcircle", clip=igraph.shape.noclip,
                    plot=mycircle, parameters=list(vertex.frame.color=1,
                                                   vertex.frame.width=1))
