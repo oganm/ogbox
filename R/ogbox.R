@@ -321,7 +321,7 @@ listStrW = function(daArray){
 
 #concatanate to preallocated. initiate vectors with NAs to make it work
 #' @export
-"%c%" = function (x, y){
+"%con%" = function (x, y){
     start = which(is.na(x))[1]
     x[start:(start+length(y) - 1)]= y
     return(x)
