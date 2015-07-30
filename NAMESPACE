@@ -3,7 +3,6 @@
 S3method("[<-",result)
 S3method(median,quartile)
 export("%con%")
-export(.onLoad)
 export(ans)
 export(as.char)
 export(as.df)
