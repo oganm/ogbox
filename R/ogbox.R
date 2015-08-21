@@ -375,7 +375,7 @@ toColorGrad = function(daList, startCol = 'white', endCol = 'red', fine = 0.01){
 
 #to use with ggplot violins. adapted from http://stackoverflow.com/questions/17319487/median-and-quartile-on-violin-plots-in-ggplot2
 #' @export
-median.quartile <- function(x){
+medianQuartile <- function(x){
     out <- quantile(x, probs = c(0.25,0.5,0.75))
     ICR = out[3] - out[1]
     out = c(out[1] - 1.5 * ICR ,out, out[3] + 1.5 * ICR)
