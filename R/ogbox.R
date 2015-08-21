@@ -227,7 +227,7 @@ repIndiv = function (aVector, n){
 
 # http://stackoverflow.com/questions/6513378/create-a-variable-capturing-the-most-frequent-occurence-by-group
 #' @export
-mode <- function(x) {
+modStat <- function(x) {
     ux <- unique(x)
     ux[which.max(tabulate(match(x, ux)))]
 }
