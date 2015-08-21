@@ -3,6 +3,7 @@ language: r
 sudo: true
 r_binary_packages:
     - RCurl
-
+r_github_packages:
+    - covr
 after_success:
     - Rscript -e 'covr::codecov()'
