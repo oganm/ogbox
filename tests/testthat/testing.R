@@ -1,9 +1,9 @@
 context('general error check')
-
+agzinaSictigimin = 1
 test_that('purge unable to delete objects', {
-    a = 1
-    purge()
-    expect_error(a,"object 'a' not found")
+    ogbox::purge()
+    expect_error(print(agzinaSictigimin),"object 'agzinaSictigimin' not found")
 })
+
 
 
