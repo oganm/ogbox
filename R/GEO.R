@@ -59,7 +59,7 @@ gsmSize = function(gsm, warnings = T){
 }
 
 #' @export
-gsmDown = function(gsm,outfile, overwrite = F, warnings = T){
+gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     # downloads a given GSM
     dir.create(dirname(outfile), showWarnings=F,recursive=T)
     if (file.exists(outfile) & !overwrite){
@@ -78,15 +78,17 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T){
         return(invisible(F))
     }
     download.file(fileURL,paste0(outfile,'.gz'))
-    system(paste0('gunzip -f "',outfile,'.gz"'))
+    if (unzip){
+        system(paste0('gunzip -f "',outfile,'.gz"'))
+    }
     invisible(T)
 }
 
 #' @export
-gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F){
+gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip = T){
     # downloads GSMs matching a regular expression from a GSE (description not GSM ID)
     gsms = gsmFind(GSE, regex)
     for (i in 1:length(gsms)){
-        gsmDown(gsms[i],paste0(outDir,'/', gsms[i],extension),overwrite)
+        gsmDown(gsms[i],paste0(outDir,'/', gsms[i],extension),overwrite, unzip)
     }
 }
