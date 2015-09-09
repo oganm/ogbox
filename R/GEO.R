@@ -77,9 +77,9 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
         }
         return(invisible(F))
     }
-    download.file(fileURL,paste0(outfile,'.gz'))
+    download.file(fileURL,paste0(outfile,'.cel.gz'))
     if (unzip){
-        system(paste0('gunzip -f "',outfile,'.gz"'))
+        system(paste0('gunzip -f "',outfile,'.cel.gz"'))
     }
     invisible(T)
 }
