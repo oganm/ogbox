@@ -2,7 +2,7 @@ Package: ogbox
 Type: Package
 Title: Stuff and things
 Version: 1.0
-Depends: RCurl, igraph, stringr, parallel
+Depends: RCurl, igraph, stringr, parallel, ggplot2
 Suggests: testthat
 Date: 2015-06-16
 Author: Ogan Mancarci

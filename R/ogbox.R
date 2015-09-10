@@ -517,3 +517,15 @@ mycircle <- function(coords, v=NULL, params) {
            })
 }
 
+#' @export
+geom_ogboxvio = function(){
+    return(geom_violin(color="#C4C4C4", fill="#C4C4C4") +
+               geom_boxplot(width=0.1,fill = 'lightblue') + 
+               theme_bw() +
+               theme(axis.text.x  = element_text(size=25),
+                     axis.title.y = element_text(vjust=0.5, size=25),
+                     axis.title.x = element_text(vjust=0.5, size=0) ,
+                     title = element_text(vjust=0.5, size=25),
+                     axis.text.y = element_text(size = 13)))
+}
+
