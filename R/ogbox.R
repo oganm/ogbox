@@ -529,3 +529,15 @@ geom_ogboxvio = function(){
               axis.text.y = element_text(size = 13)))
 }
 
+#' @export
+geom_signif = function(pValues,maxY, size = 7){
+    markers = rep('',length(pValues))
+    markers[pValues>=0.01 & pValues<0.05] = '*'
+    markers[pValues>=0.001 & pValues<0.01] = '**'
+    markers[pValues<0.001 ] = '***'
+    return(
+        lapply(1:len(pValues), function(i){
+            annotate('text',x=i,y=maxY+maxY/10,label = markers[i],size =size )
+            })
+    )
+}
