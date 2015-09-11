@@ -540,7 +540,7 @@ geom_signif = function(pValues,maxY, size = 7){
     markers[pValues<0.001 ] = '***'
     return(
         lapply(1:len(pValues), function(i){
-            annotate('text',x=i,y=maxY[i]+maxY[i]/10,label = markers[i],size =size )
+            annotate('text',x=i,y=maxY[i]+max(maxY)/10,label = markers[i],size =size )
             })
     )
 }
