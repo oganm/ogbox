@@ -408,6 +408,19 @@ intersectMult = function (...){
     }
     return(out)
 }
+
+#' @export
+intersectList = function(list){
+    out = intersect(list[[1]],list[[2]])
+    if (length(list)>=3){
+        for (i in 3:(length(list))){
+            out = intersect(out, list[[i]])
+        }
+    }
+    return(out)
+}
+
+
 # does 0-1 scaling
 #' @export
 scale01 = function(x){
