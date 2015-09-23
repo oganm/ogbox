@@ -1,5 +1,3 @@
-# replacemt to gsmDown. Didn't remove it in case I'm using it somewhere. This
-# will include all GEO related functions
 library(RCurl)
 library(stringr)
 library(parallel)
