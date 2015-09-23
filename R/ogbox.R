@@ -428,6 +428,22 @@ scale01 = function(x){
     return(x)
 }
 
+# creates a link to the rendered form of a latex formula
+#' @export
+latexImg = function(latex, markdown=T){
+    
+    link = paste0('http://latex.codecogs.com/gif.latex?',
+                  gsub('\\=','%3D',URLencode(latex)))
+    
+    # they need to be upper case
+    link = gsub("(%..)","\\U\\1",link,perl=TRUE)
+    if (!markdown){
+        return(link)
+    }
+    return(paste0('![](',link,')'))
+}
+
+
 # to add a color gradient legend to plots
 # https://aurelienmadouasse.wordpress.com/2012/01/13/legend-for-a-continuous-color-scale-in-r/
 #' @export
