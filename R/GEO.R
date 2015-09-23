@@ -227,7 +227,7 @@ softParser = function(softFile, # file to read
             return(dat)
         })
         
-        
+        names(expressionData) = rownames(samples)
         return(list(samples,expressionData))
     }
     
