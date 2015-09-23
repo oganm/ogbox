@@ -65,3 +65,11 @@ gemmaAnnotOligo = function(normalized, chipFile, outFile = NA){
         return(invisible(annotatedExpr))
     }
 }
+
+#' @export
+gemmaGeneMatch = function(probesets, chipFile){
+    annotations = read.table(chipFile, header=T,sep='\t', quote="")
+    names(annotations)[2] = 'Gene.Symbol'
+    names(annotations)[1] = 'Probe'
+    annotations[match(probesets,annotations$Probe),'Gene.Symbol']
+}
