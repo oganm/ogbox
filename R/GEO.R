@@ -97,7 +97,7 @@ gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip
 #' @export
 softDown = function(GSE,file){
     download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/",
-                  gsub('((?<=E)|((?<=E)|[0-9]))[0-9]$','nnn',GSE,perl = T),'/',
+                  gsub('(((?<=GSE)([0-9]|[0-9][0-9]))|((?<=GSE..)[0-9].*?))$','nnn',GSE,perl = T),'/',
                   GSE,'/soft/',GSE,'_family.soft.gz'),destfile = file)
 }
 
