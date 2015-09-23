@@ -2,10 +2,15 @@ Package: ogbox
 Type: Package
 Title: Stuff and things
 Version: 1.0
-Depends: RCurl, igraph, stringr, parallel, ggplot2
+Depends: 
+    RCurl, 
+    igraph (>= 0.7.1),
+    stringr,
+    parallel,
+    ggplot2
 Suggests: testthat
 Date: 2015-06-16
 Author: Ogan Mancarci
 Maintainer: Ogan Mancarci <ogan.mancarci@gmail.com>
-Description: Stuff and things
+Description: A package primarily for personal use. Has many functions dealing with gene expression databases GEO and Gemma. Also Some shorthands to do minor stuff.
 License: GPL-2
