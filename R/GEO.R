@@ -67,7 +67,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     }
     page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
     
-    fileURL =fileURL = URLdecode(str_extract(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
+    fileURL  = URLdecode(str_extract(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
     
     if (len(fileURL) == 0){
         if (warnings){
@@ -82,6 +82,14 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     invisible(T)
 }
 
+#' Download multiple cel files from GSE
+#' @description Downloads all CEL files from GSMs related to a GSE. Optionally, a regular expression can be specified to download a subset of cel files
+#' @param GSE GSE identifier of the dataset
+#' @param regex regular expression to limit files to be downloaded. Searches the regex inside GSM titles
+#' @param outDir directory to save the cel files
+#' @param extension which extension to use when saving the file
+#' @param overwrite should it overwrite the files if they exist
+#' @param unzip should it decompress downloaded files.
 #' @export
 gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip = T){
     # downloads GSMs matching a regular expression from a GSE (description not GSM ID)
@@ -91,7 +99,10 @@ gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip
     }
 }
 
-
+#' Downloads soft file of a GSE
+#' @description Downloads a soft file.
+#' @param GSE GSE identifier of the dataset
+#' @param file destination file
 #' @export
 softDown = function(GSE,file){
     download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/",
@@ -100,10 +111,22 @@ softDown = function(GSE,file){
 }
 
 
+
+#' A parser for soft files
+#' @description Parses soft files in a flat file. Expression data inside the soft file can also be returned.
+#' Returns a table of metadata if expression data is ommited. If not, returns a list. First element of the 
+#' list is the metadata, the second element is a list of expression data that needs to be flattened independently
+#'  since the expression tables can be different depending on the data
+#' @param softFile soft file to be parsed
+#' @param mergeFrame if there are different data fields, what to do with them. not yet implemented
+#' @param n how many samples are there in the GSE, if not provided, it will be acquired from GEO
+#' @param expression should the expression data be returned
+#' @return A data.frame or a list depending on \code{expression}
 #' @export
 softParser = function(softFile, # file to read
                       mergeFrame = c('intersect', 'union'), # union not implemented
-                      n=NULL # number of samples in the file
+                      n=NULL, # number of samples in the file
+                      expression=F # 
 ){
     con  = file(softFile, open = "r")
     oneLine = readLines(con, n = 1, warn = FALSE)
@@ -121,6 +144,8 @@ softParser = function(softFile, # file to read
     
     i=0
     sampleData = vector(mode ='list', length = n)
+    if (expression){expressionData = vector(mode = 'list', length = n)}
+    
     # get relevant information
     while (length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 0) {
         if (grepl('\\^SAMPLE', oneLine)){
@@ -129,8 +154,17 @@ softParser = function(softFile, # file to read
                 sampLines = c(sampLines, oneLine)
                 oneLine = readLines(con, n = 1, warn = FALSE)
             }
+            # get the expression data as well. if the user wants it
+            if (expression){
+                expressionLines = vector(mode='character',length = 0)
+                while (oneLine != '!sample_table_end'){
+                    expressionLines = c(expressionLines, oneLine)
+                    oneLine = readLines(con, n = 1, warn = FALSE)
+                }
+            }
             i = i+1
             sampleData[[i]] = sampLines
+            if (expression){expressionData[[i]] = expressionLines}
             print(i)
         }
     }
@@ -169,6 +203,7 @@ softParser = function(softFile, # file to read
         
         
         # print(names(singleSample))
+        
         return(singleSample)
     })
     
@@ -183,5 +218,19 @@ softParser = function(softFile, # file to read
         })
     }
     samples = as.data.frame(t(as.data.frame(samples)))
+    
+    if (expression){
+        expressionData = lapply(expressionData, function(x){
+            con = textConnection(x)
+            dat=read.table(con,comment.char = '!', sep='\t',header=T)
+            close(con)
+            return(dat)
+        })
+        
+        
+        return(list(samples,expressionData))
+    }
+    
     return(samples)
 }
+
