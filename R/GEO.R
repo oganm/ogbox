@@ -69,7 +69,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     
     fileURL  = URLdecode(str_extract(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
     
-    if (len(fileURL) == 0){
+    if (is.na(fileURL) == 0){
         if (warnings){
             warning(paste(gsm,"doesn't have a file attached"))
         }
