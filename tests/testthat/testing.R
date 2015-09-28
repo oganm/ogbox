@@ -31,3 +31,9 @@ test_that('list seperator', {
                 equals(c(2,3,4)))
 })
 
+test_that('gsmDown', {
+    expect_that(a<-gsmDown('GSM1026376','hede'),gives_warning('has mutliple files'))
+    expect_that(a,equals(F))
+    expect_that(a<-gsmDown('GSM1539691','hede'),gives_warning("doesn't have a file attached"))
+    expect_that(a,equals(F))
+})
