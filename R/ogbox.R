@@ -573,3 +573,15 @@ geom_signif = function(pValues,maxY, size = 7){
             })
     )
 }
+
+#' @author Achim Zeileis
+#' @author Kurt Hornik
+#' @author Paul Murrell
+#' @export
+pal <- function(col, border = "transparent", ...)
+{
+    n <- length(col)
+    plot(0, 0, type="n", xlim = c(0, 1), ylim = c(0, 1),
+         axes = FALSE, xlab = "", ylab = "", ...)
+    rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
+}
