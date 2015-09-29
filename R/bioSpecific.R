@@ -22,8 +22,8 @@ sepExpr = function(allDataPre){
                 break
             }
         }
-        geneData = allDataPre[,1:(expBound-1),with=F]
-        exprData = allDataPre[,expBound:ncol(allDataPre), with = F]
+        geneData = allDataPre[,1:(expBound-1),with=F,drop=F]
+        exprData = allDataPre[,expBound:ncol(allDataPre), with = F,drop=F]
         return(list(geneData,exprData))
     }
 }
