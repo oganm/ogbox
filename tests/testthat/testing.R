@@ -37,3 +37,12 @@ test_that('gsmDown', {
     expect_that(a<-gsmDown('GSM1539691','hede'),gives_warning("doesn't have a file attached"))
     expect_that(a,equals(F))
 })
+
+test_that('gsmFind',{
+    expect_that(gsmFind('GSE29949','Brain mic'), equals(c( "GSM741192", "GSM741193", "GSM741194")))
+})
+
+test_that('sourceGithub',{
+    sourceGithub(oganm,toSource,homologene)
+    expect_that(typeof(mouse2human),equals('closure'))
+})
