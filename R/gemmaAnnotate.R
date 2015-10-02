@@ -26,7 +26,7 @@ getGemmaAnnot = function(id,chipFile,annotType){
 #' @export
 gemmaAnnot = function(normalized, chipFile, outFile=NA){
     expression = exprs(normalized)
-    annotations = read.table(chipFile, header=T,sep='\t', quote="")
+    annotations = read.table(chipFile, header=T,sep='\t', quote="", stringsAsFactors = F)
     # gene symbols are turned into Gene.Symbols because I was using it as Gene.Symbols
     # all this time. I ain't gonna change my scripts...
     names(annotations)[2] = 'Gene.Symbol'
@@ -48,7 +48,7 @@ gemmaAnnot = function(normalized, chipFile, outFile=NA){
 gemmaAnnotOligo = function(normalized, chipFile, outFile = NA){
     featureData(normalized) <- getNetAffx(normalized, "transcript")
     expression <- get("exprs", pos=assayData(normalized))
-    annotations = read.table(chipFile, header=T,sep='\t', quote="")
+    annotations = read.table(chipFile, header=T,sep='\t', quote="", stringsAsFactors = F)
     # gene symbols are turned into Gene.Symbols because I was using it as Gene.Symbols
     # all this time. I ain't gonna change my scripts...
     names(annotations)[2] = 'Gene.Symbol'
@@ -68,7 +68,7 @@ gemmaAnnotOligo = function(normalized, chipFile, outFile = NA){
 
 #' @export
 gemmaGeneMatch = function(probesets, chipFile){
-    annotations = read.table(chipFile, header=T,sep='\t', quote="")
+    annotations = read.table(chipFile, header=T,sep='\t', quote="",stringsAsFactors = F)
     names(annotations)[2] = 'Gene.Symbol'
     names(annotations)[1] = 'Probe'
     annotations[match(probesets,annotations$Probe),'Gene.Symbol']
