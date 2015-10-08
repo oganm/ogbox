@@ -424,8 +424,21 @@ intersectList = function(list){
 # does 0-1 scaling
 #' @export
 scale01 = function(x){
-    x = (x - min(x))/(max(x)-min(x))
-    return(x)
+    scaleToInt(x,1,0)
+}
+
+# scale to intervals
+#' @export
+scaleToInt = function(x, max,min){
+    scaleFun = scaleIntervals(max(x),min(x),max,min)
+    scaleFun(x)
+}
+
+#' @export
+scaleIntervals = function(max,min,maxOut,minOut){
+    a = (max - min)/(maxOut - minOut)
+    b = max - maxOut*a
+    hede = teval(paste0("function(x){(x - ",b,")/",a,'}'))
 }
 
 # creates a link to the rendered form of a latex formula
