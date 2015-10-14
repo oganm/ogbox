@@ -576,15 +576,22 @@ geom_signif = function(pValues,maxY, size = 7){
     if (length(maxY)==1){
         maxY=rep(maxY,length(pValues))
     }
-    markers = rep('',length(pValues))
-    markers[pValues>=0.01 & pValues<0.05] = '*'
-    markers[pValues>=0.001 & pValues<0.01] = '**'
-    markers[pValues<0.001 ] = '***'
+    markers = signifMarker(pValues)
     return(
         lapply(1:len(pValues), function(i){
             annotate('text',x=i,y=maxY[i]+max(maxY)/10,label = markers[i],size =size )
             })
     )
+}
+
+
+#' @export
+signifMarker = function(pValues){
+    markers = rep('',length(pValues))
+    markers[pValues>=0.01 & pValues<0.05] = '*'
+    markers[pValues>=0.001 & pValues<0.01] = '**'
+    markers[pValues<0.001 ] = '***'
+    return(markers)
 }
 
 #' @author Achim Zeileis
