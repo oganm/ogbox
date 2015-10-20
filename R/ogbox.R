@@ -605,3 +605,11 @@ pal <- function(col, border = "transparent", ...)
          axes = FALSE, xlab = "", ylab = "", ...)
     rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
 }
+
+#' @export
+mergeMutliFrame = function(list, ...){
+    out = merge(list[[1]],list[[2]],...)
+    for (i in 3:len(list)){
+        out = merge(out,list[[i]],...)
+    }
+}
