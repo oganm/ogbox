@@ -207,6 +207,7 @@ softParser = function(softFile, # file to read
         for (i in 1:len(dups)){
             temp  = paste0(singleSample[names(singleSample) %in% dups[i]], collapse = ' ')
             singleSample = singleSample[!names(singleSample) %in% dups[i]]
+            singleSample[dups[1]] = temp
         }
         
         
@@ -241,4 +242,3 @@ softParser = function(softFile, # file to read
     
     return(samples)
 }
-
