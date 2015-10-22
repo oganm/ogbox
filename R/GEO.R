@@ -131,114 +131,96 @@ softDown = function(GSE,file){
 #' @param expression should the expression data be returned
 #' @return A data.frame or a list depending on \code{expression}
 #' @export
-softParser = function(softFile, # file to read
-                      mergeFrame = c('intersect', 'union'), # union not implemented
-                      n=NULL, # number of samples in the file
-                      expression=F # 
-){
-    con  = file(softFile, open = "r")
+softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL, 
+                       expression = F) 
+{
+    con = file(softFile, open = "r")
     oneLine = readLines(con, n = 1, warn = FALSE)
-    
-    # if n isn't provided grab it online
-    if (is.null(n)){
-        while (length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 0){
-            if (grepl('\\^SERIES', oneLine)){
-                GSE = strsplit(oneLine,' = ')[[1]][2]
+    if (is.null(n)) {
+        while (length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 
+               0) {
+            if (grepl("\\^SERIES", oneLine)) {
+                GSE = strsplit(oneLine, " = ")[[1]][2]
                 n = len(gsmFind(GSE))
                 break
             }
         }
     }
-    
-    i=0
-    sampleData = vector(mode ='list', length = n)
-    if (expression){expressionData = vector(mode = 'list', length = n)}
-    
-    # get relevant information
+    i = 0
+    sampleData = vector(mode = "list", length = n)
+    if (expression) {
+        expressionData = vector(mode = "list", length = n)
+    }
     while (length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 0) {
-        if (grepl('\\^SAMPLE', oneLine)){
-            sampLines = vector(mode = 'character', length=0)
-            while (oneLine != '!sample_table_begin'){
+        if (grepl("\\^SAMPLE", oneLine)) {
+            sampLines = vector(mode = "character", length = 0)
+            while (oneLine != "!sample_table_begin") {
                 sampLines = c(sampLines, oneLine)
                 oneLine = readLines(con, n = 1, warn = FALSE)
             }
-            # get the expression data as well. if the user wants it
-            if (expression){
-                expressionLines = vector(mode='character',length = 0)
-                while (oneLine != '!sample_table_end'){
+            if (expression) {
+                expressionLines = vector(mode = "character", 
+                                         length = 0)
+                while (oneLine != "!sample_table_end") {
                     expressionLines = c(expressionLines, oneLine)
                     oneLine = readLines(con, n = 1, warn = FALSE)
                 }
             }
-            i = i+1
+            i = i + 1
             sampleData[[i]] = sampLines
-            if (expression){expressionData[[i]] = expressionLines}
+            if (expression) {
+                expressionData[[i]] = expressionLines
+            }
             print(i)
         }
     }
-    
     close(con)
-    
-    names(sampleData) = sapply(sampleData,function(x){
-        strsplit(x[1],' = ')[[1]][2]
+    names(sampleData) = sapply(sampleData, function(x) {
+        strsplit(x[1], " = ")[[1]][2]
     })
-    
-    sampleData = lapply(sampleData,function(x){
-        x[grepl('^\\!',x)]
+    sampleData = lapply(sampleData, function(x) {
+        x[grepl("^\\!", x)]
     })
-    
-    samples = lapply(sampleData,function(x){
-        singleSample = sapply(x, function(y){
-            out = strsplit(y, '(\ =\ (?!.*?:\ ))|(:\ )', perl=T)[[1]]
-            if (len(out)==1){
+    samples = lapply(sampleData, function(x) {
+        singleSample = sapply(x, function(y) {
+            out = strsplit(y, "( = (?!.*?: ))|(: )", perl = T)[[1]]
+            if (len(out) == 1) {
                 out[2] = "NULL"
             }
             return(out[2])
         })
-        
-        names(singleSample) = sapply(x,function(y){
-            out = strsplit(y, '(\ =\ (?!.*?:\ ))|(:\ )', perl=T)[[1]][1]
+        names(singleSample) = sapply(x, function(y) {
+            out = strsplit(y, "( = (?!.*?: ))|(: )", perl = T)[[1]][1]
             return(out)
         })
-        
-        # some fields occur more than once. merge'em
-        dups = unique(names(singleSample)[duplicated(names(singleSample))])       
-        
-        for (i in 1:len(dups)){
-            temp  = paste0(singleSample[names(singleSample) %in% dups[i]], collapse = ' ')
-            singleSample = singleSample[!names(singleSample) %in% dups[i]]
-            singleSample[dups[1]] = temp
+        dups = unique(names(singleSample)[duplicated(names(singleSample))])
+        for (i in 1:len(dups)) {
+            temp = paste0(singleSample[names(singleSample) %in% 
+                                           dups[i]], collapse = " ")
+            singleSample = singleSample[!names(singleSample) %in% 
+                                            dups[i]]
+            singleSample[dups[i]] = temp
         }
-        
-        
-        # print(names(singleSample))
-        
         return(singleSample)
     })
-    
-    
-    
-    fields = table(unlist(lapply(samples,names)))
-    
-    if (mergeFrame[1] =='intersect'){
-        fields = names(fields[fields==max(fields)])
-        samples = lapply(samples, function(x){
+    fields = table(unlist(lapply(samples, names)))
+    if (mergeFrame[1] == "intersect") {
+        fields = names(fields[fields == max(fields)])
+        samples = lapply(samples, function(x) {
             x[fields]
         })
     }
     samples = as.data.frame(t(as.data.frame(samples)))
-    
-    if (expression){
-        expressionData = lapply(expressionData, function(x){
+    if (expression) {
+        expressionData = lapply(expressionData, function(x) {
             con = textConnection(x)
-            dat=read.table(con,comment.char = '!', sep='\t',header=T)
+            dat = read.table(con, comment.char = "!", sep = "\t", 
+                             header = T)
             close(con)
             return(dat)
         })
-        
         names(expressionData) = rownames(samples)
-        return(list(samples,expressionData))
+        return(list(samples, expressionData))
     }
-    
     return(samples)
 }
