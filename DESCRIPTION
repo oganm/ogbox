@@ -3,13 +3,15 @@ Type: Package
 Title: Stuff and things
 Version: 1.0
 Depends: 
-    RCurl, 
-    igraph (>= 0.7.1),
+    RCurl,
     stringr,
     parallel,
     ggplot2,
     tools
-Suggests: testthat
+Suggests: 
+    testthat
+Enhances:
+    igraph (>= 0.7.1)
 Date: 2015-06-16
 Author: Ogan Mancarci
 Maintainer: Ogan Mancarci <ogan.mancarci@gmail.com>
