@@ -4,7 +4,7 @@ Title: Stuff and things
 Version: 1.0
 Depends:
     RCurl,
-    stringr,
+    stringr (>= 1.0.0),
     parallel,
     ggplot2,
     tools,
