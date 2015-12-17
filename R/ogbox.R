@@ -519,8 +519,13 @@ snowman = function(x){
 
 # merges regex's with an or clause. search for multiple regexes
 #' @export
-regexMerge = function(regexList){
-    paste0('(',paste0(regexList,collapse=')|('),')')
+regexMerge = function(regexList, exact = FALSE){
+    assertthat::assert_that(is.logical(exact))
+    exact = as.character(exact)
+    switch (exact,
+        'FALSE' = {paste0('(',paste0(regexList,collapse=')|('),')')},
+        'TRUE' =  {paste0('(\\Q',paste0(regexList,collapse='\\E)|(\\Q'),'\\E)')}
+    )
 }
 
 # http://stackoverflow.com/questions/2261079/how-to-trim-leading-and-trailing-whitespace-in-r
