@@ -611,6 +611,23 @@ pal <- function(col, border = "transparent", ...)
     rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
 }
 
+# sets rown ames to first collumn
+#' @export
+rn2col = function(frame){
+    frame = cbind(rownames(frame),frame)
+    names(frame)[1] = 'rownames'
+    return(frame)
+}
+
+# sets first collumn to row names, drops the collumn
+#' @export
+col2rn = function(frame){
+    rownames(frame) = frame[,1]
+    frame = frame[,-1,drop=F]
+    return(frame)
+}
+
+
 # #' @export
 # mergeMutliFrame = function(list, ...){
 #     out = merge(list[[1]],list[[2]],...)
