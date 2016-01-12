@@ -214,14 +214,17 @@ repCol<-function(x,n){
 }
 
 # repeats every element in the vector n times
+# if n is a vector repeat every element as specified in the corresponding element of n
 #' @export
 repIndiv = function (aVector, n){
-    output = vector(length = length(aVector) * n)
-    step = 1
-    for (i in aVector){
-        output[(step * n - n + 1):(n * step)] = rep(i, n)
-        step = step + 1
+    if (length(n) ==1){
+        n = rep(n,length(aVector))
     }
+    output = vector(length = sum(n))
+    for (i in 1:length(aVector)){
+        output[(sum(n[(i-1):0])+1):(sum(n[i:0]))] = rep(aVector[i], n[i])
+    }
+    
     return(output)
 }
 
