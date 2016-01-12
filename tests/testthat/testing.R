@@ -49,8 +49,17 @@ test_that('sourceGithub',{
 
 
 test_that('intersectMult',{
-    expect_that(intersectMult(list = list(a=c(1,3,4),b=c(3,4,5))),
+    expect_that(intersectMult(list = list(a=c(1,3,4),b=c(3,4,5), c = c(3,4,1))),
                 equals(c(3,4)))
-    expect_that(intersectMult(c(1,3,4), c(3,4,5)),
+    expect_that(intersectMult(c(1,3,4), c(3,4,5), c = c(3,4,1)),
                 equals(c(3,4)))
+})
+
+test_that('rn2col-col2rn',{
+    df = data.frame(a=c('a','b','c'),b=c(1,2,3))
+    expect_that(rownames(df2<-col2rn(df)) , equals(c('a','b','c')))
+    expect_that(rn2col(df2) ,
+                equals(data.frame(rownames=c('a','b','c'),b=c(1,2,3),
+                                  stringsAsFactors=F,
+                                  row.names= c('a','b','c'))))
 })

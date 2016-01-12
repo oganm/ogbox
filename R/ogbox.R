@@ -619,6 +619,7 @@ pal <- function(col, border = "transparent", ...)
 #' @export
 rn2col = function(frame){
     frame = cbind(rownames(frame),frame)
+    frame[,1] = as.character(frame[,1])
     names(frame)[1] = 'rownames'
     return(frame)
 }
