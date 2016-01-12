@@ -46,3 +46,11 @@ test_that('sourceGithub',{
     sourceGithub(oganm,toSource,homologene)
     expect_that(typeof(mouse2human),equals('closure'))
 })
+
+
+test_that('intersectMult',{
+    expect_that(intersectMult(list = list(a=c(1,3,4),b=c(3,4,5))),
+                equals(c(3,4)))
+    expect_that(intersectMult(c(1,3,4), c(3,4,5)),
+                equals(c(3,4)))
+})

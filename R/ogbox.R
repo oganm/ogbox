@@ -397,9 +397,13 @@ threeQuartile <- function(x){
 
 # for intersecting more than one sets
 #' @export
-intersectMult = function (...){
-    targets = list(...)
-    
+intersectMult = function (..., list = NULL){
+    if(is.null(list)){
+        targets = list(...)
+    } else{
+        assertthat::assert_that(class(list) == 'list')
+        targets = list
+    }
     out = intersect(targets[[1]],targets[[2]])
     if (length(targets)>=3){
         for (i in 3:(length(targets))){

@@ -7,7 +7,7 @@ Depends:
     stringr (>= 1.0.0),
     parallel,
     ggplot2,
-    tools,
+    tools
 Imports:
     assertthat
 Suggests:
