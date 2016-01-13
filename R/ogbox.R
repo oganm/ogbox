@@ -418,13 +418,7 @@ intersectMult = function (..., list = NULL){
 
 #' @export
 intersectList = function(list){
-    out = intersect(list[[1]],list[[2]])
-    if (length(list)>=3){
-        for (i in 3:(length(list))){
-            out = intersect(out, list[[i]])
-        }
-    }
-    return(out)
+    intersectMult(list = list)
 }
 
 
