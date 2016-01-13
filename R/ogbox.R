@@ -76,7 +76,7 @@ list <- structure(NA,class="result")
 #' @description Clear global environment
 #' @export
 purge =   function() {
-    rm(list = ls(.GlobalEnv, all.names = T), envir = .GlobalEnv)
+    rm(list = ls(parent.frame(), all.names = T), envir = .GlobalEnv)
 }
 
 
