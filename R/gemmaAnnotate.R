@@ -1,8 +1,7 @@
 # uses probeset-gene reallignments provided in Gemma by Zoubarev, A., et al.,2012
 # download the annotation file using getGemmaAnot and use it on the ExpressionSet
 # object that is outputted by affy package pre-processing functions (eg. rma)
-require(RCurl)
-library(stringr)
+
 
 # download's gemma's annotation files for your pleasure. annotType is for go terms
 # attached to the genes. bioProcess is the least detailed version.
