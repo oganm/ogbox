@@ -73,5 +73,15 @@ test_that('sepExpr fails to separate data frames',{
                 equals(data.frame(c = c(1.1,2.2,3.3), d = c(2.2,3.3,4.4))))
 })
 
+test_that('purge fails do delete',{
+    a = 23
+    purge()
+    expect_error(a,'not found')
+})
 
 
+test_that('gsubMult',{
+    str = 'asdfg'
+    expect_that(gsubMult(c('a','s'),c('m','n'),str),
+                equals('mndfg'))
+})
