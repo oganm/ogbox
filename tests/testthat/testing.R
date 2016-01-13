@@ -63,3 +63,15 @@ test_that('rn2col-col2rn',{
                                   stringsAsFactors=F,
                                   row.names= c('a','b','c'))))
 })
+
+test_that('sepExpr fails to separate data frames',{
+    df = data.frame(a = c('asd','gfa','sad'), b = c('qwe', 'ewq', 'rew') , c = c(1.1,2.2,3.3), d = c(2.2,3.3,4.4))
+    seperated = sepExpr(df)
+    expect_that(seperated[[1]],
+                equals(data.frame(a = c('asd','gfa','sad'), b = c('qwe', 'ewq', 'rew'))))
+    expect_that(seperated[[2]],
+                equals(data.frame(c = c(1.1,2.2,3.3), d = c(2.2,3.3,4.4))))
+})
+
+
+
