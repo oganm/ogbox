@@ -5,7 +5,7 @@
 # dfs in one go
 #' @export
 sepExpr = function(allDataPre){
-    if (class(allDataPre)[1] =='data.frame'){
+    if (class(allDataPre)[1] %in% c('data.frame','tbl_df')){
         for (i in 1:ncol(allDataPre)){
             if ('double'==typeof(allDataPre[,i])){
                 expBound = i
