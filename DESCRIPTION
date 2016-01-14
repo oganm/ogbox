@@ -3,8 +3,8 @@ Type: Package
 Title: Stuff and things
 Version: 1.0
 Depends:
-    stringr (>= 1.0.0),
     RCurl,
+    stringr (>= 1.0.0),
     parallel,
     ggplot2,
     tools
