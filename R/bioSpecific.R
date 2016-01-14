@@ -7,8 +7,8 @@
 sepExpr = function(allDataPre){
     if (class(allDataPre)[1] %in% c('data.frame','tbl_df')){
         # unlist is there to enable tbl_df to work
-        for (i in 1:ncol(allDataPre) %>% unlist){
-            if ('double'==typeof(allDataPre[,i])){
+        for (i in 1:ncol(allDataPre)){
+            if ('double'==typeof(allDataPre[,i] %>% unlist)){
                 expBound = i
                 break
             }
