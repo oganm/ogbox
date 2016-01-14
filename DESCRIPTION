@@ -3,7 +3,7 @@ Type: Package
 Title: Stuff and things
 Version: 1.0
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.0.2),
     stringr (>= 1.0.0),
     RCurl,
     parallel,
