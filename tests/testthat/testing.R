@@ -86,7 +86,7 @@ test_that('gsubMult',{
                 equals('mndfg'))
 })
 
-test_that('geom_ogboxvio', {
-    expect_that(class(geom_ogboxvio()),equals('list'))
-    expect_that(length(geom_ogboxvio()), equals(4))
-})
+# test_that('geom_ogboxvio', {
+#     expect_that(class(geom_ogboxvio()),equals('list'))
+#     expect_that(length(geom_ogboxvio()), equals(4))
+# })
