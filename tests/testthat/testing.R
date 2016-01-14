@@ -38,8 +38,10 @@ test_that('gsmDown', {
     expect_that(a,equals(F))
 })
 
-test_that('gsmFind',{
+test_that('gsmFind with regex merge',{
     expect_that(gsmFind('GSE29949','Brain mic'), equals(c( "GSM741192", "GSM741193", "GSM741194")))
+    expect_equal(gsmFind('GSE69340',regex = regexMerge(c('OLIG2','NEK7'))),
+                 c("GSM1698231", "GSM1698232", "GSM1698233", "GSM1698237", "GSM1698238" ,"GSM1698239"))
 })
 
 test_that('sourceGithub',{
