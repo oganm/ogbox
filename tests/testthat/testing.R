@@ -85,3 +85,30 @@ test_that('gsubMult',{
     expect_that(gsubMult(c('a','s'),c('m','n'),str),
                 equals('mndfg'))
 })
+
+test_that('trimHeadComment',{
+    text = textConnection(
+        '# goygoygoy
+#loyloyloy
+hedehodo
+loyloy#llo'
+    )
+    trimmed = trimHeadComment(text,commentChar = '#')
+    expect_equal(readLines(trimmed),c("hedehodo" ,  "loyloy#llo"))
+    close(text)
+    close(trimmed)
+})
+
+test_that('mergeList', {
+    expect_equal(mergeList(list(a = c(1,2), b = c(3,4)), list(b = c(4,5)), forceUnique = T),
+                 list(a=c(1,2),
+                      b= c(3,4,5)))
+    expect_equal(mergeList(list(a = c(1,2), b = c(3,4)), list(b = c(4,5)), forceUnique = F),
+                 list(a=c(1,2),
+                      b= c(3,4,4,5)))
+})
+
+test_that('insist', {
+    insist(gapminder)
+    expect_equal(as.character(gapminder[1,1]), 'Afghanistan')
+})

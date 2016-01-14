@@ -2,7 +2,7 @@
 #' Trim first line comments
 #' @description Deletes the comments added to the first lines. Useful when comment char is 
 #' only a comment char in the beginning of the file
-#' @param fileName name of the file
+#' @param fileName name of the file or a connection
 #' @param commentChar comment indicator
 #' @param outFile File to save
 #' @return a textConnection object

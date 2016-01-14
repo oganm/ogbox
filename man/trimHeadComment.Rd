@@ -7,7 +7,7 @@
 trimHeadComment(fileName, commentChar = "#", outFile = NULL)
 }
 \arguments{
-\item{fileName}{name of the file}
+\item{fileName}{name of the file or a connection}
 
 \item{commentChar}{comment indicator}
 
