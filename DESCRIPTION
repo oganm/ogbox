@@ -3,14 +3,14 @@ Type: Package
 Title: Stuff and things
 Version: 1.0
 Depends:
-    R (>= 3.0.0)
-Imports:
+    R (>= 3.0.0),
     stringr (>= 1.0.0),
-    assertthat,
     RCurl,
     parallel,
     ggplot2,
     tools
+Imports:
+    assertthat
 Suggests:
     testthat
 Enhances: igraph (>= 0.7.1)
