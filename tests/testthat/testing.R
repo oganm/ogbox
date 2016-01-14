@@ -108,7 +108,7 @@ test_that('mergeList', {
                       b= c(3,4,4,5)))
 })
 
-test_that('insist', {
-    insist(gapminder,repos = 'http://cran.us.r-project.org')
-    expect_equal(as.character(gapminder[1,1]), 'Afghanistan')
-})
+# test_that('insist', {
+#     insist(gapminder,repos = 'http://cran.us.r-project.org')
+#     expect_equal(as.character(gapminder[1,1]), 'Afghanistan')
+# })
