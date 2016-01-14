@@ -238,11 +238,11 @@ modStat <- function(x) {
 # load that bloody function no matter what
 # doesn't seems to work all that well...
 #' @export
-insist = function(name){
+insist = function(name,...){
     name = substitute(name)
     name = as.character(name)
     if (!require(name, character.only = T)) {
-        install.packages(name)
+        install.packages(name,...)
         Sys.sleep(5)
         library(name, character.only = T, logical.return = F)
     }

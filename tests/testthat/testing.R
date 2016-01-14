@@ -109,6 +109,6 @@ test_that('mergeList', {
 })
 
 test_that('insist', {
-    insist(gapminder)
+    insist(gapminder,repos = 'http://cran.us.r-project.org')
     expect_equal(as.character(gapminder[1,1]), 'Afghanistan')
 })
