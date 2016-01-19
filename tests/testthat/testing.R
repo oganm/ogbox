@@ -42,6 +42,8 @@ test_that('gsmFind with regex merge',{
     expect_that(gsmFind('GSE29949','Brain mic'), equals(c( "GSM741192", "GSM741193", "GSM741194")))
     expect_equal(gsmFind('GSE69340',regex = regexMerge(c('OLIG2','NEK7'))),
                  c("GSM1698231", "GSM1698232", "GSM1698233", "GSM1698237", "GSM1698238" ,"GSM1698239"))
+    expect_equal(gsmFind('GSE42021', regex = regexMerge(c('04_(+) 24hi', '22_(-) 24hi'), exact = T)),
+                 c("GSM1030712", "GSM1030715"))
 })
 
 test_that('sourceGithub',{
@@ -109,6 +111,24 @@ test_that('mergeList', {
                  list(a=c(1,2),
                       b= c(3,4,4,5)))
 })
+
+test_that('ans', {
+    4+5
+    expect_equal(ans(),11)
+})
+
+test_that('scale',{
+    expect_equal(scale01(c(1,2,3,4,5)),
+                 seq(0,1,0.25)) 
+})
+
+test_that('signifMarker', {
+    expect_equal(signifMarker(c(0.1,0.01,0.05,0.005,0.0005)),
+                 c( "", "*", "", "**", "***"))
+})
+
+
+
 
 # test_that('insist', {
 #     insist(gapminder,repos = 'http://cran.us.r-project.org')
