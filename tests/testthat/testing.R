@@ -112,11 +112,6 @@ test_that('mergeList', {
                       b= c(3,4,4,5)))
 })
 
-test_that('ans', {
-    4+5
-    expect_equal(ans(),11)
-})
-
 test_that('scale',{
     expect_equal(scale01(c(1,2,3,4,5)),
                  seq(0,1,0.25)) 
