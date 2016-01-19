@@ -260,24 +260,15 @@ teval = function(daString){
 # for navigating through list of lists with teval
 #' @export
 listParse = function (daList,daArray){
-    out = ''
-    for (i in daArray){
-        out = paste0(out , '[[' ,  daArray[i] , ']]')
-    }
-    eval(parse(text=paste0('daList' , out)))
+    out = listStr(daArray)
+    teval(paste0('daList' , out))
 }
 
 #returns the final step as a list
 #' @export
 listParseW = function (daList,daArray){
-    out = ''
-    if (length(daArray) > 1){
-        for (i in daArray[1 : (length(daArray) - 1)]){
-            out = paste0(out , '[[' ,  i , ']]')
-        }
-    }
-    out = paste0(out ,'[', daArray[length(daArray)], ']')
-    eval(parse(text=paste0('daList' , out)))
+    out = listStrW(daArray)
+    teval(paste0('daList' , out))
 }
 
 # sets the list element
@@ -285,12 +276,8 @@ listParseW = function (daList,daArray){
 listSet = function(daList,daArray ,something){
     name = substitute(daList)
     name = as.character(name)
-    out = ''
-    for (i in daArray){
-        out = paste0(out , '[[' ,  i , ']]')
-    }
-    
-    eval(parse(text = paste0(name, out, '<<-something')))
+    out = listStr(daArray)
+    teval(paste0(name, out, '<<-something'))
 }
 
 # > listStr(c(1,2,3))
