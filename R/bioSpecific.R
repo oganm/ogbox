@@ -43,5 +43,5 @@ read.design  = function(x){
 
 #' @export
 read.exp = function(x){
-    data.table::fread('data/finalExp.csv',stringsAsFactors=F,data.table=F)
+    data.table::fread(x,stringsAsFactors=F,data.table=F)
 }
