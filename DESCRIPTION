@@ -9,7 +9,8 @@ Depends:
     ggplot2,
     tools
 Imports:
-    assertthat
+    assertthat,
+    data.table
 Suggests:
     testthat
 Enhances: igraph (>= 0.7.1)
