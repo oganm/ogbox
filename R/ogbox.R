@@ -25,25 +25,6 @@ trimHeadComment = function(fileName, commentChar = '#',outFile = NULL){
     }
 }
 
-#' List cel files
-#' @description list.celfiles from oligo package. it's better than affy since it 
-#' has listGzipped option.
-#' @param ... arguments to pass to \code{list.files}
-#' @param listGzipped logical. If true adds gzipped files to the results
-#' @return A string vector, listing files
-#' @export
-celFiles = function (..., listGzipped = FALSE) 
-{
-    files <- list.files(...)
-    if (listGzipped) {
-        return(files[grep("\\.[cC][eE][lL]\\.[gG][zZ]$|\\.[cC][eE][lL]$", 
-                          files)])
-    }
-    else {
-        return(files[grep("\\.[cC][eE][lL]$", files)])
-    }
-}
-
 
 #' Clear display
 #' @description clear display, taken from http://stackoverflow.com/questions/14260340/function-to-clear-the-console-in-r
