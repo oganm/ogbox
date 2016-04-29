@@ -537,7 +537,8 @@ mycircle <- function(coords, v=NULL, params) {
 geom_ogboxvio = function(){
    list(geom_violin(color="#C4C4C4", fill="#C4C4C4"),
         geom_boxplot(width=0.1,fill = 'lightblue'), 
-        theme_bw(),
+        # theme_bw(),
+        theme_cowplot(),
         theme(axis.text.x  = element_text(size=25),
               axis.title.y = element_text(vjust=0.5, size=25),
               axis.title.x = element_text(vjust=0.5, size=0) ,
