@@ -233,8 +233,8 @@ insist = function(name,...){
 
 #direct text eval
 #' @export
-teval = function(daString){
-    eval(parse(text=daString))
+teval = function(daString,...){
+    eval(parse(text=daString),...)
 }
 
 
@@ -537,8 +537,7 @@ mycircle <- function(coords, v=NULL, params) {
 geom_ogboxvio = function(){
    list(geom_violin(color="#C4C4C4", fill="#C4C4C4"),
         geom_boxplot(width=0.1,fill = 'lightblue'), 
-        # theme_bw(),
-        theme_cowplot(),
+        theme_bw(),
         theme(axis.text.x  = element_text(size=25),
               axis.title.y = element_text(vjust=0.5, size=25),
               axis.title.x = element_text(vjust=0.5, size=0) ,
@@ -607,3 +606,20 @@ col2rn = function(frame){
 #     }
 #     return(out)
 # }
+
+# http://stackoverflow.com/questions/18122548/display-names-of-column-of-recursive-list-as-tree
+# displays a list as a tree by their names
+#' @export
+nametree <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = "")
+    if( is.list(X) )
+        for( i in seq_along(X) ) { 
+            cat( if(i<length(X)) prefix1 else prefix3, names(X)[i], "\n", sep="" )
+            prefix <- if( i<length(X) ) prefix2 else prefix4
+            nametree(
+                X[[i]], 
+                paste0(prefix, "├──"),
+                paste0(prefix, "│  "),
+                paste0(prefix, "└──"),
+                paste0(prefix, "   ")
+            )
+        }
