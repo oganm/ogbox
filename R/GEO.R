@@ -1,6 +1,12 @@
 library(RCurl)
 library(stringr)
 library(parallel)
+# returns a vector
+#' @export
+whichGSE = function(GSM){
+    page = getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSM))
+    str_extract_all(page, 'GSE[0-9]*?(?=<)')[[1]]
+}
 
 #' @export
 gsmFind = function(GSE, regex=NULL, cores = 1){
