@@ -534,9 +534,9 @@ mycircle <- function(coords, v=NULL, params) {
 }
 
 #' @export
-geom_ogboxvio = function(data=NULL){
-   list(geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data),
-        geom_boxplot(width=0.1,fill = 'lightblue',data=data), 
+geom_ogboxvio = function(data=NULL, mapping = NULL){
+   list(geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data, mapping = mapping),
+        geom_boxplot(width=0.1,fill = 'lightblue',data=data, mapping = mapping), 
         theme_bw(),
         theme(axis.text.x  = element_text(size=25),
               axis.title.y = element_text(vjust=0.5, size=25),
