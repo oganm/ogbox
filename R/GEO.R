@@ -196,7 +196,7 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
             }
             # just in case there is an additonal column in the description... those idiots.
             out = paste(out[-1],collapse = ':')
-            return(out[2])
+            return(out)
         })
         names(singleSample) = sapply(x, function(y) {
             out = strsplit(y, "( = (?!.*?: ))|(: )", perl = T)[[1]][1]
