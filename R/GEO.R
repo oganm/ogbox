@@ -157,7 +157,8 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
     if (expression) {
         expressionData = vector(mode = "list", length = n)
     }
-    while (length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 0) {
+    while (length(oneLine <- readLines(con, n = 1, warn = FALSE)) > 
+           0) {
         if (grepl("\\^SAMPLE", oneLine)) {
             sampLines = vector(mode = "character", length = 0)
             while (oneLine != "!sample_table_begin") {
@@ -193,6 +194,8 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
             if (len(out) == 1) {
                 out[2] = "NULL"
             }
+            # just in case there is an additonal column in the description... those idiots.
+            out = paste(out[-1],collapse = ':')
             return(out[2])
         })
         names(singleSample) = sapply(x, function(y) {
