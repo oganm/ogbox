@@ -37,13 +37,13 @@ write.design = function(x, file){
 }
 
 #' @export
-read.design  = function(x){
-    read.table(x,header=T,sep='\t',stringsAsFactors=F,quote="")
+read.design  = function(x,...){
+    read.table(x,header=T,sep='\t',stringsAsFactors=F,quote="",...)
 }
 
 #' @export
-read.exp = function(x){
-    data.table::fread(x,stringsAsFactors=F,data.table=F)
+read.exp = function(x,...){
+    data.table::fread(x,stringsAsFactors=F,data.table=F,...)
 }
 
 #' List cel files
