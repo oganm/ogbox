@@ -161,7 +161,8 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
            0) {
         if (grepl("\\^SAMPLE", oneLine)) {
             sampLines = vector(mode = "character", length = 0)
-            while (oneLine != "!sample_table_begin") {
+            while (!((oneLine == "!sample_table_begin") | 
+                     (!expression & (oneLine == "!Sample_data_row_count = 0")))) {
                 sampLines = c(sampLines, oneLine)
                 oneLine = readLines(con, n = 1, warn = FALSE)
             }
