@@ -241,5 +241,9 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
 #' @export
 gseGet = function(gsm){
     page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
-    unlist(str_extract_all(page,'GSE[0-9]*')) %>% unique
+    out = unlist(str_extract_all(page,'GSE[0-9]*')) %>% unique
+    if(length(out)==0){
+        return('')
+    }
+    return(out)
 }
