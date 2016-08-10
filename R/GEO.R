@@ -234,3 +234,12 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
     }
     return(samples)
 }
+
+#' Gets GSE id of a GSM
+#' @description Gets GSE id of a GSM.
+#' @param gsm GSM identifier of the sample
+#' @export
+gseGet = function(gsm){
+    page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
+    unlist(str_extract_all(page,'GSE[0-9]*')) %>% unique
+}
