@@ -388,6 +388,42 @@ intersectList = function(list){
     intersectMult(list = list)
 }
 
+#' @export
+cbindMult = function(..., list){
+    if(is.null(list)){
+        targets = list(...)
+    } else{
+        assertthat::assert_that(class(list) == 'list')
+        targets = list
+    }
+    out = cbind(targets[[1]],targets[[2]])
+    if (length(targets)>=3){
+        for (i in 3:(length(targets))){
+            out = cbind(out, targets[[i]])
+        }
+    }
+    return(out)
+}
+
+
+#' @export
+rbindMult = function(..., list){
+    if(is.null(list)){
+        targets = list(...)
+    } else{
+        assertthat::assert_that(class(list) == 'list')
+        targets = list
+    }
+    out = rbind(targets[[1]],targets[[2]])
+    if (length(targets)>=3){
+        for (i in 3:(length(targets))){
+            out = rbind(out, targets[[i]])
+        }
+    }
+    return(out)
+}
+
+
 
 # does 0-1 scaling
 #' @export
