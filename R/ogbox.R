@@ -434,7 +434,7 @@ scale01 = function(x){
 # scale to intervals
 #' @export
 scaleToInt = function(x, max,min){
-    scaleFun = scaleIntervals(max(x),min(x),max,min)
+    scaleFun = scaleIntervals(max(x,na.rm = TRUE),min(x, na.rm=TRUE),max,min)
     scaleFun(x)
 }
 
