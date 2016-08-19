@@ -1,23 +1,20 @@
-library(RCurl)
-library(stringr)
-library(parallel)
 # returns a vector
 #' @export
 whichGSE = function(GSM){
-    page = getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSM))
-    str_extract_all(page, 'GSE[0-9]*?(?=<)')[[1]]
+    page = RCurl::getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSM))
+    stringr::str_extract_all(page, 'GSE[0-9]*?(?=<)')[[1]]
 }
 
 #' @export
 gsmFind = function(GSE, regex=NULL, cores = 1){
     # finds GSMs that match to a regular expression from a GSE (description not GSM ID)
-    page = getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSE))
+    page = RCurl::getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSE))
     sampleSize = as.numeric(str_extract(page, '(?<=Samples\\ \\().*?(?=\\))'))
     # due to the structure of the page if there are more than 500 samples,
     # download the list of gsms. in the list the title isnt present hence the
     # need to look at the pages individually, this can make the function go slow
     if (sampleSize>500){
-        page =  getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',GSE,'&targ=self&view=brief&form=text'))
+        page =  RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',GSE,'&targ=self&view=brief&form=text'))
         page = strsplit(page,split = '\n')[[1]]
         gsms = trimNAs(str_extract(page,"GSM.*?(?=\r)"))
         # only try doing this if regex is provided
@@ -36,7 +33,7 @@ gsmFind = function(GSE, regex=NULL, cores = 1){
             }
         }
     } else {
-        page = getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSE))
+        page = RCurl::getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSE))
         if (is.null(regex))
             regex = ''
         gsms = regmatches(page,gregexpr(paste0('GSM[0-9]*?(?=<.*\n.*?',regex,'.*?</td)'),page,perl=T))[[1]]
@@ -47,7 +44,7 @@ gsmFind = function(GSE, regex=NULL, cores = 1){
 
 #' @export
 gsmSize = function(gsm, warnings = T){
-    page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
+    page = RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
     fileURL = fileURL = URLdecode(str_extract(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
     
     if (len(fileURL) == 0){
@@ -58,7 +55,7 @@ gsmSize = function(gsm, warnings = T){
     }
     sizeString = getURL(fileURL,nobody=1L, header=1L)
     size = as.numeric(
-        str_extract(sizeString, perl('(?<=(Content-Length: )).*?(?=\r)')))
+        stringr::str_extract(sizeString, perl('(?<=(Content-Length: )).*?(?=\r)')))
     return(size)
 }
 
@@ -72,7 +69,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
         print(basename(outfile))
         return(invisible(F))
     }
-    page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
+    page = RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
     urls = unlist(str_extract_all(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
     if (len(urls)>1){
         if (warnings){
