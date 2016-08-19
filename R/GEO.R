@@ -67,7 +67,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     # downloads a given GSM
     dir.create(dirname(outfile), showWarnings=F,recursive=T)
     if ((file.exists(outfile) & !overwrite)|
-        (file.exists(paste0(outfile,'.gz')) & !overwrite & unzip=FALSE)){
+        (file.exists(paste0(outfile,'.gz')) & !overwrite & unzip==FALSE)){
         print('you already have it bro. i aint gonna get it again')
         print(basename(outfile))
         return(invisible(F))
