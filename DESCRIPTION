@@ -20,5 +20,6 @@ Maintainer: Ogan Mancarci <ogan.mancarci@gmail.com>
 Description: A package primarily for personal use. Has many functions dealing
     with gene expression databases GEO and Gemma. Also Some shorthands to do minor
     stuff.
+LazyData: true
 License: GPL-2
 RoxygenNote: 5.0.1
