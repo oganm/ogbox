@@ -260,5 +260,5 @@ downloadGSE = function(GSE,celDir,metaDir){
     softData$scanDate = sapply(softData$`!Sample_geo_accession`, function(x){
         oligoClasses::celfileDate(paste0(celDir,'/',platform,'/',x, '.cel'))
     })
-    return(softData)
+    return(invisible(softData))
 }
