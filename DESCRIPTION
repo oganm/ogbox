@@ -10,7 +10,8 @@ Depends:
     tools
 Imports:
     assertthat,
-    data.table
+    data.table,
+    oligoClasses
 Suggests:
     testthat
 Enhances: igraph (>= 0.7.1)

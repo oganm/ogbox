@@ -245,3 +245,20 @@ gseGet = function(gsm){
     }
     return(out)
 }
+
+#' Downloads an entire dataset from GEO
+#' @param GSE GSE id
+#' @param celDir directory to save the cel files
+#' @param metaDir directory to save the soft file
+#' @export
+downloadGSE = function(GSE,celDir,metaDir){
+    gseDown(GSE, outDir = celDir)
+    dir.create(outDir, recursive = TRUE)
+    softDown(GSE,paste0(metaDir,'/',GSE,'_family.soft.gz'))
+    softData = softParser(softFile=paste0(metaDir,'/',GSE,'_family.soft'),expression=F)
+    
+    softData$scanDate = sapply(softData$`!Sample_geo_accession`, function(x){
+        oligoClasses::celfileDate(paste0(celDir,'/',platform,'/',x, '.cel'))
+    })
+    return(softData)
+}
