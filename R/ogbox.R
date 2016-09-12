@@ -327,6 +327,41 @@ toColor = function(daList, palette = NULL,NAcolor = 'white'){
     return(out)
 }
 
+#' Replaces elements of a vector based on the dictonary provided
+#' @param vector a vector
+#' @param dictionary a named vector
+#' @param NAreplace that to put instead of NAs
+#' @return A list with $newVector and $dictionary.
+#' @export
+replaceElement = function(vector, dictionary = NULL,NAreplace = NA){
+    daList = vector
+    palette = dictionary
+    NAcolor = NAreplace
+    
+    daList = as.factor(daList)
+    uniq = unique(daList) %>% trimNAs
+    if (is.null(palette[1])){
+        palette = rainbow(length(uniq))
+    }
+    if (is.null(names(palette))){
+        names(palette) = uniq
+    }
+    cols = vector(length = length(daList))
+    #to match palette names to uniq names so that custom naming is possible
+    palette = trimNAs(palette[match(uniq,names(palette))])
+    names(palette) = uniq
+    
+    
+    for (i in 1:length(uniq)){
+        cols[daList == uniq[i]]= palette[i]
+    }
+    
+    cols[is.na(daList)] = NAcolor
+    
+    out = list(newVector = cols , dictionary = palette)
+    return(out)
+}
+
 # creates a color gradient from a continuous variable. returns assigned color values and the legend
 #' @export
 toColorGrad = function(daList, startCol = 'white', endCol = 'red', fine = 0.01){
