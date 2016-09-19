@@ -117,7 +117,7 @@ gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip
 #' @param file destination file
 #' @export
 softDown = function(GSE,file, overwrite=FALSE){
-    if(file.exists(file) & !overwrite){
+    if((file.exists(file) | file.exists(gsub('[.]gz', '', file))) & !overwrite){
         print('this file already exists. not overwriting')
         return(FALSE)
     }
