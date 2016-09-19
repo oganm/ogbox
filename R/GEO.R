@@ -116,10 +116,15 @@ gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip
 #' @param GSE GSE identifier of the dataset
 #' @param file destination file
 #' @export
-softDown = function(GSE,file){
+softDown = function(GSE,file, overwrite=FALSE){
+    if(file.exists(file) & !overwrite){
+        print('this file already exists. not overwriting')
+        return(FALSE)
+    }
     download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/",
                   gsub('(((?<=GSE)([0-9]|[0-9][0-9]|[0-9][0-9][0-9]))|((?<=GSE.)[0-9][0-9][0-9])|((?<=GSE..)[0-9][0-9][0-9]))$','nnn',GSE,perl = T),'/',
                   GSE,'/soft/',GSE,'_family.soft.gz'),destfile = file)
+    return(TRUE)
 }
 
 
