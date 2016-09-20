@@ -10,10 +10,10 @@ Depends:
     tools
 Imports:
     assertthat,
-    data.table,
-    oligoClasses
+    data.table
 Suggests:
-    testthat
+    testthat,
+    oligoClasses
 Enhances: igraph (>= 0.7.1)
 Date: 2015-06-16
 Author: Ogan Mancarci
