@@ -9,26 +9,26 @@ whichGSE = function(GSM){
 gsmFind = function(GSE, regex=NULL, cores = 1){
     # finds GSMs that match to a regular expression from a GSE (description not GSM ID)
     page = RCurl::getURL(paste0('www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSE))
-    sampleSize = as.numeric(str_extract(page, '(?<=Samples\\ \\().*?(?=\\))'))
+    sampleSize = as.numeric(stringr::str_extract(page, '(?<=Samples\\ \\().*?(?=\\))'))
     # due to the structure of the page if there are more than 500 samples,
     # download the list of gsms. in the list the title isnt present hence the
     # need to look at the pages individually, this can make the function go slow
     if (sampleSize>500){
         page =  RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',GSE,'&targ=self&view=brief&form=text'))
         page = strsplit(page,split = '\n')[[1]]
-        gsms = trimNAs(str_extract(page,"GSM.*?(?=\r)"))
+        gsms = trimNAs(stringr::str_extract(page,"GSM.*?(?=\r)"))
         # only try doing this if regex is provided
         if (!is.null(regex)){
             if (cores==1){
                 gsms = gsms[
                     sapply(1:len(gsms),function(i){
                         page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsms[i]))
-                        grepl(regex,str_extract(str_extract(page,'Title.*?\\n.*?\n'),'(?<=\\>).*?(?=\\<)'))
+                        grepl(regex,stringr::str_extract(stringr::str_extract(page,'Title.*?\\n.*?\n'),'(?<=\\>).*?(?=\\<)'))
                     })]
             } else {
                 gsms = gsms[unlist(mclapply(1:len(gsms),function(i){
                     page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsms[i]))
-                    grepl(regex,str_extract(str_extract(page,'Title.*?\\n.*?\n'),'(?<=\\>).*?(?=\\<)'))
+                    grepl(regex,stringr::str_extract(stringr::str_extract(page,'Title.*?\\n.*?\n'),'(?<=\\>).*?(?=\\<)'))
                 }, mc.cores = cores))]
             }
         }
@@ -45,7 +45,7 @@ gsmFind = function(GSE, regex=NULL, cores = 1){
 #' @export
 gsmSize = function(gsm, warnings = T){
     page = RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
-    fileURL = fileURL = URLdecode(str_extract(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
+    fileURL = fileURL = URLdecode(stringr::str_extract(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
     
     if (len(fileURL) == 0){
         if (warnings){
@@ -70,7 +70,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
         return(invisible(F))
     }
     page = RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
-    urls = unlist(str_extract_all(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
+    urls = unlist(stringr::str_extract_all(page,'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM.*?(c|C)(e|E)(l|L)%2Egz'))
     if (len(urls)>1){
         if (warnings){
             warning(paste(gsm,"has mutliple files"))
@@ -244,7 +244,7 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
 #' @export
 gseGet = function(gsm){
     page = getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
-    out = unlist(str_extract_all(page,'GSE[0-9]*')) %>% unique
+    out = unlist(stringr::str_extract_all(page,'GSE[0-9]*')) %>% unique
     if(length(out)==0){
         return('')
     }
@@ -266,4 +266,12 @@ downloadGSE = function(GSE,celDir,metaDir){
         oligoClasses::celfileDate(paste0(celDir,'/',platform,'/',x, '.cel'))
     })
     return(invisible(softData))
+}
+
+#' Get title of a geo ID
+#' @export
+geoTitle = function(geo){
+    page = RCurl::getURL(paste0('http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',geo))
+    title = stringr::str_extract(stringr::str_extract(page,'Title.*?\\n.*?\n'),'(?<=\\>).*?(?=\\<)')
+    return(title)
 }
