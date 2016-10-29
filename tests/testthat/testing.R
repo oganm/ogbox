@@ -21,6 +21,8 @@ test_that('toColor custom', {
     col = toColor(a, palette)
     check  = list(cols = c( "a", "b", "c","a"),
                   palette = c(a="a",b= "b", c="c"))
+    expect_that(col$palette,
+                equals(check$palette))
 })
 
 test_that('list seperator', {

@@ -302,28 +302,16 @@ listStrW = function(daArray){
 
 # turn every member of daList to a color from the palette
 #' @export
-toColor = function(daList, palette = NULL,NAcolor = 'white'){
-    daList = as.factor(daList)
-    uniq = unique(daList) %>% trimNAs
-    if (is.null(palette[1])){
-        palette = rainbow(length(uniq))
+toColor = function(vector, palette = NULL,NAcolor = 'white'){
+    if(!is.null(palette) & !is.null(names(palette))){
+        assertthat::assert_that(all(names(palette) %in% vector))
+        assertthat::assert_that(all(vector %in%names(palette)))
     }
-    if (is.null(names(palette))){
-        names(palette) = uniq
+    if(is.null(names(palette)) & !is.null(palette)){
+        names(palette) = unique(vector)
     }
-    cols = vector(length = length(daList))
-    #to match palette names to uniq names so that custom naming is possible
-    palette = trimNAs(palette[match(uniq,names(palette))])
-    names(palette) = uniq
-    
-    
-    for (i in 1:length(uniq)){
-        cols[daList == uniq[i]]= palette[i]
-    }
-    
-    cols[is.na(daList)] = NAcolor
-    
-    out = list(cols = cols , palette = palette)
+    out = replaceElement(vector,palette,NAcolor)
+    names(out) = c('cols','palette')
     return(out)
 }
 
@@ -334,31 +322,28 @@ toColor = function(daList, palette = NULL,NAcolor = 'white'){
 #' @return A list with $newVector and $dictionary.
 #' @export
 replaceElement = function(vector, dictionary = NULL,NAreplace = NA){
-    daList = vector
-    palette = dictionary
-    NAcolor = NAreplace
-    
-    daList = as.factor(daList)
-    uniq = unique(daList) %>% trimNAs
-    if (is.null(palette[1])){
-        palette = rainbow(length(uniq))
+
+    #vector = as.factor(vector)
+    uniq = unique(vector) %>% trimNAs
+    if (is.null(dictionary[1])){
+        dictionary = rainbow(length(uniq))
     }
-    if (is.null(names(palette))){
-        names(palette) = uniq
+    if (is.null(names(dictionary))){
+        names(dictionary) = uniq
     }
-    cols = vector(length = length(daList))
+    cols = vector(length = length(vector))
     #to match palette names to uniq names so that custom naming is possible
-    palette = trimNAs(palette[match(uniq,names(palette))])
-    names(palette) = uniq
+    dictionary = trimNAs(dictionary[match(uniq,names(dictionary))])
+    #names(dictionary) = uniq
     
     
-    for (i in 1:length(uniq)){
-        cols[daList == uniq[i]]= palette[i]
+    for (i in 1:length(dictionary)){
+        vector[vector == names(dictionary)[i]]= dictionary[i]
     }
     
-    cols[is.na(daList)] = NAcolor
+    vector[is.na(vector)] = NAreplace
     
-    out = list(newVector = cols , dictionary = palette)
+    out = list(newVector = vector , dictionary = dictionary)
     return(out)
 }
 
