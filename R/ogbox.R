@@ -679,3 +679,23 @@ nametree <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = "")
                 paste0(prefix, "   ")
             )
         }
+
+#' @export
+frame2tree = function(design, levels){
+  out = vector(mode = 'list', length = len(unique(design[levels[1]]) %>% trimNAs))
+  
+  out = lapply(out,function(x){list()})
+  names(out) = unique(design[levels[1]]) %>% trimNAs %>% sort
+  
+  if ((len(levels)>1) & (nrow(design)>0)){
+    out = lapply(names(out),function(x){
+      frame2tree(design[design[,levels[1]] %in% x,], levels[-1] )
+    })
+    names(out) = unique(design[levels[1]]) %>% trimNAs %>% sort
+    for(i in 1:len(out)){
+      if (len(out[[i]])==1 && names(out[[i]]) == names(out[i])){
+        out[[i]] = list()}
+    }
+  }
+  return(out)
+}
