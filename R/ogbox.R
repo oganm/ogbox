@@ -466,7 +466,7 @@ scaleIntervals = function(max,min,maxOut,minOut){
         return(teval(paste0("function(x){(x - ",b,")/",a,'}')))
     }else{
         mean = (maxOut - minOut)/2
-        return(teval(paste0("function(x){rep(",mean,",length(x))}")))
+        return(teval(paste0("function(x){out = rep(",mean,",length(x));names(out)=names(x);return(out)}")))
     }
 }
 
