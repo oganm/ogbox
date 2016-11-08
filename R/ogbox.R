@@ -462,7 +462,12 @@ scaleToInt = function(x, max,min){
 scaleIntervals = function(max,min,maxOut,minOut){
     a = (max - min)/(maxOut - minOut)
     b = max - maxOut*a
-    hede = teval(paste0("function(x){(x - ",b,")/",a,'}'))
+    if(a != 0){
+        return(teval(paste0("function(x){(x - ",b,")/",a,'}')))
+    }else{
+        mean = (maxOut - minOut)/2
+        return(teval(paste0("function(x){rep(",mean,",length(x))}")))
+    }
 }
 
 # creates a link to the rendered form of a latex formula
