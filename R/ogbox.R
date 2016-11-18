@@ -304,7 +304,6 @@ listStrW = function(daArray){
 #' @export
 toColor = function(vector, palette = NULL,NAcolor = 'white'){
     if(!is.null(palette) & !is.null(names(palette))){
-        assertthat::assert_that(all(names(palette) %in% vector))
         assertthat::assert_that(all(vector %in%names(palette)))
     }
     if(is.null(names(palette)) & !is.null(palette)){
