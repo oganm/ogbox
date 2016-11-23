@@ -684,6 +684,7 @@ nametree <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = "")
             )
         }
 
+#' @export
 nametreeVector <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = ""){
     if( is.list(X) ){
         out = vector(mode='list',length = length(X))
