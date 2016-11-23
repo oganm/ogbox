@@ -684,6 +684,25 @@ nametree <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = "")
             )
         }
 
+nametreeVector <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = ""){
+    if( is.list(X) ){
+        out = vector(mode='list',length = length(X))
+        for( i in seq_along(X) ) { 
+            out[[i]] = paste0( if(i<length(X)) prefix1 else prefix3, names(X)[i], "\n", sep="" )
+            prefix <- if( i<length(X) ) prefix2 else prefix4
+            out2 = nametreeVector(
+                X[[i]], 
+                paste0(prefix, "├──"),
+                paste0(prefix, "│  "),
+                paste0(prefix, "└──"),
+                paste0(prefix, "   ")
+            )
+            out[[i]] = c(out[[i]],out2)
+        }
+    }
+    return(unlist(out))
+}
+
 #' @export
 frame2tree = function(design, levels){
   out = vector(mode = 'list', length = len(unique(design[levels[1]]) %>% trimNAs))
