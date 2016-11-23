@@ -697,7 +697,7 @@ nametreeVector <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 
                 paste0(prefix, "├──"),
                 paste0(prefix, "│  "),
                 paste0(prefix, "└──"),
-                paste0(prefix, "   ")
+                paste0(prefix, "\U00A0\U00A0\U00A0\U00A0")
             )
             out[[i]] = c(out[[i]],out2)
         }
