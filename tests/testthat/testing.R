@@ -33,21 +33,6 @@ test_that('list seperator', {
                 equals(c(2,3,4)))
 })
 
-test_that('gsmDown', {
-    expect_that(a<-gsmDown('GSM1026376','hede'),gives_warning('has mutliple files'))
-    expect_that(a,equals(F))
-    expect_that(a<-gsmDown('GSM1539691','hede'),gives_warning("doesn't have a file attached"))
-    expect_that(a,equals(F))
-})
-
-test_that('gsmFind with regex merge',{
-    expect_that(gsmFind('GSE29949','Brain mic'), equals(c( "GSM741192", "GSM741193", "GSM741194")))
-    expect_equal(gsmFind('GSE69340',regex = regexMerge(c('OLIG2','NEK7'))),
-                 c("GSM1698231", "GSM1698232", "GSM1698233", "GSM1698237", "GSM1698238" ,"GSM1698239"))
-    expect_equal(gsmFind('GSE42021', regex = regexMerge(c('04_(+) 24hi', '22_(-) 24hi'), exact = T)),
-                 c("GSM1030712", "GSM1030715"))
-})
-
 test_that('sourceGithub',{
     sourceGithub(oganm,toSource,homologene)
     expect_that(typeof(mouse2human),equals('closure'))
@@ -116,7 +101,9 @@ test_that('mergeList', {
 
 test_that('scale',{
     expect_equal(scale01(c(1,2,3,4,5)),
-                 seq(0,1,0.25)) 
+                 seq(0,1,0.25))
+    expect_equal(scale01(c(0,0,0)),
+                 c(0.5,0.5,0.5))
 })
 
 test_that('signifMarker', {
@@ -125,7 +112,10 @@ test_that('signifMarker', {
 })
 
 
-
+test_that('loadURL', {
+    loadURL('https://github.com/oganm/ogbox/blob/master/tests/testthat/testData.Rda?raw=true')
+    expect_equal(hede, c(1,2,3))
+})
 
 # test_that('insist', {
 #     insist(gapminder,repos = 'http://cran.us.r-project.org')

@@ -126,39 +126,6 @@ getParent = function(step = 1){
     return(wd)
 }
 
-#merges lists by their common names. adds non common ones.
-#' @export
-mergeList = function(aList,bList,forceUnique=T){
-    allNames = unique(c(names(aList),names(bList)))
-    outList = vector(mode= "list",length = length(allNames))
-    names(outList) = allNames
-    outList = sapply(allNames,function(x){
-        out=(c(aList[[x]],bList[[x]]))
-        if (forceUnique){
-            out = unique(out)
-        }
-        return(out)
-    })
-    return(outList)
-}
-
-# seeks for a given object in a single layered list
-#' @export
-findInList = function(object, aList){
-    indices = vector()
-    for (i in 1:length(aList)){
-        if (object %in% aList[[i]]){
-            indices = c(indices, i)
-        }
-    }
-    return(indices)
-}
-
-# counts total no of elements in a single layered list
-#' @export
-listCount = function(aList){
-    length(unlist(aList))
-}
 
 # removes NAs in a vector by shortening it
 #' @export
@@ -172,17 +139,6 @@ trimElement = function (aVector,e){
     return(aVector[!(aVector %in% e)])
 }
 
-# finds total depth of a list which is assumed to be symmetrical
-#' @export
-listDepth = function(deList){
-    step = 1
-    while (T){
-        if (typeof(eval( parse(text = paste(c("deList",rep('[[1]]',step)),sep='',collapse = '')))) != "list"){
-            return(step)
-        }
-        step = step +1
-    }
-}
 
 #source
 #http://www.r-bloggers.com/a-quick-way-to-do-row-repeat-and-col-repeat-rep-row-rep-col/
@@ -235,57 +191,6 @@ insist = function(name,...){
 #' @export
 teval = function(daString,...){
     eval(parse(text=daString),...)
-}
-
-
-# for navigating through list of lists with teval
-#' @export
-listParse = function (daList,daArray){
-    out = listStr(daArray)
-    teval(paste0('daList' , out))
-}
-
-#returns the final step as a list
-#' @export
-listParseW = function (daList,daArray){
-    out = listStrW(daArray)
-    teval(paste0('daList' , out))
-}
-
-# sets the list element
-#' @export
-listSet = function(daList,daArray ,something){
-    name = substitute(daList)
-    name = as.character(name)
-    out = listStr(daArray)
-    teval(paste0(name, out, '<<-something'))
-}
-
-# > listStr(c(1,2,3))
-# [1] "[[1]][[2]][[3]]"
-#' @export
-listStr = function(daArray){
-    out = ''
-    for (i in daArray[1 : length(daArray)]){
-        
-        out = paste0(out, '[[',  i, ']]')
-    }
-    return(out)
-}
-
-# the last element is returned with a singe "["
-# > listStrW(c(1,2,3))
-# [1] "[[1]][[2]][3]"
-#' @export
-listStrW = function(daArray){
-    out = ''
-    if (length(daArray) > 1){
-        for (i in daArray[1 : (length(daArray) - 1)]){
-            out = paste0(out,'[[',i, ']]')
-        }
-    }
-    out = paste0(out,'[', daArray[length(daArray)],']')
-    return(out)
 }
 
 
@@ -597,7 +502,7 @@ mycircle <- function(coords, v=NULL, params) {
 geom_ogboxvio = function(data=NULL, mapping = NULL){
    list(geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data, mapping = mapping),
         geom_boxplot(width=0.1,fill = 'lightblue',data=data, mapping = mapping), 
-        theme_bw(),
+        theme_cowplot(),
         theme(axis.text.x  = element_text(size=25),
               axis.title.y = element_text(vjust=0.5, size=25),
               axis.title.x = element_text(vjust=0.5, size=0) ,
@@ -667,63 +572,7 @@ col2rn = function(frame){
 #     return(out)
 # }
 
-# http://stackoverflow.com/questions/18122548/display-names-of-column-of-recursive-list-as-tree
-# displays a list as a tree by their names
-#' @export
-nametree <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = "")
-    if( is.list(X) )
-        for( i in seq_along(X) ) { 
-            cat( if(i<length(X)) prefix1 else prefix3, names(X)[i], "\n", sep="" )
-            prefix <- if( i<length(X) ) prefix2 else prefix4
-            nametree(
-                X[[i]], 
-                paste0(prefix, "├──"),
-                paste0(prefix, "│  "),
-                paste0(prefix, "└──"),
-                paste0(prefix, "   ")
-            )
-        }
 
-#' @export
-nametreeVector <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = ""){
-    out = NULL
-    if( is.list(X) ){
-        out = vector(mode='list',length = length(X))
-        for( i in seq_along(X) ) { 
-            out[[i]] = paste0( if(i<length(X)) prefix1 else prefix3, names(X)[i], "\n", sep="" )
-            prefix <- if( i<length(X) ) prefix2 else prefix4
-            out2 = nametreeVector(
-                X[[i]], 
-                paste0(prefix, "├──"),
-                paste0(prefix, "│  "),
-                paste0(prefix, "└──"),
-                paste0(prefix, "\U00A0\U00A0\U00A0\U00A0")
-            )
-            out[[i]] = c(out[[i]],out2)
-        }
-    }
-    return(unlist(out))
-}
-
-#' @export
-frame2tree = function(design, levels){
-  out = vector(mode = 'list', length = len(unique(design[levels[1]]) %>% trimNAs))
-  
-  out = lapply(out,function(x){list()})
-  names(out) = unique(design[levels[1]]) %>% trimNAs %>% sort
-  
-  if ((len(levels)>1) & (nrow(design)>0)){
-    out = lapply(names(out),function(x){
-      frame2tree(design[design[,levels[1]] %in% x,], levels[-1] )
-    })
-    names(out) = unique(design[levels[1]]) %>% trimNAs %>% sort
-    for(i in 1:len(out)){
-      if (len(out[[i]])==1 && names(out[[i]]) == names(out[i])){
-        out[[i]] = list()}
-    }
-  }
-  return(out)
-}
 
 #' #' @export
 #' "+" = function(x,y) {
@@ -735,6 +584,9 @@ frame2tree = function(design, levels){
 #' }
 
 
+#' Load an Rdata file from a URL
+#' @param url url of the Rdata file
+#' @return A character vector of the names of objects created, invisibly.
 #' @export
 loadURL = function(url){
     file = tempfile()
