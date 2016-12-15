@@ -233,7 +233,7 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
             return(dat)
         })
         names(expressionData) = rownames(samples)
-        return(list(samples, expressionData))
+        return(list(meta = samples, exp = expressionData))
     }
     return(samples)
 }
