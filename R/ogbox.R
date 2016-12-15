@@ -724,3 +724,21 @@ frame2tree = function(design, levels){
   }
   return(out)
 }
+
+#' #' @export
+#' "+" = function(x,y) {
+#'     if(is.character(x) || is.character(y)) {
+#'         return(paste(x , y, sep=""))
+#'     } else {
+#'         .Primitive("+")(x,y)
+#'     }
+#' }
+
+
+#' @export
+loadURL = function(url){
+    file = tempfile()
+    download.file(url,destfile = file)
+    y <- load(file)
+}
+
