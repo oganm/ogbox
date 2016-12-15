@@ -1,4 +1,7 @@
-# returns a vector
+#' Gets GSE id of a GSM
+#' @description Gets GSE id of a GSM.
+#' @param gsm GSM identifier of the sample
+#' @return A character vectir of GSE identifiers
 #' @export
 whichGSE = function(GSM){
     page = RCurl::getURL(paste0('https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=', GSM))
@@ -236,19 +239,6 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
         return(list(meta = samples, exp = expressionData))
     }
     return(samples)
-}
-
-#' Gets GSE id of a GSM
-#' @description Gets GSE id of a GSM.
-#' @param gsm GSM identifier of the sample
-#' @export
-gseGet = function(gsm){
-    page = getURL(paste0('https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsm))
-    out = unlist(stringr::str_extract_all(page,'GSE[0-9]*')) %>% unique
-    if(length(out)==0){
-        return('')
-    }
-    return(out)
 }
 
 #' Downloads an entire dataset from GEO
