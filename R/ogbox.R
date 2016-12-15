@@ -739,6 +739,6 @@ frame2tree = function(design, levels){
 loadURL = function(url){
     file = tempfile()
     download.file(url,destfile = file)
-    y <- load(file)
+    y <- load(file, envir = parent.env(parent.frame()))
 }
 
