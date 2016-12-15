@@ -65,7 +65,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     dir.create(dirname(outfile), showWarnings=F,recursive=T)
     if ((file.exists(outfile) & !overwrite)|
         (file.exists(paste0(outfile,'.gz')) & !overwrite & unzip==FALSE)){
-        print('you already have it bro. i aint gonna get it again')
+        warning('you already have it bro. i aint gonna get it again')
         print(basename(outfile))
         return(invisible(F))
     }
@@ -118,7 +118,7 @@ gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip
 #' @export
 softDown = function(GSE,file, overwrite=FALSE){
     if((file.exists(file) | file.exists(gsub('[.]gz', '', file))) & !overwrite){
-        print('this file already exists. not overwriting')
+        warning('this file already exists. not overwriting')
         return(FALSE)
     }
     download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/",
