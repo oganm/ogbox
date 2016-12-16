@@ -589,8 +589,9 @@ col2rn = function(frame){
 #' @return A character vector of the names of objects created, invisibly.
 #' @export
 loadURL = function(url){
+    frame = parent.frame()
     file = tempfile()
     download.file(url,destfile = file)
-    y <- load(file, envir = parent.env(parent.frame()))
+    y <- load(file, envir = frame)
 }
 
