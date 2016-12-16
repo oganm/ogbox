@@ -98,7 +98,7 @@ sourceGithub = function(user, repo, script){
     if (!grepl('[.](r|R)',script)){
         script = paste0(script,'.R')
     }
-    text = getURL(paste0(
+    text = RCurl::getURL(paste0(
         "https://raw.githubusercontent.com/",user,'/',repo,'/master/',script),
         ssl.verifypeer=FALSE) 
     source(textConnection(text))
@@ -298,10 +298,10 @@ intersectMult = function (..., list = NULL){
         assertthat::assert_that(class(list) == 'list')
         targets = list
     }
-    out = intersect(targets[[1]],targets[[2]])
+    out = dplyr::intersect(targets[[1]],targets[[2]])
     if (length(targets)>=3){
         for (i in 3:(length(targets))){
-            out = intersect(out, targets[[i]])
+            out = dplyr::intersect(out, targets[[i]])
         }
     }
     return(out)
@@ -500,14 +500,14 @@ mycircle <- function(coords, v=NULL, params) {
 
 #' @export
 geom_ogboxvio = function(data=NULL, mapping = NULL){
-   list(geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data, mapping = mapping),
-        geom_boxplot(width=0.1,fill = 'lightblue',data=data, mapping = mapping), 
-        theme_cowplot(),
-        theme(axis.text.x  = element_text(size=25),
-              axis.title.y = element_text(vjust=0.5, size=25),
-              axis.title.x = element_text(vjust=0.5, size=0) ,
-              title = element_text(vjust=0.5, size=25),
-              axis.text.y = element_text(size = 13)))
+   list(ggplot2::geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data, mapping = mapping),
+        ggplot2::geom_boxplot(width=0.1,fill = 'lightblue',data=data, mapping = mapping), 
+        cowplot::theme_cowplot(),
+        theme(axis.text.x  = ggplot2::element_text(size=25),
+              axis.title.y = ggplot2::element_text(vjust=0.5, size=25),
+              axis.title.x = ggplot2::element_text(vjust=0.5, size=0) ,
+              title = ggplot2::element_text(vjust=0.5, size=25),
+              axis.text.y = ggplot2::element_text(size = 13)))
 }
 
 #' @export
@@ -517,8 +517,8 @@ geom_signif = function(pValues,maxY, size = 7){
     }
     markers = signifMarker(pValues)
     return(
-        lapply(1:len(pValues), function(i){
-            annotate('text',x=i,y=maxY[i]+max(maxY)/10,label = markers[i],size =size )
+        lapply(1:length(pValues), function(i){
+            ggplot2::annotate('text',x=i,y=maxY[i]+max(maxY)/10,label = markers[i],size =size )
             })
     )
 }

@@ -1,7 +1,7 @@
 context('general error check')
 test_that("trimNAs can't trim NAs", {
     a = c(1,2,NA)
-    expect_that(ogbox::trimNAs(a),equals(c(1,2)))
+    expect_that(ogbox::trimNAs(a),testthat::equals(c(1,2)))
 })
 
 
@@ -12,7 +12,7 @@ test_that("toColor defaults", {
     check  = list(cols = c( "#FF0000FF", "#00FF00FF", "#0000FFFF","#FF0000FF"),
                   palette = c(a="#FF0000FF",b= "#00FF00FF", c="#0000FFFF"))
     expect_that(col$palette,
-                equals(check$palette))
+                testthat::equals(check$palette))
 })
 
 test_that('toColor custom', {
@@ -22,46 +22,46 @@ test_that('toColor custom', {
     check  = list(cols = c( "a", "b", "c","a"),
                   palette = c(a="a",b= "b", c="c"))
     expect_that(col$palette,
-                equals(check$palette))
+                testthat::equals(check$palette))
 })
 
 test_that('list seperator', {
     list[a,b] = list(a=c(1,2,3),b=c(2,3,4)) 
     expect_that(a,
-                equals(c(1,2,3)))
+                testthat::equals(c(1,2,3)))
     expect_that(b,
-                equals(c(2,3,4)))
+                testthat::equals(c(2,3,4)))
 })
 
 test_that('sourceGithub',{
     sourceGithub(oganm,toSource,homologene)
-    expect_that(typeof(mouse2human),equals('closure'))
+    expect_that(typeof(mouse2human),testthat::equals('closure'))
 })
 
 
 test_that('intersectMult',{
     expect_that(intersectMult(list = list(a=c(1,3,4),b=c(3,4,5), c = c(3,4,1))),
-                equals(c(3,4)))
+                testthat::equals(c(3,4)))
     expect_that(intersectMult(c(1,3,4), c(3,4,5), c = c(3,4,1)),
-                equals(c(3,4)))
+                testthat::equals(c(3,4)))
 })
 
 test_that('rn2col-col2rn',{
     df = data.frame(a=c('a','b','c'),b=c(1,2,3))
-    expect_that(rownames(df2<-col2rn(df)) , equals(c('a','b','c')))
+    expect_that(rownames(df2<-col2rn(df)) , testthat::equals(c('a','b','c')))
     expect_that(rn2col(df2) ,
-                equals(data.frame(rownames=c('a','b','c'),b=c(1,2,3),
-                                  stringsAsFactors=F,
-                                  row.names= c('a','b','c'))))
+                testthat::equals(data.frame(rownames=c('a','b','c'),b=c(1,2,3),
+                                            stringsAsFactors=F,
+                                            row.names= c('a','b','c'))))
 })
 
 test_that('sepExpr fails to separate data frames',{
     df = data.frame(a = c('asd','gfa','sad'), b = c('qwe', 'ewq', 'rew') , c = c(1.1,2.2,3.3), d = c(2.2,3.3,4.4))
     seperated = sepExpr(df)
     expect_that(seperated[[1]],
-                equals(data.frame(a = c('asd','gfa','sad'), b = c('qwe', 'ewq', 'rew'))))
+                testthat::equals(data.frame(a = c('asd','gfa','sad'), b = c('qwe', 'ewq', 'rew'))))
     expect_that(seperated[[2]],
-                equals(data.frame(c = c(1.1,2.2,3.3), d = c(2.2,3.3,4.4))))
+                testthat::equals(data.frame(c = c(1.1,2.2,3.3), d = c(2.2,3.3,4.4))))
 })
 
 test_that('purge fails do delete',{
@@ -74,7 +74,7 @@ test_that('purge fails do delete',{
 test_that('gsubMult',{
     str = 'asdfg'
     expect_that(gsubMult(c('a','s'),c('m','n'),str),
-                equals('mndfg'))
+                testthat::equals('mndfg'))
 })
 
 test_that('trimHeadComment',{

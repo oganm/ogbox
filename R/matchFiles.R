@@ -6,8 +6,8 @@ require(tools)
 matchFiles = function(dir1, dir2, fileOut=NA, basename=T, justMatches=F, removeSameName=F){
     files1 = list.files(dir1, full.names=T)
     files2 = list.files(dir2, full.names=T)
-    sums1 = md5sum(files1)
-    sums2 = md5sum(files2)
+    sums1 = tools::md5sum(files1)
+    sums2 = tools::md5sum(files2)
     
     sums2[match(sums1,sums2)]
     
