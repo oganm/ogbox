@@ -298,10 +298,10 @@ intersectMult = function (..., list = NULL){
         assertthat::assert_that(class(list) == 'list')
         targets = list
     }
-    out = dplyr::intersect(targets[[1]],targets[[2]])
+    out = intersect(targets[[1]],targets[[2]])
     if (length(targets)>=3){
         for (i in 3:(length(targets))){
-            out = dplyr::intersect(out, targets[[i]])
+            out = intersect(out, targets[[i]])
         }
     }
     return(out)

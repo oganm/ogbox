@@ -4,7 +4,6 @@ Title: Stuff and things
 Version: 1.0
 Imports:
     assertthat,
-    dplyr,
     data.table,
     RCurl (>= 1.95),
     stringr (>= 1.0.0),
