@@ -33,10 +33,6 @@ test_that('list seperator', {
                 testthat::equals(c(2,3,4)))
 })
 
-test_that('sourceGithub',{
-    sourceGithub(oganm,toSource,homologene)
-    expect_that(typeof(mouse2human),testthat::equals('closure'))
-})
 
 
 test_that('intersectMult',{

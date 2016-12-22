@@ -53,8 +53,7 @@ list <- structure(NA,class="result")
 
 
 
-#' Delete everything
-#' @description Clear global environment
+#' Clear parent environment
 #' @export
 purge =   function() {
     rm(list = ls(parent.frame(), all.names = T), envir = parent.frame())
@@ -78,31 +77,6 @@ checkLines = function(file,lines,fun = readLines, ...){
     return(outAll)
 }
 
-#' Source R files from github
-#' @description sources R files from github
-#' @param user username
-#' @param repo repository name
-#' @param script name of the script
-#' @details Does not require \code{user}, \code{repo} or \code{script} to be 
-#' strings. Defaults to capitalized .R if extension not provided
-#' @export
-sourceGithub = function(user, repo, script){
-    user = substitute(user)
-    user = as.character(user)
-    repo = substitute(repo)
-    repo = as.character(repo)
-    script = substitute(script)
-    script = as.character(script)
-    
-    require(RCurl)
-    if (!grepl('[.](r|R)',script)){
-        script = paste0(script,'.R')
-    }
-    text = RCurl::getURL(paste0(
-        "https://raw.githubusercontent.com/",user,'/',repo,'/master/',script),
-        ssl.verifypeer=FALSE) 
-    source(textConnection(text))
-}
 
 # multiple iterations of gsub in a single line. it replaces every element in patterns
 # with matching elements at replacements. Starts from the first
@@ -582,16 +556,4 @@ col2rn = function(frame){
 #'         .Primitive("+")(x,y)
 #'     }
 #' }
-
-
-#' Load an Rdata file from a URL
-#' @param url url of the Rdata file
-#' @return A character vector of the names of objects created, invisibly.
-#' @export
-loadURL = function(url){
-    frame = parent.frame()
-    file = tempfile()
-    download.file(url,destfile = file)
-    y <- load(file, envir = frame)
-}
 
