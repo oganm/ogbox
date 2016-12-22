@@ -10,7 +10,9 @@ Imports:
     parallel,
     ggplot2,
     tools,
-    cowplot
+    cowplot,
+    magrittr,
+    dplyr
 Suggests:
     testthat
 Enhances: 

@@ -13,7 +13,7 @@ explicit = function(fileIn,fileOut=fileIn,
     file = readLines(fileIn)
     
     parseData = file %>% paste(collapse='\n') %>% parse(text = .) %>% getParseData %>% 
-        filter(token %in% c('SYMBOL_PACKAGE','NS_GET','SYMBOL_FUNCTION_CALL'))
+        dplyr::filter(token %in% c('SYMBOL_PACKAGE','NS_GET','SYMBOL_FUNCTION_CALL'))
     
     # filter the functions that are already explicit
     alreadyExplicitPackage = parseData$token %in% 'SYMBOL_PACKAGE' %>% which 
@@ -35,7 +35,7 @@ explicit = function(fileIn,fileOut=fileIn,
             }
         }) %>% unlist
     parseData %<>%
-        filter((!package %in% c(ignore, 'nonExist', 'NULL'))&(!grepl('environment:',package)))
+        dplyr::filter((!package %in% c(ignore, 'nonExist', 'NULL'))&(!grepl('environment:',package)))
     
     out = file
     for (i in 1:nrow(parseData)){
