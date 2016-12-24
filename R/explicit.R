@@ -12,7 +12,7 @@ explicit = function(fileIn,fileOut=fileIn,
     readLines(fileIn) %>% paste(collapse='\n')
     file = readLines(fileIn)
     
-    parseData = file %>% paste(collapse='\n') %>% parse(text = .) %>% getParseData %>% 
+    parseData = file %>% paste(collapse='\n') %>% parse(text = .,keep.source = TRUE) %>% getParseData %>% 
         dplyr::filter(token %in% c('SYMBOL_PACKAGE','NS_GET','SYMBOL_FUNCTION_CALL'))
     
     # filter the functions that are already explicit
