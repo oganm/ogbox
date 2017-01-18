@@ -557,3 +557,10 @@ col2rn = function(frame){
 #'     }
 #' }
 
+
+#' @export
+`%tin%` = function(x,y){
+    x = substitute(x)
+    x = as.character(x)
+    x %in% y
+}
