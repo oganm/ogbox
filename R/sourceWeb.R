@@ -1,18 +1,33 @@
 #' Source R files from github
 #' @description sources R files from github
-#' @param githubPath character. username/repository/pathToFile
+#' @param githubPath character. username/repository/pathToFile. Lines to excecute can be provided with github's #L1-L5 syntax. The function doesn't work with files that have ? # [ or ] in their addresses.
+#' @param line numbers to excecute. Providing lines in both here and with githubPath will result in an error.
 #' @param branch which branch to source from
 #' @seealso \code{\link{loadURL}}, \code{\link{sourceGithub}}
 #' @export
-sourceGithub = function(githubPath, branch = 'master'){
+sourceGithub = function(githubPath,lines = NULL, branch = 'master'){
     path = strsplit(githubPath,'/')[[1]]
     user = path[1]
     repo = path[2]
     script = paste(path[3:length(path)], collapse = '/')
+    pathLines = script %>% {strsplit(.,"#")[[1]][2]}
+    # if lines detected, split the file name
+    if(!is.na(pathLines)){
+        script = script %>% {strsplit(.,"#")[[1]][1]}
+    }
+    assertthat::assert_that(!(!is.null(lines) & !is.na(pathLines)))
+    text = RCurl::getURL(URLencode(paste0(
+        "https://raw.githubusercontent.com/",user,'/',repo,'/master/',script)),
+        ssl.verifypeer=FALSE)
+    if (!is.na(pathLines)){
+        lines = pathLines %>% stringr::str_extract_all("[0-9]+") %>% {.[[1]]}
+        lines = seq(lines[1] %>% as.integer,lines[2] %>% as.integer, by = 1)
+    }
+    if(!is.null(lines)){
+        text = text %>% strsplit(split = '\n') %>% {.[[1]]}
+        text = text[lines] %>% paste(collapse='\n')
+    }
     
-    text = RCurl::getURL(paste0(
-        "https://raw.githubusercontent.com/",user,'/',repo,'/master/',script),
-        ssl.verifypeer=FALSE) 
     source(textConnection(text))
 }
 

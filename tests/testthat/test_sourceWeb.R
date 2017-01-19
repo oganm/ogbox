@@ -1,6 +1,9 @@
 test_that('sourceGithub',{
     sourceGithub('oganm/toSource/homologene.R')
     expect_that(typeof(mouse2human),testthat::equals('closure'))
+    
+    sourceGithub("oganm/neuroExpressoAnalysis/R/regionize.R#L5-L18")
+    testthat::expect_that(typeof(regionHierarchy), testthat::equals('list'))
 })
 
 test_that('loadGithub',{

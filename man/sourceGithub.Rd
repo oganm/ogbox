@@ -4,12 +4,14 @@
 \alias{sourceGithub}
 \title{Source R files from github}
 \usage{
-sourceGithub(githubPath, branch = "master")
+sourceGithub(githubPath, lines = NULL, branch = "master")
 }
 \arguments{
-\item{githubPath}{character. username/repository/pathToFile}
+\item{githubPath}{character. username/repository/pathToFile. Lines to excecute can be provided with github's #L1-L5 syntax. The function doesn't work with files that have ? # [ or ] in their addresses.}
 
 \item{branch}{which branch to source from}
+
+\item{line}{numbers to excecute. Providing lines in both here and with githubPath will result in an error.}
 }
 \description{
 sources R files from github
