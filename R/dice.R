@@ -2,14 +2,22 @@
 roll = function(dice){
     rollingRules = list()
     validTokens = "[dkscrf+\\-!DKSCRF]"
-    dice %<>% tolower
+    dice %<>% tolower  %>% gsub(pattern = '\\s',replacement = '',x = .)
     rollingRules$diceCount = stringr::str_extract(string = dice,pattern =  '^[0-9]+?(?=d)') %>% as.integer()
     otherTokens =  stringr::str_extract_all(string = dice,
                                             pattern =  paste0(validTokens,'.*?((?=',validTokens, ')|$)')) %>% unlist 
     
 
-    rollingRules$diceSide = stringr::str_extract(string = otherTokens[1],pattern =  '(?<=d)[0-9F]*')
-    if(is.na(rollingRules$diceSide)){
+    rollingRules$diceSide = stringr::str_extract(string = otherTokens[1],pattern =  '(?<=d)[0-9f]*')
+    if( rollingRules$diceSide == '' &  otherTokens[2] == 'f'){
+        rollingRules$diceSide = 3
+        rollingRules$fate = TRUE
+        otherTokens = otherTokens[-1]
+    } else{
+        rollingRules$fate = FALSE
+    }
+    
+    if(rollingRules$diceSide == ''){
         stop('First parameter has to be dice side (eg. "1d6")')
     }
     
@@ -53,29 +61,83 @@ roll = function(dice){
     
     
     # reroll ---------------------
+    rerollDetermine = function(x){
+        number=  stringr::str_extract(x,'[0-9]*$')
+        if(grepl('<|>',x) & number ==''){
+            stop('Rerolling with "<" or ">" identifiers requires an integer')
+        } else if(grepl('<',x) & grepl('>',x)){
+            stop('Single rerolling clause can only have one of "<" or ">"')
+        } else if(!grepl('<|>',x) & number ==''){
+            reroll = 1
+            if (rollingRules$fate){
+                reroll = -1
+            }
+        } else if(!grepl('<|>',x) & number!=''){
+            reroll = number %>% as.integer()
+        } else if (grepl('<',x)){
+            reroll = 1:number
+            if(rollingRules$fate){
+                reroll = -1:number
+            }
+        } else if(grepl('>',x)){
+            reroll = number:rollingRules$diceSide
+            if(rollingRules$fate){
+                reroll = number:1
+            }
+        }
+        return(reroll)
+    }
+    
     rerollRules = otherTokens %>% {.[grep(pattern = 'r(?!o)',.,perl=TRUE)]}
+    
+    reroll = rerollRules %>% lapply(rerollDetermine) %>% unlist
+    dicePossibilities = 1:rollingRules$diceSide
+    if(rollingRules$fate){
+        dicePossibilities = -1:1
+    }
+    if(all(dicePossibilities %in% reroll)){
+        stop('You cannot reroll every possible result')
+    }
+    rollingRules$reroll = reroll
+
+    
     rerollOnceRules = otherTokens %>% {.[grep(pattern = 'ro',.,perl=TRUE)]}
+    rerollOnce = rerollOnceRules %>% lapply(rerollDetermine) %>% unlist
+    if(length(intersect(reroll,rerollOnce))>0){
+        warning('Why reroll something once and forever?')
+    }
+    rollingRules$rerollOnce = rerollOnce
     
     
     # end
     rollParam(rollingRules$diceCount,
               rollingRules$diceSide,
+              rollingRules$fate,
               rollingRules$sort,
               rollingRules$dropDice,
               rollingRules$dropLowest,
-              rollingRules$add)
+              rollingRules$add,
+              rollingRules$reroll,
+              rollingRules$rerollOnce)
     
 }
 
 #' @export
 rollParam = function(diceCount,
-                     diceSide,
-                     sort,
-                     dropDice,
-                     dropLowest,
-                     add){
-    dice = sample(1:diceSide,diceCount,replace=T)
-
+                     diceSide = NULL,
+                     fate = FALSE,
+                     sort = FALSE,
+                     dropDice = NULL,
+                     dropLowest = TRUE,
+                     add = 0,
+                     reroll = c(),
+                     rerollOnce = c()){
+    if(!fate){
+        dice = sample((1:diceSide)[!1:diceSide %in% reroll],diceCount,replace=TRUE)
+    } else{
+        dice = sample((-1:1)[!-1:1 %in% reroll],diceCount,replace=TRUE)
+    }
+    
     if(!is.null(dropDice)){
         drop = dice[order(dice,decreasing = !dropLowest)[1:dropDice] %>% sort]
         dice =  dice[-order(dice,decreasing = !dropLowest)[1:dropDice] %>% sort]
