@@ -1,0 +1,139 @@
+#' @export
+roll = function(dice){
+    rollingRules = list()
+    validTokens = "[dkscrf+\\-!DKSCRF]"
+    dice %<>% tolower
+    rollingRules$diceCount = stringr::str_extract(string = dice,pattern =  '^[0-9]+?(?=d)') %>% as.integer()
+    otherTokens =  stringr::str_extract_all(string = dice,
+                                            pattern =  paste0(validTokens,'.*?((?=',validTokens, ')|$)')) %>% unlist 
+    
+
+    rollingRules$diceSide = stringr::str_extract(string = otherTokens[1],pattern =  '(?<=d)[0-9F]*')
+    if(is.na(rollingRules$diceSide)){
+        stop('First parameter has to be dice side (eg. "1d6")')
+    }
+    
+    otherTokens = otherTokens[-1]
+    
+    # sort the dice if s token is added ------------
+    if('s' %in%  otherTokens){
+        rollingRules$sort = TRUE
+    } else{
+        rollingRules$sort = FALSE
+    }
+    
+    # drop dice if rules are given --------------
+    dropRules = otherTokens %>% {.[grep(pattern = 'd|k',.)]}
+    if(length(dropRules)>1){
+        stop('Conflicting keep options given')
+    } else if(length(dropRules)==0){
+        rollingRules$dropDice = NULL
+        rollingRules$dropLowest = TRUE # default configuration
+    } else{
+        dropNo = stringr::str_extract(string = dropRules,pattern =  '[0-9]+') %>% as.integer
+        if(length(dropNo)==0){
+            stop('Keep options require number of dice to keep or drop (eg. 10d6k3 10d6d3)')
+        }
+        rollingRules$dropDice = switch(substr(dropRules,1,1),
+                                       d =  dropNo,
+                                       k =  rollingRules$diceCount-dropNo)
+        rollingRules$dropLowest = !(grepl(pattern = 'dh',dropRules) | grepl(pattern ='kl', dropRules))
+    }
+    
+    # additon or substraction -----------------
+    aditionRules = otherTokens %>% {.[grep(pattern = '\\+|-',.)]} %>% as.integer()
+    if(any(is.na(aditionRules))){
+        stop('"-" and "+" should always be followed by integers')
+    }
+    if(length(aditionRules)!=0){
+        rollingRules$add = sum(aditionRules)
+    } else{
+        rollingRules$add = 0
+    }
+    
+    
+    # reroll ---------------------
+    rerollRules = otherTokens %>% {.[grep(pattern = 'r(?!o)',.,perl=TRUE)]}
+    rerollOnceRules = otherTokens %>% {.[grep(pattern = 'ro',.,perl=TRUE)]}
+    
+    
+    # end
+    rollParam(rollingRules$diceCount,
+              rollingRules$diceSide,
+              rollingRules$sort,
+              rollingRules$dropDice,
+              rollingRules$dropLowest,
+              rollingRules$add)
+    
+}
+
+#' @export
+rollParam = function(diceCount,
+                     diceSide,
+                     sort,
+                     dropDice,
+                     dropLowest,
+                     add){
+    dice = sample(1:diceSide,diceCount,replace=T)
+
+    if(!is.null(dropDice)){
+        drop = dice[order(dice,decreasing = !dropLowest)[1:dropDice] %>% sort]
+        dice =  dice[-order(dice,decreasing = !dropLowest)[1:dropDice] %>% sort]
+    }
+    
+    if(sort){
+        dice = sort(dice)
+        if(!is.null(dropDice)){
+            drop = sort(drop)
+        }
+    }
+    
+    
+    print(paste('Rolls: [',paste(dice,collapse=' '),']'))
+    if(!is.null(dropDice)){
+        print(paste('Dropped: [',paste(drop,collapse=' '),']'))
+    }
+    
+    result = sum(dice) + add
+    return(result)
+}
+
+# AC: armor class
+# bonus: attack bonus of the group
+# count: number of entities in the group
+# advantage: N = normal. A = with advantage, D = with disadvantage
+# dice = number and type of die
+# damageBonus = bonus to damage
+# default settings are for animating 10 tiny objects but should work with any mob of identical creatures
+#' @export
+animate = function(AC, bonus = 8, count = 10, advantage = 'N', dice = '1d4' , damageBonus = 4){
+    out = sapply(1:count, function(x){
+        out = sample(1:20,size = 1)
+        if (advantage == 'A'){
+            out2 = sample(1:20,size = 1)
+            out = max(out,out2)
+        } else if(advantage == 'D'){
+            out2 = sample(1:20,size = 1)
+            out = min(out,out2)
+        }
+        return(out)
+    })
+    
+    diceCount = as.integer(regmatches(dice,regexpr(".*?(?=d)",dice,perl = T)))
+    diceSide = as.integer(regmatches(dice,regexpr("(?<=d).*",dice,perl = T)))
+    
+    sum(
+        sapply(out,function(x){
+            if(x == 20){
+                return(sum(sample(1:diceSide,diceCount*2,replace=T)) + damageBonus)
+            } else if(x==1){
+                return(0)
+            }else{
+                if ((x + bonus - AC) >= 0){
+                    return(sample(1:diceSide,diceCount,replace=T) + damageBonus)
+                } else {
+                    return(0)
+                }
+            }
+        }))
+}
