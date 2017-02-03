@@ -19,4 +19,3 @@ sources R files from github
 \seealso{
 \code{\link{loadURL}}, \code{\link{sourceGithub}}
 }
-

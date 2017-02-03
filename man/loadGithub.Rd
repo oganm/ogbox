@@ -22,4 +22,3 @@ Load an Rdata file from a URL
 \seealso{
 \code{\link{loadURL}}, \code{\link{sourceGithub}}
 }
-

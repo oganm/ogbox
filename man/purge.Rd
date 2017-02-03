@@ -9,4 +9,3 @@ purge()
 \description{
 Clear parent environment
 }
-

@@ -18,4 +18,3 @@ A list containing the outputs per line
 Creates a text connection for specific lines of a file and
 returns them as an output of \code{fun}. Modified from  http://stackoverflow.com/questions/18235269/efficiently-reading-specific-lines-from-large-files-into-r
 }
-

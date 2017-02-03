@@ -26,4 +26,4 @@ Description: A package primarily for personal use. Has many functions dealing
     stuff.
 LazyData: true
 License: GPL-2
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

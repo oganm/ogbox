@@ -9,4 +9,3 @@ ans()
 \description{
 A shorter way to get the \code{.Last.value}
 }
-

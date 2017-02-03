@@ -14,4 +14,3 @@ softDown(GSE, file, overwrite = FALSE)
 \description{
 Downloads a soft file.
 }
-

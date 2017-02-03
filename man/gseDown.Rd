@@ -23,4 +23,3 @@ gseDown(GSE, regex = NULL, outDir, extension = ".cel", overwrite = F,
 \description{
 Downloads all CEL files from GSMs related to a GSE. Optionally, a regular expression can be specified to download a subset of cel files
 }
-

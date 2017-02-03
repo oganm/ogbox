@@ -15,4 +15,3 @@ A character vectir of GSE identifiers
 \description{
 Gets GSE id of a GSM.
 }
-

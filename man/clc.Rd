@@ -9,4 +9,3 @@ clc()
 \description{
 clear display, taken from http://stackoverflow.com/questions/14260340/function-to-clear-the-console-in-r
 }
-

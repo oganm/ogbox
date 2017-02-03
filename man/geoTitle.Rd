@@ -9,4 +9,3 @@ geoTitle(geo)
 \description{
 Get title of a geo ID
 }
-

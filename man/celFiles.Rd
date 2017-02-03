@@ -18,4 +18,3 @@ A string vector, listing files
 list.celfiles from oligo package. it's better than affy since it 
 has listGzipped option.
 }
-

@@ -15,4 +15,3 @@ given. Eg. if first level is \code{c(1,1,2)} and second level is \code{c('a','b'
 length 2 that includes lists named 1 and 2. List 1 will include 2 empty lists named a and b while list 2 will include
 1 empty list called c.
 }
-

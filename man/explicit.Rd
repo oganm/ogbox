@@ -17,4 +17,3 @@ explicit(fileIn, fileOut = fileIn, ignore = "base")
 This function turns function calls into explicit function calls (packageName::functionName) in a file
 The packages must be currently loaded
 }
-

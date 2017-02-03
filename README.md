@@ -9,3 +9,7 @@ A multi-purpose R package primarily for personal use
 ```
 devtools::install_github('oganm/ogbox')
 ```
+
+##Usage
+
+While this 

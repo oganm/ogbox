@@ -19,4 +19,3 @@ A list with $newVector and $dictionary.
 \description{
 Replaces elements of a vector based on the dictonary provided
 }
-

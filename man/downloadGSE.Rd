@@ -16,4 +16,3 @@ downloadGSE(GSE, celDir, metaDir)
 \description{
 Downloads an entire dataset from GEO
 }
-

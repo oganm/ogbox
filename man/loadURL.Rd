@@ -17,4 +17,3 @@ A character vector of the names of objects created, invisibly.
 \description{
 Load an Rdata file from a URL
 }
-

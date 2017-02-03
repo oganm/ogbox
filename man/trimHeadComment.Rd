@@ -20,4 +20,3 @@ a textConnection object
 Deletes the comments added to the first lines. Useful when comment char is 
 only a comment char in the beginning of the file
 }
-

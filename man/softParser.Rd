@@ -25,4 +25,3 @@ Returns a table of metadata if expression data is ommited. If not, returns a lis
 list is the metadata, the second element is a list of expression data that needs to be flattened independently
  since the expression tables can be different depending on the data
 }
-
