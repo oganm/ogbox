@@ -1,5 +1,5 @@
 #' @export
-roll = function(dice){
+roll = function(dice, vocal=TRUE){
     rollingRules = list()
     validTokens = "[dkscrf+\\-!DKSCRF]"
     dice %<>% tolower  %>% gsub(pattern = '\\s',replacement = '',x = .)
@@ -118,9 +118,13 @@ roll = function(dice){
               rollingRules$dropLowest,
               rollingRules$add,
               rollingRules$reroll,
-              rollingRules$rerollOnce)
+              rollingRules$rerollOnce,
+              vocal)
     
 }
+
+#' @export
+r = roll
 
 #' @export
 rollParam = function(diceCount,
@@ -131,7 +135,8 @@ rollParam = function(diceCount,
                      dropLowest = TRUE,
                      add = 0,
                      reroll = c(),
-                     rerollOnce = c()){
+                     rerollOnce = c(),
+                     vocal=TRUE){
     if(!fate){
         dice = sample((1:diceSide)[!1:diceSide %in% reroll],diceCount,replace=TRUE)
     } else{
@@ -150,12 +155,12 @@ rollParam = function(diceCount,
         }
     }
     
-    
-    print(paste('Rolls: [',paste(dice,collapse=' '),']'))
-    if(!is.null(dropDice)){
-        print(paste('Dropped: [',paste(drop,collapse=' '),']'))
+    if(vocal){
+        print(paste('Rolls: [',paste(dice,collapse=' '),']'))
+        if(!is.null(dropDice)){
+            print(paste('Dropped: [',paste(drop,collapse=' '),']'))
+        }
     }
-    
     result = sum(dice) + add
     return(result)
 }
