@@ -1,6 +1,6 @@
 #' @export
 insertRoll = function(){
-    rstudioapi::insertText(' %>% ogbox::roll')
+    rstudioapi::insertText(' %>% (ogbox::roll)')
 }
 # 
 #' @export
