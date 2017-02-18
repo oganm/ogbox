@@ -1,8 +1,8 @@
 #' @export
 insertRoll = function(){
-    rstudioapi::insertText(' %>% roll')
+    rstudioapi::insertText(' %>% ogbox::roll')
 }
-
+# 
 #' @export
 roll = function(dice, vocal=TRUE){
     rollingRules = list()
