@@ -1,4 +1,9 @@
 #' @export
+insertRoll = function(){
+    rstudioapi::insertText(' %>% roll')
+}
+
+#' @export
 roll = function(dice, vocal=TRUE){
     rollingRules = list()
     validTokens = "[dkscrf+\\-!DKSCRF]"
