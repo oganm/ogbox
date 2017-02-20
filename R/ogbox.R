@@ -564,3 +564,18 @@ col2rn = function(frame){
     x = as.character(x)
     x %in% y
 }
+
+
+#' @export
+qNormToValues = function(x,values){
+    values %<>% sort
+    if(length(values) != nrow(x)){
+        warning('non equal values to x, streching things a little')
+        values = values[seq(1,length(values),length.out = nrow(x)) %>% round]
+    }
+    x %>% apply(2,rank) %>% apply(2,function(y){
+        values[y]
+    })
+}
+
+
