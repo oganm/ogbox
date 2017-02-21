@@ -195,28 +195,33 @@ toColor = function(vector, palette = NULL,NAcolor = 'white'){
 
 #' Replaces elements of a vector based on the dictonary provided
 #' @param vector a vector
-#' @param dictionary a named vector
+#' @param dictionary a named vector or just a vector if labels are provided
+#' @param labels a character vector
 #' @param NAreplace that to put instead of NAs
 #' @return A list with $newVector and $dictionary.
 #' @export
-replaceElement = function(vector, dictionary = NULL,NAreplace = NA){
+replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = NA){
 
     #vector = as.factor(vector)
     uniq = unique(vector) %>% trimNAs
     if (is.null(dictionary[1])){
         dictionary = rainbow(length(uniq))
     }
-    if (is.null(names(dictionary))){
-        names(dictionary) = uniq
+    
+    if(is.null(labels) & !is.null(names(dictionary))){
+        labels = names(dictionary)
+    } else if(is.null(labels) & is.null(names(dictionary))){
+        labels = uniq
     }
+    
     cols = vector(length = length(vector))
     #to match palette names to uniq names so that custom naming is possible
-    dictionary = trimNAs(dictionary[match(uniq,names(dictionary))])
+    dictionary = trimNAs(dictionary[match(uniq,labels)])
     #names(dictionary) = uniq
     
     
     for (i in 1:length(dictionary)){
-        vector[vector == names(dictionary)[i]]= dictionary[i]
+        vector[vector == labels[i]]= dictionary[i]
     }
     
     vector[is.na(vector)] = NAreplace

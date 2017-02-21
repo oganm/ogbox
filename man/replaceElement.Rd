@@ -4,12 +4,14 @@
 \alias{replaceElement}
 \title{Replaces elements of a vector based on the dictonary provided}
 \usage{
-replaceElement(vector, dictionary = NULL, NAreplace = NA)
+replaceElement(vector, dictionary = NULL, labels = NULL, NAreplace = NA)
 }
 \arguments{
 \item{vector}{a vector}
 
-\item{dictionary}{a named vector}
+\item{dictionary}{a named vector or just a vector if labels are provided}
+
+\item{labels}{a character vector}
 
 \item{NAreplace}{that to put instead of NAs}
 }
