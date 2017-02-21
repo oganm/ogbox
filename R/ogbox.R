@@ -225,11 +225,13 @@ replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = N
     
     vector[is.na(vector)] = NAreplace
     
-    names(dictionary) = labels
-    
+    if(length(dictionary)>0){
+        names(dictionary) = labels
+    }
     out = list(newVector = vector , dictionary = dictionary)
     return(out)
 }
+
 
 
 # creates a color gradient from a continuous variable. returns assigned color values and the legend
