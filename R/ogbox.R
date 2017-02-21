@@ -201,7 +201,6 @@ toColor = function(vector, palette = NULL,NAcolor = 'white'){
 #' @return A list with $newVector and $dictionary.
 #' @export
 replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = NA){
-
     #vector = as.factor(vector)
     uniq = unique(vector) %>% trimNAs
     if (is.null(dictionary[1])){
@@ -216,7 +215,7 @@ replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = N
     
     cols = vector(length = length(vector))
     #to match palette names to uniq names so that custom naming is possible
-    dictionary = trimNAs(dictionary[match(uniq,labels)])
+    dictionary = dictionary[trimNAs(match(uniq,labels))]
     #names(dictionary) = uniq
     
     
@@ -226,9 +225,12 @@ replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = N
     
     vector[is.na(vector)] = NAreplace
     
+    names(dictionary) = labels
+    
     out = list(newVector = vector , dictionary = dictionary)
     return(out)
 }
+
 
 # creates a color gradient from a continuous variable. returns assigned color values and the legend
 #' @export
