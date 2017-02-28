@@ -188,7 +188,7 @@ toColor = function(vector, palette = NULL,NAcolor = 'white'){
     if(is.null(names(palette)) & !is.null(palette)){
         names(palette) = unique(vector)
     }
-    out = replaceElement(vector,palette,NAcolor)
+    out = replaceElement(vector,dictionary = palette,NAreplace = NAcolor)
     names(out) = c('cols','palette')
     return(out)
 }
