@@ -12,8 +12,7 @@ Imports:
     tools,
     cowplot,
     magrittr,
-    dplyr,
-    rstudioapi
+    dplyr
 Suggests:
     testthat
 Enhances: 
