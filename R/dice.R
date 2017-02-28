@@ -142,10 +142,12 @@ rollParam = function(diceCount,
                      reroll = c(),
                      rerollOnce = c(),
                      vocal=TRUE){
+    resample <- function(x, ...) x[sample.int(length(x), ...)]
+    
     if(!fate){
-        dice = sample((1:diceSide)[!1:diceSide %in% reroll],diceCount,replace=TRUE)
+        dice = resample((1:diceSide)[!1:diceSide %in% reroll],diceCount,replace=TRUE)
     } else{
-        dice = sample((-1:1)[!-1:1 %in% reroll],diceCount,replace=TRUE)
+        dice = resample((-1:1)[!-1:1 %in% reroll],diceCount,replace=TRUE)
     }
     
     if(!is.null(dropDice)){
@@ -168,6 +170,16 @@ rollParam = function(diceCount,
     }
     result = sum(dice) + add
     return(result)
+}
+
+#' @export
+diceStats = function(dice,n=1000){
+    rolls = sapply(1:n,function(i){roll(dice,vocal = FALSE)})
+    plot = data.frame(rolls = rolls) %>% 
+        ggplot2::ggplot(ggplot2::aes(x = rolls)) + cowplot::theme_cowplot() + 
+        ggplot2::geom_density(fill = 'grey')
+    mean = mean(rolls)
+    return(list(mean,plot))
 }
 
 # AC: armor class
