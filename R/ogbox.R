@@ -574,17 +574,26 @@ col2rn = function(frame){
     x %in% y
 }
 
-
 #' @export
-qNormToValues = function(x,values){
+qNormToValues = function(x,values,uniquelyOrdered = FALSE ,...){
     values %<>% sort
-    if(length(values) != nrow(x)){
-        warning('non equal values to x, streching things a little')
-        values = values[seq(1,length(values),length.out = nrow(x)) %>% round]
+    if (uniquelyOrdered){
+        x_unique <- unique(x)
+        if(length(values) != length(x_unique)){
+            warning('number of values and input is not equal. which is fine...')
+            values = values[seq(1,length(values),length.out = length(x_unique)) %>% round]
+        }
+        x_ranks <- rank(x_unique,...)
+        
+        x_ranks[match(x,x_unique)] %>% {values[.]}
+    } else{
+        
+        if(length(values) != length(x)){
+            warning('number of values and input is not equal. which is fine...')
+            values = values[seq(1,length(values),length.out = length(x)) %>% round]
+        }
+        x %>% rank(...) %>% {values[.]}
     }
-    x %>% apply(2,rank) %>% apply(2,function(y){
-        values[y]
-    })
 }
 
 

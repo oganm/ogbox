@@ -113,6 +113,15 @@ test_that('loadURL', {
     expect_equal(hede, c(1,2,3))
 })
 
+
+test_that('qNormToValues', {
+    expect_equal(qNormToValues(c(0,0,0,0,0,1,100,100,100),1:3,uniquelyOrdered = TRUE),
+                 c(1, 1, 1, 1, 1, 2, 3, 3, 3))
+    expect_equal(qNormToValues(c(0,0,0,0,0,1,100,100,100),1:3,uniquelyOrdered = FALSE),
+                 c(2, 2, 2, 2, 2, 2, 3, 3, 3))
+})
+
+
 # test_that('insist', {
 #     insist(gapminder,repos = 'http://cran.us.r-project.org')
 #     expect_equal(as.character(gapminder[1,1]), 'Afghanistan')
