@@ -3,10 +3,16 @@ context('GEO error check')
 
 test_that('gsmDown', {
     temp = tempfile()
+    temp2 = tempfile()
     expect_that(a<-gsmDown('GSM1026376',temp),gives_warning('has mutliple files'))
     expect_that(a,testthat::equals(F))
     expect_that(a<-gsmDown('GSM1539691',temp),gives_warning("doesn't have a file attached"))
     expect_that(a,testthat::equals(F))
+    expect_that(gsmDown('GSM86787',temp2),testthat::equals(T))
+})
+
+test_that('gsmFind >500',{
+   expect_equal(gsmFind('GSE14468',regex = '6455'),'GSM361359')
 })
 
 test_that('gsmFind with regex merge',{
