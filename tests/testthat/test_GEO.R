@@ -13,9 +13,9 @@ test_that('gsmDown', {
 
 test_that('gsmFind >500',{
     cores = parallel::detectCores()
-    if(is.na(cores){
+    if(is.na(cores)){
         cores = 1
-    })
+    }
     expect_equal(gsmFind('GSE14468',regex = '6455',cores = cores),'GSM361359')
     # if(cores > 1){
     #     expect_equal(gsmFind('GSE14468',regex = '6455',cores = 1),'GSM361359')
