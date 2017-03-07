@@ -2,7 +2,7 @@
 #' @description A shorter way to get the \code{.Last.value}
 #' @export
 ans = function(){
-    .Last.value
+    base::.Last.value
 }
 
 
