@@ -19,3 +19,8 @@ as.num = as.numeric
 rn = rownames
 #' @export
 cn = colnames
+
+#' @export
+`rn<-` = `rownames<-`
+#' @export
+`cn<-` = `colnames<-`
