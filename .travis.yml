@@ -1,6 +1,7 @@
 
 language: r
 sudo: true
+cache: packages
 r_binary_packages:
     - RCurl
     - testthat
