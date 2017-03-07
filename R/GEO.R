@@ -33,8 +33,8 @@ gsmFind = function(GSE, regex=NULL, cores = 1){
                     })]
                 close(pb)
             } else {
-                gsms = gsms[unlist(mclapply(1:len(gsms),function(i){
-                    page = getURL(paste0('https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsms[i]))
+                gsms = gsms[unlist(parallel::mclapply(1:len(gsms),function(i){
+                    page = RCurl::getURL(paste0('https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',gsms[i]))
                     grepl(regex,stringr::str_extract(stringr::str_extract(page,'Title.*?\\n.*?\n'),'(?<=\\>).*?(?=\\<)'))
                 }, mc.cores = cores))]
             }
