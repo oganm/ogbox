@@ -4,6 +4,20 @@ test_that("trimNAs can't trim NAs", {
     expect_that(ogbox::trimNAs(a),testthat::equals(c(1,2)))
 })
 
+test_that('replaceElement',{
+    vector = c('control','Control',"Parkinson's disease","Parkinsons disease")
+    dictionary = c('Control' ='control',
+                   "Parkinson's disease" = 'PD',
+                   'Parkinsons disease' = "PD")
+    
+    expect_equal(replaceElement(vector,dictionary)$newVector,c('control','control','PD','PD'))
+    
+    names(dictionary) = NULL
+    expect_equal(replaceElement(vector,dictionary = dictionary,
+                                labels = c('Control',"Parkinson's disease",'Parkinsons disease')),
+                 c('control','control','PD','PD'))
+    
+})
 
 
 test_that("toColor defaults", {

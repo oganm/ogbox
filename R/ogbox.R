@@ -215,7 +215,7 @@ replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = N
     
     cols = vector(length = length(vector))
     #to match palette names to uniq names so that custom naming is possible
-    dictionary = dictionary[trimNAs(match(uniq,labels))]
+    # dictionary = dictionary[trimNAs(match(uniq,labels))]
     #names(dictionary) = uniq
     
     
