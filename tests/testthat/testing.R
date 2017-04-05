@@ -14,7 +14,7 @@ test_that('replaceElement',{
     
     names(dictionary) = NULL
     expect_equal(replaceElement(vector,dictionary = dictionary,
-                                labels = c('Control',"Parkinson's disease",'Parkinsons disease')),
+                                labels = c('Control',"Parkinson's disease",'Parkinsons disease'))$newVector,
                  c('control','control','PD','PD'))
     
 })
