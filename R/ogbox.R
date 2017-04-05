@@ -528,7 +528,7 @@ pal <- function(col, border = "transparent", ...)
     rect(0:(n-1)/n, 0, 1:n/n, 1, col = col, border = border)
 }
 
-# sets rown ames to first collumn
+# sets rownames to first collumn
 #' @export
 rn2col = function(frame){
     frame = cbind(rownames(frame),frame)
@@ -567,6 +567,8 @@ col2rn = function(frame){
 # }
 
 
+#' Non standardly evaluated %in%
+#' @description First value provided is non standardly evaluated and searched within the second value
 #' @export
 `%tin%` = function(x,y){
     x = substitute(x)
