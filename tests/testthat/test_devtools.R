@@ -5,7 +5,7 @@ test_that('getVersion',{
 })
 
 test_that('setVersion',{
-    setVersion(1.2)
+    setVersion('1.2')
     testthat::expect_equal(getVersion(),'1.2')
-    setVersion(1.0)
+    setVersion('1.0')
 })
