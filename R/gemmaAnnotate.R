@@ -85,5 +85,8 @@ gemmaProbesetMatch = function(genes, chipFile){
     annotations = read.table(chipFile, header=T,sep='\t', quote="",stringsAsFactors = F)
     names(annotations)[2] = 'Gene.Symbol'
     names(annotations)[1] = 'Probe'
-    annotations %>% dplyr::filter(Gene.Symbol %in% genes) %>% dplyr::select(Gene.Symbol,Probe)
+    out = annotations %>% dplyr::filter(Gene.Symbol %in% genes) %>% dplyr::select(Gene.Symbol,Probe) %>% 
+        dplyr::mutate(Gene.Symbol = Gene.Symbol %>% factor(levels = genes)) %>% 
+        dplyr::arrange(Gene.Symbol) %>% dplyr::mutate(Gene.Symbol = Gene.Symbol %>% as.character)
+    return(out)
 }

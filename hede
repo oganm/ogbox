@@ -1,0 +1,37 @@
+name,hw_mark,hw_comment,pr_count,pr_mark,reviewee,pr_comment
+ahn_chiyoung,check,NA,2,"needs more, good","lee_dongsoo, sedivy-haley_katharine","peer review was not conducted
+NA"
+carsky_grace,check,NA,2,"good, good","mahrous_hesham-mostafa, wong_jasper","NA
+NA"
+chen_hung-li,check,NA,2,"good, good","ahn_chiyoung, nezafatkhah_sina","NA
+NA"
+cristiani_john,check,NA,2,"good, good","dai_ke, mahrous_hesham-mostafa","NA
+NA"
+dai_ke,check,NA,1,good,flynn_mallory,"NA"
+eyster_theodore,check plus,NA,2,"needs more, needs more","chen_hung-li, flynn_mallory","peer review was not conducted
+peer review was not conducted"
+flynn_mallory,check,NA,2,"good, good","ahn_chiyoung, lee_lik-hang","NA
+NA"
+fuhrman_robert,check,NA,2,"good, good","chen_hung-li, suresh-kumar_gokul-raj","NA
+NA"
+lee_dongsoo,check,NA,2,"good, good","fuhrman_robert, wong_jasper","NA
+NA"
+lee_lik-hang,check,NA,2,"good, good","sedivy-haley_katharine, yuen_michael","NA
+NA"
+mahrous_hesham-mostafa,check,NA,1,good,pauly_theresa,"NA"
+nezafatkhah_sina,check,NA,2,"good, good","carsky_grace, lee_dongsoo","NA
+NA"
+pauly_theresa,check,NA,2,"good, good","tremblay-boyer_sara, xie_yijun","NA
+NA"
+sedivy-haley_katharine,check,NA,2,"good, good","eyster_theodore, fuhrman_robert","NA
+NA"
+suresh-kumar_gokul-raj,check,NA,2,"good, good","nezafatkhah_sina, xie_yijun","NA
+NA"
+tremblay-boyer_sara,check minus,not completed,2,"needs more, needs more","cristiani_john, yuen_michael","peer review was not conducted
+peer review was not conducted"
+wong_jasper,check minus,home directory troubles. faulty dependency listing,2,"needs more, needs more","pauly_theresa, suresh-kumar_gokul-raj","peer review was not conducted
+peer review was not conducted"
+xie_yijun,check,NA,2,"good, good","carsky_grace, cristiani_john","NA
+NA"
+yuen_michael,check,NA,2,"good, good","dai_ke, eyster_theodore","NA
+NA"

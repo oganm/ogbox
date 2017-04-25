@@ -27,6 +27,10 @@ test_that('annotations',{
                            data.frame(Gene.Symbol  =c("Napb" ,  "Napb",   "Cdkn1a" ,"Cdkn1a"),
                                       Probe = probes,stringsAsFactors = FALSE))
     
+    testthat::expect_equal(gemmaProbesetMatch(genes %>% rev,temp),
+                           data.frame(Gene.Symbol  =c("Napb" ,  "Napb",   "Cdkn1a" ,"Cdkn1a") %>% rev,
+                                      Probe = c(probes[3:4],probes[1:2]),stringsAsFactors = FALSE))
+    
     testthat::expect_equal(gemmaGeneMatch(probes,temp),c("Napb" ,  "Napb",   "Cdkn1a" ,"Cdkn1a"))
     
 })
