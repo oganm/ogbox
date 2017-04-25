@@ -78,3 +78,11 @@ gemmaGeneMatch = function(probesets, chipFile){
     names(annotations)[1] = 'Probe'
     annotations[match(probesets,annotations$Probe),'Gene.Symbol']
 }
+
+#' @export
+gemmaProbesetMatch = function(genes, chipFile){
+    annotations = read.table(chipFile, header=T,sep='\t', quote="",stringsAsFactors = F)
+    names(annotations)[2] = 'Gene.Symbol'
+    names(annotations)[1] = 'Probe'
+    annotations[match(genes,annotations$Gene.Symbol),'Probe']
+}
