@@ -13,3 +13,21 @@ test_that('getGemmaAnnot', {
     expect_that(getGemmaAnnot('GPL8',temp,overwrite = TRUE),testthat::equals(TRUE))
     
 })
+
+test_that('annotations',{
+    temp = tempfile()
+    if(file.exists(temp)){
+        file.remove(temp)
+    }
+    getGemmaAnnot('GPL8',temp)
+    
+    genes = c('Napb','Cdkn1a')
+    probes =  c(884,885,328,83)
+    testthat::expect_equal(gemmaProbesetMatch(genes,temp),
+                           data.frame(Gene.Symbol  =c("Napb" ,  "Napb",   "Cdkn1a" ,"Cdkn1a"),
+                                      Probe = probes,stringsAsFactors = FALSE))
+    
+    testthat::expect_equal(gemmaGeneMatch(probes,temp),c("Napb" ,  "Napb",   "Cdkn1a" ,"Cdkn1a"))
+    
+})
+

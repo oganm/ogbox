@@ -79,10 +79,11 @@ gemmaGeneMatch = function(probesets, chipFile){
     annotations[match(probesets,annotations$Probe),'Gene.Symbol']
 }
 
+# outputs data frame as genes can match multiple probesets
 #' @export
 gemmaProbesetMatch = function(genes, chipFile){
     annotations = read.table(chipFile, header=T,sep='\t', quote="",stringsAsFactors = F)
     names(annotations)[2] = 'Gene.Symbol'
     names(annotations)[1] = 'Probe'
-    annotations[match(genes,annotations$Gene.Symbol),'Probe']
+    annotations %>% dplyr::filter(Gene.Symbol %in% genes) %>% dplyr::select(Gene.Symbol,Probe)
 }
