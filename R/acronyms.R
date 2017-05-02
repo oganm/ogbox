@@ -24,3 +24,9 @@ cn = colnames
 `rn<-` = `rownames<-`
 #' @export
 `cn<-` = `colnames<-`
+
+#' @export
+install.pakcages = install.packages
+
+#' @export
+insPack = install.packages
