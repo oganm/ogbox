@@ -182,6 +182,9 @@ teval = function(daString,...){
 # turn every member of daList to a color from the palette
 #' @export
 toColor = function(vector, palette = NULL,NAcolor = 'white'){
+    if(class(vector) == "factor"){
+        vector = as.character(vector)
+    }
     if(!is.null(palette) & !is.null(names(palette))){
         assertthat::assert_that(all(vector %in%names(palette)))
     }
@@ -201,6 +204,9 @@ toColor = function(vector, palette = NULL,NAcolor = 'white'){
 #' @return A list with $newVector and $dictionary.
 #' @export
 replaceElement = function(vector, dictionary = NULL,labels = NULL, NAreplace = NA){
+    if(class(vector) == "factor"){
+        vector = as.character(vector)
+    }
     #vector = as.factor(vector)
     uniq = unique(vector) %>% trimNAs
     if (is.null(dictionary[1])){
