@@ -626,7 +626,7 @@ prettifyLatexKable = function(table,columnLines = FALSE){
                       '\\toprule',
                       tableLines[tableTop+1],
                       '\\midrule',
-                      tableLines[(tableTop+1):(tableBottom-1)],
+                      tableLines[(tableTop+2):(tableBottom-1)],
                       '\\bottomrule',
                       tableLines[tableBottom:length(tableLines)])
     
