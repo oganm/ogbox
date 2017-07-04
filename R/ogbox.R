@@ -492,7 +492,7 @@ geom_ogboxvio = function(data=NULL, mapping = NULL){
    list(ggplot2::geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data, mapping = mapping),
         ggplot2::geom_boxplot(width=0.1,fill = 'lightblue',data=data, mapping = mapping), 
         cowplot::theme_cowplot(),
-        ggplot::theme(axis.text.x  = ggplot2::element_text(size=25),
+        ggplot2::theme(axis.text.x  = ggplot2::element_text(size=25),
               axis.title.y = ggplot2::element_text(vjust=0.5, size=25),
               axis.title.x = ggplot2::element_text(vjust=0.5, size=0) ,
               title = ggplot2::element_text(vjust=0.5, size=25),
