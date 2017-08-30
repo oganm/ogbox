@@ -26,7 +26,10 @@ cn = colnames
 `cn<-` = `colnames<-`
 
 #' @export
-install.pakcages = install.packages
+install.pakcages = function(...){
+    warning('you spelled it wrong moron')
+    install.packages(...)
+}
 
 #' @export
 insPack = install.packages
