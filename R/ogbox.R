@@ -522,6 +522,7 @@ signifMarker = function(pValues){
     return(markers)
 }
 
+# https://cran.r-project.org/web/packages/colorspace/vignettes/hcl-colors.pdf
 #' @author Achim Zeileis
 #' @author Kurt Hornik
 #' @author Paul Murrell
