@@ -75,7 +75,7 @@ celFiles = function (..., listGzipped = FALSE)
 #' @param femaleGenes names of female genes
 #' @export
 bioGender <- function(x,geneColName = 'Gene.Symbol', probeColName = 'Probe', maleGenes = c('RPS4Y1','KDM5D') , femaleGenes = 'XIST'){
-    
+    aned = x
     probeM <- aned[[probeColName]][grep(ogbox::regexMerge(maleGenes), aned[[geneColName]])] %>% as.character
     probeF <- aned[[probeColName]][grep(ogbox::regexMerge(femaleGenes), aned[[geneColName]])] %>% as.character
     print(paste('male probes found:', paste(probeM,collapse =', ')))
