@@ -637,3 +637,21 @@ prettifyLatexKable = function(table,columnLines = FALSE){
 }
 
 
+#' @export
+tabular <- function(df,col.names= TRUE,  ...) {
+    stopifnot(is.data.frame(df))
+    
+    align <- function(x) if (is.numeric(x)) "r" else "l"
+    col_align <- vapply(df, align, character(1))
+    
+    if(col.names){
+        df = rbind(paste0('\\strong{',colnames(df),'}'),df)
+    }
+    
+    cols <- lapply(df, format, ...)
+    contents <- do.call("paste",
+                        c(cols, list(sep = " \\tab ", collapse = "\\cr\n  ")))
+    
+    paste("\\tabular{", paste(col_align, collapse = ""), "}{\n  ",
+          contents, "\n}\n", sep = "")
+}
