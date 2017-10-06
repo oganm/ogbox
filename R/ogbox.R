@@ -636,9 +636,16 @@ prettifyLatexKable = function(table,columnLines = FALSE){
     return(outTable)
 }
 
-
+# adapted from
+# https://cran.r-project.org/web/packages/roxygen2/vignettes/formatting.html
+#' Roxygen table maker
+#' 
+#' @param df data.frame
+#' @param col.names logica. If colnames should be included
+#' @param ... variables for format function
+#'
 #' @export
-tabular <- function(df,col.names= TRUE,  ...) {
+roxygenTabular <- function(df,col.names= TRUE,  ...) {
     stopifnot(is.data.frame(df))
     
     align <- function(x) if (is.numeric(x)) "r" else "l"
