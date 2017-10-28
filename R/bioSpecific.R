@@ -124,3 +124,33 @@ bioGender <- function(x,geneColName = 'Gene.Symbol', probeColName = 'Probe', mal
         print("No sex specific genes on the platform")
     }
 }
+
+
+
+#' @export
+pickRandom = function(labels,
+                      allValues,
+                      tolerance,
+                      allowSelf = TRUE,
+                      invalids = c(),
+                      n = 500){
+    
+    distribution = ecdf(allValues)
+    percentiles = distribution(allValues[labels])
+    range = quantile(allValues, c((percentiles -tolerance/2) %>% sapply(max,0),
+                                  (percentiles + tolerance/2) %>% sapply(min,.99))) %>% 
+        matrix(ncol = 2)
+    colnames(range) = c('min','max')
+    allValues = allValues[!names(allValues) %in% invalids]
+    eligibles = range %>% apply(1,function(x){
+        which( allValues >= x['min'] & allValues <= x['max']) %>% names
+    })
+    names(eligibles) = labels
+    
+    random = eligibles %>% sapply(function(x){
+        if(length(x)==0){
+            return(rep(NA,length(n)) %>% as.character)
+        }
+        sample(x,n,replace= TRUE)
+    }) %>% as.data.frame(stringsAsFactors = FALSE)
+}
