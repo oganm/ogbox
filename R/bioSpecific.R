@@ -126,7 +126,15 @@ bioGender <- function(x,geneColName = 'Gene.Symbol', probeColName = 'Probe', mal
 }
 
 
-
+#' Select random elements based on a criteria
+#' 
+#' @param labels Character vector. Labels to randomize
+#' @param allValues Named numeric vector. Randomization candidates
+#' @param tolerance Percentage tolerance for randomization
+#' @param allowSelf Logical, is self a viable candidate for randomization
+#' @param invalids  Specific cases to exclude from randomization
+#' @param n How many times randomization should happen
+#'
 #' @export
 pickRandom = function(labels,
                       allValues,
@@ -146,6 +154,12 @@ pickRandom = function(labels,
         which( allValues >= x['min'] & allValues <= x['max']) %>% names
     })
     names(eligibles) = labels
+    
+    if(!allowSelf){
+        for(i in length(eligibles)){
+            eligibles[[i]] = eligibles[[i]][eligibles[[i]] != names(eligibles[[i]])]
+        }
+    }
     
     random = eligibles %>% sapply(function(x){
         if(length(x)==0){
