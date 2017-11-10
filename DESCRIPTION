@@ -13,7 +13,8 @@ Imports:
     cowplot,
     magrittr,
     dplyr,
-    glue
+    glue,
+    kable
 Suggests:
     testthat
 Enhances: 

@@ -75,7 +75,7 @@ celFiles = function (..., listGzipped = FALSE)
 #' @param femaleGenes names of female genes
 #' @export
 bioGender <- function(x,geneColName = 'Gene.Symbol', probeColName = 'Probe', maleGenes = c('RPS4Y1','KDM5D') , femaleGenes = 'XIST'){
-    
+    aned = x
     probeM <- aned[[probeColName]][grep(ogbox::regexMerge(maleGenes), aned[[geneColName]])] %>% as.character
     probeF <- aned[[probeColName]][grep(ogbox::regexMerge(femaleGenes), aned[[geneColName]])] %>% as.character
     print(paste('male probes found:', paste(probeM,collapse =', ')))
@@ -123,4 +123,48 @@ bioGender <- function(x,geneColName = 'Gene.Symbol', probeColName = 'Probe', mal
     } else {
         print("No sex specific genes on the platform")
     }
+}
+
+
+#' Select random elements based on a criteria
+#' 
+#' @param labels Character vector. Labels to randomize
+#' @param allValues Named numeric vector. Randomization candidates
+#' @param tolerance Percentage tolerance for randomization
+#' @param allowSelf Logical, is self a viable candidate for randomization
+#' @param invalids  Specific cases to exclude from randomization
+#' @param n How many times randomization should happen
+#'
+#' @export
+pickRandom = function(labels,
+                      allValues,
+                      tolerance,
+                      allowSelf = TRUE,
+                      invalids = c(),
+                      n = 500){
+    
+    distribution = ecdf(allValues)
+    percentiles = distribution(allValues[labels])
+    range = quantile(allValues, c((percentiles -tolerance/2) %>% sapply(max,0),
+                                  (percentiles + tolerance/2) %>% sapply(min,.99))) %>% 
+        matrix(ncol = 2)
+    colnames(range) = c('min','max')
+    allValues = allValues[!names(allValues) %in% invalids]
+    eligibles = range %>% apply(1,function(x){
+        which( allValues >= x['min'] & allValues <= x['max']) %>% names
+    })
+    names(eligibles) = labels
+    
+    if(!allowSelf){
+        for(i in length(eligibles)){
+            eligibles[[i]] = eligibles[[i]][eligibles[[i]] != names(eligibles[[i]])]
+        }
+    }
+    
+    random = eligibles %>% sapply(function(x){
+        if(length(x)==0){
+            return(rep(NA,length(n)) %>% as.character)
+        }
+        sample(x,n,replace= TRUE)
+    }) %>% as.data.frame(stringsAsFactors = FALSE)
 }

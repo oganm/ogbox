@@ -1,4 +1,0 @@
-Name: Insert roll
-Description: Inserts `%>% roll` at the cursor position.
-Binding: insertRoll
-Interactive: false
