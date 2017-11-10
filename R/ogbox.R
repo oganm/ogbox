@@ -473,6 +473,18 @@ mycircle <- function(coords, v=NULL, params) {
            })
 }
 
+#' A violin plot overlayed by a boxplot
+#' 
+#' This function returns a list of ggplot elements that overlays a boxplot over
+#' a violin plot.
+#' 
+#' @param data Default dataset to use for plot. If not already a data.frame, 
+#' will be converted to one by \link[ggplot2]{fortify}. If not specified, must
+#' be suppled in each layer added to the plot.
+#' @param mapping Default list of aesthetic mappings to use for plot. If not 
+#' specified, must be suppled in each layer added to the plot.
+#'  
+#' 
 #' @export
 geom_ogboxvio = function(data=NULL, mapping = NULL){
    list(ggplot2::geom_violin(color="#C4C4C4", fill="#C4C4C4",data=data, mapping = mapping),
