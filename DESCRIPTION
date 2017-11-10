@@ -14,7 +14,6 @@ Imports:
     magrittr,
     dplyr,
     glue,
-    kable
 Suggests:
     testthat
 Enhances: 
