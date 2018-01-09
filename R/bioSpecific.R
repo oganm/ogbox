@@ -3,28 +3,40 @@
 # gene information other containing expression values. Most people seem to use
 # this kind of output. use as list[gene,expression] = sepExpr(data) to get to
 # dfs in one go
+#' Seprate expression data from gene annotations
+#' 
+#' Separetes numberic component of gene expression data from non-numeric gene 
+#' annotations. Detects the first non-double column in the data frame and
+#' separates the data into two parts
+#' 
+#' @param data Expression data with gene annotations. First columns must inlcude
+#' the gene annotations and they must not have data of type "double".
+#' 
+#' @return  A list of length 2. 1st element includes the gene annoation data, the
+#' second element includes the gene expression data.
+#' 
 #' @export
-sepExpr = function(allDataPre){
-    if (class(allDataPre)[1] %in% c('data.frame','tbl_df')){
+sepExpr = function(data){
+    if (class(data)[1] %in% c('data.frame','tbl_df')){
         # unlist is there to enable tbl_df to work
-        for (i in 1:ncol(allDataPre)){
-            if ('double'==typeof(allDataPre[,i] %>% unlist)){
+        for (i in 1:ncol(data)){
+            if ('double'==typeof(data[,i] %>% unlist)){
                 expBound = i
                 break
             }
         }
-        geneData = allDataPre[,1:(expBound-1),drop=F]
-        exprData = allDataPre[,expBound:ncol(allDataPre),drop=F]
+        geneData = data[,1:(expBound-1),drop=F]
+        exprData = data[,expBound:ncol(data),drop=F]
         return(list(geneData,exprData))
-    } else if (class(allDataPre)[1] =='data.table'){
-        for (i in 1:ncol(allDataPre)){
-            if ('double'==typeof(allDataPre[[i]])){
+    } else if (class(data)[1] =='data.table'){
+        for (i in 1:ncol(data)){
+            if ('double'==typeof(data[[i]])){
                 expBound = i
                 break
             }
         }
-        geneData = allDataPre[,1:(expBound-1),with=F]
-        exprData = allDataPre[,expBound:ncol(allDataPre), with = F]
+        geneData = data[,1:(expBound-1),with=F]
+        exprData = data[,expBound:ncol(data), with = F]
         return(list(geneData,exprData))
     }
 }
