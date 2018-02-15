@@ -14,6 +14,7 @@ Imports:
     magrittr,
     dplyr,
     glue,
+    R.utils
 Suggests:
     testthat
 Enhances: 

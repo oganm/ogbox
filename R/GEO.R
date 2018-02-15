@@ -96,7 +96,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     
     download.file(fileURL,paste0(outfile,'.gz'))
     if (unzip){
-        system(paste0('gunzip -f "',outfile,'.gz"'))
+        R.utils::gunzip(paste0(outfile,'.gz'))
     }
     invisible(T)
 }
