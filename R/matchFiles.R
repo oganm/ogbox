@@ -1,7 +1,5 @@
 # given two directories, matches the files that are the same based on their
 # md5 sums
-require(tools)
-
 #' @export
 matchFiles = function(dir1, dir2, fileOut=NA, basename=T, justMatches=F, removeSameName=F){
     files1 = list.files(dir1, full.names=T)
