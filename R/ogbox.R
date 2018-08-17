@@ -405,16 +405,14 @@ legendGrad <- function(col, lev){
 
 # to use instead of "head" with bidimentially huge matrices
 #' @export
-corner = function(x){
-    row = 10
-    col = 10
-    if (ncol(x)<10){
+corner = function(x,row = 10,col = row){
+    if (ncol(x)<col){
         col = ncol(x)
     }
-    if (nrow(x)<10){
+    if (nrow(x)<row){
         row = nrow(x)
     }
-    x[1:row,1:col]
+    x[seq_len(row),seq_len(col)]
 }
 
 # http://codegolf.stackexchange.com/questions/49671/do-you-want-to-code-a-snowman/49780#49780
