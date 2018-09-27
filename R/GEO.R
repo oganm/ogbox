@@ -189,7 +189,7 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
             if (expression) {
                 expressionData[[i]] = expressionLines
             }
-            print(i)
+            message(i)
         }
     }
     close(con)
