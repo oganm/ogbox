@@ -628,3 +628,9 @@ roxygenTabular <- function(df,col.names= TRUE,  ...) {
     paste("\\tabular{", paste(col_align, collapse = ""), "}{\n  ",
           contents, "\n}\n", sep = "")
 }
+
+#' @export
+catFile = function(file){
+    readLines(file) %>%
+        cat(sep = '\n')
+}

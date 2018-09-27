@@ -1,7 +1,7 @@
 Package: ogbox
 Type: Package
 Title: Stuff and things
-Version: 1.0
+Version: 1.0.1
 Imports:
     assertthat,
     data.table,
@@ -28,4 +28,4 @@ Description: A package primarily for personal use. Has many functions dealing
     stuff.
 LazyData: true
 License: GPL-2
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
