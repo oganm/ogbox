@@ -17,7 +17,7 @@ gsmFind = function(GSE, regex=NULL, cores = 1){
     # download the list of gsms. in the list the title isnt present hence the
     # need to look at the pages individually, this can make the function go slow
     if (sampleSize>500){
-        print('More than 500 samples. This might take a while')
+        message('More than 500 samples. This might take a while')
         page =  RCurl::getURL(paste0('https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=',GSE,'&targ=self&view=brief&form=text'))
         page = strsplit(page,split = '\n')[[1]]
         gsms = trimNAs(stringr::str_extract(page,"GSM.*?(?=\r)"))
