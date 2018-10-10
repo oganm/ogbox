@@ -16,14 +16,54 @@ mergeList = function(aList,bList,forceUnique=T){
 
 # seeks for a given object in a single layered list
 #' @export
-findInList = function(object, aList){
+findInList = function(object, list){
+
     indices = vector()
-    for (i in 1:length(aList)){
-        if (object %in% aList[[i]]){
+    for (i in 1:length(list)){
+        if (object %in% list[[i]]){
             indices = c(indices, i)
         }
     }
     return(indices)
+}
+
+# counts total no of elements in a single layered list
+#' @export
+listCount = function(aList){
+    length(unlist(aList))
+}
+
+
+# vectorized and generalized version of find in list
+#' @export
+findInDeepList = function(objects, list){
+    findTRUE = function(i,x){
+        if(class(x[[i]]) %in% 'list'){
+            out = lapply(1:length(x[[i]]),function(j){
+                y = findTRUE(j,x[[i]])
+            })
+            names(out) = 1:length(x[[i]])
+            out = names(out) %>% {.[sapply(out,len)>0]} %>% lapply(function(y){paste0(y,', ',out[[y]])}) %>% unlist
+            return(out)
+        } else{
+            which(x[[i]])
+        }
+    }
+    
+    unlisted = unlist(list)
+    logicalList = lapply(objects, function(obj){
+        unlisted %in% obj
+    }) %>% lapply(relist,skeleton = list)
+    
+    
+    logicalList %>% lapply(function(x){
+        out = 1:length(x) %>% lapply(findTRUE,x)
+        names(out) = 1:length(x)
+        out = names(out) %>% {.[sapply(out,len)>0]} %>% lapply(function(y){paste0(y,', ',out[[y]])}) %>% unlist
+        return(out)
+    }) %>% lapply(strsplit,', ') %>% sapply(function(x){
+        x %>% lapply(as.integer)
+    })
 }
 
 # counts total no of elements in a single layered list
