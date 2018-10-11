@@ -67,12 +67,12 @@ gsmSize = function(gsm, warnings = T){
 }
 
 #' @export
-gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
+gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T,quiet= TRUE){
     # downloads a given GSM
     dir.create(dirname(outfile), showWarnings=F,recursive=T)
     if ((file.exists(outfile) & !overwrite)|
         (file.exists(paste0(outfile,'.gz')) & !overwrite & unzip==FALSE)){
-        warning('you already have it bro. i aint gonna get it again')
+        warning('this file already exists. not overwriting')
         print(basename(outfile))
         return(invisible(F))
     }
@@ -94,7 +94,7 @@ gsmDown = function(gsm,outfile, overwrite = F, warnings = T, unzip = T){
     
     fileURL  = URLdecode(urls)
     
-    download.file(fileURL,paste0(outfile,'.gz'))
+    download.file(fileURL,paste0(outfile,'.gz'),quiet=quiet)
     if (unzip){
         R.utils::gunzip(paste0(outfile,'.gz'))
     }
@@ -123,14 +123,14 @@ gseDown = function(GSE,regex =NULL,outDir, extension = '.cel',overwrite=F, unzip
 #' @param GSE GSE identifier of the dataset
 #' @param file destination file
 #' @export
-softDown = function(GSE,file, overwrite=FALSE){
+softDown = function(GSE,file, overwrite=FALSE,quiet = TRUE){
     if((file.exists(file) | file.exists(gsub('[.]gz', '', file))) & !overwrite){
         warning('this file already exists. not overwriting')
         return(FALSE)
     }
     download.file(paste0("ftp://ftp.ncbi.nlm.nih.gov/geo/series/",
                   gsub('(((?<=GSE)([0-9]|[0-9][0-9]|[0-9][0-9][0-9]))|((?<=GSE.)[0-9][0-9][0-9])|((?<=GSE..)[0-9][0-9][0-9]))$','nnn',GSE,perl = T),'/',
-                  GSE,'/soft/',GSE,'_family.soft.gz'),destfile = file)
+                  GSE,'/soft/',GSE,'_family.soft.gz'),destfile = file,quiet =quiet )
     return(TRUE)
 }
 
