@@ -4,7 +4,7 @@
 \alias{softDown}
 \title{Downloads soft file of a GSE}
 \usage{
-softDown(GSE, file, overwrite = FALSE)
+softDown(GSE, file, overwrite = FALSE, quiet = TRUE)
 }
 \arguments{
 \item{GSE}{GSE identifier of the dataset}

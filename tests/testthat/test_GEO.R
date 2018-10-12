@@ -40,7 +40,7 @@ test_that('softDown and softParser',{
     tmp = tempfile()
     softDown('GSE28642',tmp)
     
-    expect_equal(softDown('GSE28642',tmp), FALSE)
+    expect_equal(suppressWarnings(softDown('GSE28642',tmp)), FALSE)
     
     softDataWithExp = softParser(tmp, expression = TRUE)
     softData = softParser(tmp)

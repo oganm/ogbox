@@ -1,7 +1,7 @@
 Package: ogbox
 Type: Package
 Title: Stuff and things
-Version: 1.0.1
+Version: 1.0.2
 Imports:
     assertthat,
     data.table,
@@ -14,7 +14,8 @@ Imports:
     magrittr,
     dplyr,
     glue,
-    R.utils
+    R.utils,
+    gh
 Suggests:
     testthat
 Enhances: 
