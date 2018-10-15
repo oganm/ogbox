@@ -59,3 +59,13 @@ loadGithub = function(githubPath, branch = 'master', envir = parent.frame()){
                  '?raw=true')
     loadURL(url,envir)
 }
+
+
+#' @export
+readRDSGithub = function(githubPath,branch = 'master'){
+    path = strsplit(githubPath,'/')[[1]]
+    readRDS(url(paste0("https://github.com/",
+                       path[1],'/',path[2],'/blob/',branch,'/',
+                       paste(path[3:length(path)], collapse = '/'),
+                       '?raw=true')))
+}
