@@ -40,3 +40,20 @@ b
 
 allows unpacking of lists. These days `zeallot` package does that with %<-% operator.
 
+### Remote code sourcing and data loading
+
+* `sourceGithub` runs R scripts or specific lines of R scripts from github.
+* `loadURL` and `loadGithub` loads remote rda files
+* `readRDSGithub` reads an RDS file from github
+* `getGithubFile`, also used by the functions above gets files from github.
+
+### Gene Expression Omnibus tools
+
+Didn't want to deal with S4 classes from bioconductor packages so there are a bunch of functions that deal with GEO datasets.
+
+* `gsmFind` picks samples that match a regex from a dataset
+* `whichGSE` finds the datasets that a sample belongs to
+* `gsmDown` downloads cel files for microarray samples
+* `gseDown` downloads all cel files for a microarray dataset
+* `softDown` downloads softfile for an experiment
+* `softParser` parses said soft file.
