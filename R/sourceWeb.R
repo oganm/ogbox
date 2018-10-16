@@ -51,21 +51,47 @@ loadURL = function(url,envir = parent.frame()){
 #' @param envir the environment where the data should be loaded.
 #' @seealso \code{\link{loadURL}}, \code{\link{sourceGithub}}
 #' @export
-loadGithub = function(githubPath, branch = 'master', envir = parent.frame()){
-    path = strsplit(githubPath,'/')[[1]]
-    url = paste0("https://github.com/",
-                 path[1],'/',path[2],'/blob/',branch,'/',
-                 paste(path[3:length(path)], collapse = '/'),
-                 '?raw=true')
-    loadURL(url,envir)
+loadGithub = function(githubPath, branch = 'master', envir = parent.frame(),
+                      token = NULL){
+    file = getGithubFile(githubPath,branch = branch, token = token)
+    load(file,envir)
 }
 
 
 #' @export
-readRDSGithub = function(githubPath,branch = 'master'){
-    path = strsplit(githubPath,'/')[[1]]
-    readRDS(url(paste0("https://github.com/",
-                       path[1],'/',path[2],'/blob/',branch,'/',
-                       paste(path[3:length(path)], collapse = '/'),
-                       '?raw=true')))
+readRDSGithub = function(githubPath,branch = 'master',token = NULL){
+    file = getGithubFile(githubPath,branch = branch, token = token)
+    readRDS(file)
 }
+
+
+#' @export
+getGithubFile = function(githubPath,branch = 'master', downloadPath = NULL,token = NULL){
+    if(is.null(downloadPath)){
+        downloadPath = tempfile()
+    }
+    
+    path = strsplit(githubPath,'/')[[1]]
+    file = paste(path[3:length(path)], collapse = '/')
+    contents = gh::gh('GET /repos/:username/:reponame/contents/:dir?ref=:branch',
+                  username = path[1],
+                  reponame = path[2],
+                  branch = branch,
+                  dir = dirname(file),
+                  .token = token)
+    
+    names(contents) = contents %>% purrr::map_chr('name')
+    
+    fileInfo = contents[contents %>% purrr::map_chr('name') %>% {.%in%basename(file)}][[1]]
+    
+    blob = gh::gh('GET /repos/:username/:reponame/git/blobs/:sha',
+                  username = path[1],
+                  reponame = path[2],
+                  sha = fileInfo$sha,
+                  .token = token)
+    tmp = tempfile()
+    writeLines(blob$content,tmp)
+    
+    base64::decode(tmp,downloadPath)
+}
+

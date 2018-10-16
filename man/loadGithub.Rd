@@ -4,7 +4,8 @@
 \alias{loadGithub}
 \title{Load an Rdata file from a URL}
 \usage{
-loadGithub(githubPath, branch = "master", envir = parent.frame())
+loadGithub(githubPath, branch = "master", envir = parent.frame(),
+  token = NULL)
 }
 \arguments{
 \item{githubPath}{character. username/repository/pathToFile}
