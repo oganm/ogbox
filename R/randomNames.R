@@ -856,3 +856,19 @@ getRandomNames = function(n=1,alliterate = FALSE){
 
   return(names)
 }
+
+
+hash2names = function(hash,encode=6){
+    left = left()
+    right = right()
+    allPossible = expand.grid(left,right) %>% dplyr::filter(!(Var1 == 'boring' & Var2 == 'wozniak')) %>% apply(1,paste,collapse = '_')
+    
+    hashLength = hash %>% nchar()
+    
+    integer = hash %>% substr(hashLength - encode,hashLength) %>% paste0('0x',.) %>% strtoi
+    prefix = allPossible[integer %% length(allPossible)]
+    suffix = floor(integer/length(allPossible))
+    suffix[suffix==0] = ''
+    
+    paste0(prefix,suffix)
+}
