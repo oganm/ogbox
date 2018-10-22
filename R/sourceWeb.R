@@ -89,9 +89,10 @@ getGithubFile = function(githubPath,branch = 'master', downloadPath = NULL,token
                   reponame = path[2],
                   sha = fileInfo$sha,
                   .token = token)
-    tmp = tempfile()
-    writeLines(blob$content,tmp)
     
-    base64::decode(tmp,downloadPath)
+    decodeContent = openssl::base64_decode(blob$content)
+    writeBin(decodeContent,downloadPath)
+    
+    return(invisible(downloadPath))
 }
 

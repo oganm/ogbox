@@ -1,7 +1,7 @@
 Package: ogbox
 Type: Package
 Title: Stuff and things
-Version: 1.1.2
+Version: 1.1.3
 Imports:
     assertthat,
     data.table,
@@ -16,7 +16,7 @@ Imports:
     glue,
     R.utils,
     gh,
-    base64
+    openssl
 Suggests:
     testthat
 Enhances: 
