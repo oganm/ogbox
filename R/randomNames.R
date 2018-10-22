@@ -830,11 +830,14 @@ right = function(){
 # this is one that gives n number of unique names. if n is greater than number of
 # possible names, start adding numbers
 #' @export
-getRandomNames = function(n=1){
+getRandomNames = function(n=1,alliterate = FALSE){
     left = left()
     right = right()
   allPossible = expand.grid(left,right) %>% dplyr::filter(!(Var1 == 'boring' & Var2 == 'wozniak'))
-
+    if(alliterate){
+        allPossible %<>% dplyr::filter(substr(Var1,1,1) == substr(Var2,1,1)) 
+    }
+  
   nameSet = cut(seq_len(n),breaks = unique(c(seq(0,to = n,by = nrow(allPossible)),n)))
   nameSets = unique(nameSet)
   nameSetSuffix = seq(0,length(nameSets)-1)
