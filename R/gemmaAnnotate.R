@@ -19,7 +19,7 @@ getGemmaAnnot = function(chipName,chipFile,annotType = c('bioProcess','noParents
     download.file(paste0('http://chibi.ubc.ca/microannots/',chipName,annotType,'.an.txt.gz'),
                   paste0(chipFile,'.gz'))
 
-    R.utils::gunzip(paste0(chipFile,'.gz'))
+    R.utils::gunzip(paste0(chipFile,'.gz'),overwrite = overwrite)
     
     return(TRUE)
 }
