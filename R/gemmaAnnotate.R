@@ -6,6 +6,7 @@
 #' @export
 getGemmaAnnot = function(chipName,chipFile,annotType = c('bioProcess','noParents','allParents'), 
                          overwrite=FALSE){
+    warning('you are using deprecated Gemma functions. use getAnnotation from gemmaAPI package instead')
     annotType = match.arg(annotType)
     if (annotType == 'allParents'){
         annotType = ''
@@ -27,6 +28,7 @@ getGemmaAnnot = function(chipName,chipFile,annotType = c('bioProcess','noParents
 # for affy package
 #' @export
 gemmaAnnot = function(normalized, chipFile, outFile=NA){
+
     expression = exprs(normalized)
     annotations = read.table(chipFile, header=T,sep='\t', quote="", stringsAsFactors = F)
     # gene symbols are turned into Gene.Symbols because I was using it as Gene.Symbols
@@ -70,6 +72,8 @@ gemmaAnnotOligo = function(normalized, chipFile, outFile = NA){
 
 #' @export
 gemmaGeneMatch = function(probesets, chipFile){
+    warning('you are using deprecated Gemma functions. use annotationGeneMatch from gemmaAPI package instead')
+    
     annotations = read.table(chipFile, header=T,sep='\t', quote="",stringsAsFactors = F)
     names(annotations)[2] = 'Gene.Symbol'
     names(annotations)[1] = 'Probe'
@@ -79,6 +83,8 @@ gemmaGeneMatch = function(probesets, chipFile){
 # outputs data frame as genes can match multiple probesets
 #' @export
 gemmaProbesetMatch = function(genes, chipFile){
+    warning('you are using deprecated Gemma functions. use annotationProbesetMatch from gemmaAPI package instead')
+    
     annotations = read.table(chipFile, header=T,sep='\t', quote="",stringsAsFactors = F)
     names(annotations)[2] = 'Gene.Symbol'
     names(annotations)[1] = 'Probe'
