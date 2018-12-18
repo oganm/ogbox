@@ -27,7 +27,10 @@ cn = colnames
 
 #' @export
 install.pakcages = function(...){
-    warning('you spelled it wrong moron')
+    # don't insult strangers
+    if(Sys.info()['nodename'] %in%  c('nelson.msl.ubc.ca','pavdesk-26','oganm','oganGR')){
+        warning('you spelled it wrong moron')
+    }
     install.packages(...)
 }
 
