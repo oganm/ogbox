@@ -30,6 +30,8 @@ install.pakcages = function(...){
     # don't insult strangers
     if(Sys.info()['nodename'] %in%  c('nelson.msl.ubc.ca','pavdesk-26','oganm','oganGR')){
         warning('you spelled it wrong moron')
+    } else{
+        warning("You seem to have mispelled install.packages. Worry not, I got you. Just don't do it again.")
     }
     install.packages(...)
 }
