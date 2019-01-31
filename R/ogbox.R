@@ -163,8 +163,10 @@ insist = function(name,...){
 
 #direct text eval
 #' @export
-teval = function(daString,...){
-    eval(parse(text=daString),...)
+teval = function(x,envir = parent.frame(),
+                 enclos = if(is.list(envir) || is.pairlist(envir))
+                     parent.frame() else baseenv()){
+    eval(parse(text=x),envir,enclos)
 }
 
 
