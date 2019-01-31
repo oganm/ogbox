@@ -152,10 +152,10 @@ nametree <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 = "")
             prefix <- if( i<length(X) ) prefix2 else prefix4
             nametree(
                 X[[i]], 
-                paste0(prefix, "├──"),
-                paste0(prefix, "│  "),
-                paste0(prefix, "└──"),
-                paste0(prefix, "   ")
+                paste0(prefix, "\U251C\U2500\U2500"),
+                paste0(prefix, "\U2502\U00A0\U00A0"),
+                paste0(prefix, "\U2514\U2500\U2500"),
+                paste0(prefix, "\U00A0\U00A0\U00A0\U00A0")
             )
         }
 
@@ -171,9 +171,9 @@ nametreeVector <- function(X, prefix1 = "", prefix2 = "", prefix3 = "", prefix4 
             prefix <- if( i<length(X) ) prefix2 else prefix4
             out2 = nametreeVector(
                 X[[i]], 
-                paste0(prefix, "├──"),
-                paste0(prefix, "│  "),
-                paste0(prefix, "└──"),
+                paste0(prefix, "\U251C\U2500\U2500"),
+                paste0(prefix, "\U2502\U00A0\U00A0"),
+                paste0(prefix, "\U2514\U2500\U2500"),
                 paste0(prefix, "\U00A0\U00A0\U00A0\U00A0")
             )
             out[[i]] = c(out[[i]],out2)
