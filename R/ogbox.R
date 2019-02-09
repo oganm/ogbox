@@ -1,3 +1,10 @@
+#' @export
+remove_table_numbers = function(table){
+    old_attributes = attributes(table)
+    table %<>% as.character() %>% gsub("\\(\\\\#tab:.*?\\)","",.)
+    attributes(table) = old_attributes
+    return(table)
+}
 
 #' Trim first line comments
 #' @description Deletes the comments added to the first lines. Useful when comment char is 

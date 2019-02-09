@@ -90,7 +90,7 @@ listDepth = function(deList){
 #' @export
 listParse = function (daList,daArray){
     out = listStr(daArray)
-    teval(paste0('daList' , out))
+    teval(paste0('daList' , out),envir = parent.frame())
 }
 
 #returns the final step as a list
