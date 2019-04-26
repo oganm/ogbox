@@ -230,7 +230,7 @@ softParser = function (softFile, mergeFrame = c("intersect", "union"), n = NULL,
             x[fields]
         })
     }
-    samples = as.data.frame(t(as.data.frame(samples)))
+    samples = as.data.frame(t(as.data.frame(samples,stringsAsFactors = FALSE)), stringsAsFactors = FALSE)
     if (expression) {
         expressionData = lapply(expressionData, function(x) {
             con = textConnection(x)
