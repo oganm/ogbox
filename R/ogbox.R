@@ -643,3 +643,13 @@ catFile = function(file){
     readLines(file) %>%
         cat(sep = '\n')
 }
+
+#' @export
+set_file_wd = function(){
+    command = commandArgs(trailingOnly = FALSE)
+    
+    file = gsub('--file=','',command[grepl('--file',command)])
+    if(length(file) == 1){
+        setwd(dirname(file))
+    }
+}
