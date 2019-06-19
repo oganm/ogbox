@@ -2,7 +2,7 @@ test_that('sourceGithub',{
     sourceGithub('oganm/toSource/homologene.R')
     expect_that(typeof(mouse2human),testthat::equals('closure'))
     
-    sourceGithub("oganm/neuroExpressoAnalysis/analysis/00.DownloadPreprocess/01.MouseCellTypeData.R#L128-L141")
+    sourceGithub("oganm/neuroExpressoAnalysis/analysis/00.DownloadPreprocess/01.MouseCellTypeData.R#L150-L163")
     testthat::expect_that(typeof(regionHierarchy), testthat::equals('list'))
 })
 
