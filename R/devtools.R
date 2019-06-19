@@ -29,8 +29,8 @@ setDate = function(date,pkg = '.'){
 #' Make a github repository from a specific version of a pacakge
 #' @param pkg Name of the package
 #' @param version Desired version
+#' @param token Github token if NULL GITHUB_PAT environment variable will be used
 #' @param private,has_issues,has_wiki arguments to pass to gh
-#' @param credentials 
 #' @export
 forkOldCRAN = function(pkg, version, token = NULL, private = FALSE, has_issues = FALSE, has_wiki = FALSE){
     if(!is.null(token)){

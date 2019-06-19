@@ -12,9 +12,9 @@ forkOldCRAN(pkg, version, token = NULL, private = FALSE,
 
 \item{version}{Desired version}
 
-\item{private, has_issues, has_wiki}{arguments to pass to gh}
+\item{token}{Github token if NULL GITHUB_PAT environment variable will be used}
 
-\item{credentials}{}
+\item{private, has_issues, has_wiki}{arguments to pass to gh}
 }
 \description{
 Make a github repository from a specific version of a pacakge
