@@ -76,6 +76,9 @@ forkOldCRAN = function(pkg, version, token = NULL, private = FALSE, has_issues =
     file.remove(glue::glue('{tmp}/pkgSource.tar.gz'))
     unlink(glue::glue('{tmp}/{pkg}'),recursive = TRUE)
     
+    lines = readLines(glue::glue('{tmp}/DESCRIPTION'))
+    lines[grepl('Package:',lines)] = paste0('Package: ',pkg,'.',version)
+    
     files = list.files( glue::glue('{tmp}'))
     git2r::add(tmp,path = files)
     git2r::commit(tmp,glue::glue('Copying version {version} of package {pkg} from CRAN'))
