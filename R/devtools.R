@@ -29,10 +29,11 @@ setDate = function(date,pkg = '.'){
 #' Make a github repository from a specific version of a pacakge
 #' @param pkg Name of the package
 #' @param version Desired version
+#' @param newname Name of the resulting package. If NULL it'll default to packagename.versionnumber
 #' @param token Github token if NULL GITHUB_PAT environment variable will be used
 #' @param private,has_issues,has_wiki arguments to pass to gh
 #' @export
-forkOldCRAN = function(pkg, version, token = NULL, private = FALSE, has_issues = FALSE, has_wiki = FALSE){
+forkCRAN = function(pkg, version = NULL, newname = NULL, token = NULL, private = FALSE, has_issues = FALSE, has_wiki = FALSE){
     if(!is.null(token)){
         old = Sys.getenv('GITHUB_PAT')
         Sys.setenv(GITHUB_PAT = token)
@@ -40,9 +41,24 @@ forkOldCRAN = function(pkg, version, token = NULL, private = FALSE, has_issues =
     }
     cred = git2r::cred_token()
     
+    available = available.packages()
+    
+    currentVersion = available[available[,'Package'] == pkg,"Version"]
+    
+    if(is.null(version)){
+        version = currentVersion
+    }
+    
+    if(is.null(newname)){
+        name = paste0(pkg,'.',version)
+    } else{
+        name = newname
+    }
+    
+    versionComp = compareVersion(currentVersion,version)
     
     newRepo = gh::gh('POST /user/repos',
-           name = paste0(pkg,'.',version),
+           name = name,
            .token = token,
            private = private,
            has_issues = has_issues,
@@ -51,12 +67,6 @@ forkOldCRAN = function(pkg, version, token = NULL, private = FALSE, has_issues =
     
     tmp = tempfile()
     git2r::clone(newRepo$clone_url,local_path = tmp,credentials = cred)
-    
-    available = available.packages()
-    
-    currentVersion = available[available[,'Package'] == pkg,"Version"]
-    
-    versionComp = compareVersion(currentVersion,version)
     
     if(versionComp ==0){
         download.file(glue::glue('https://cran.r-project.org/src/contrib/{pkg}_{version}.tar.gz'),
@@ -77,7 +87,7 @@ forkOldCRAN = function(pkg, version, token = NULL, private = FALSE, has_issues =
     unlink(glue::glue('{tmp}/{pkg}'),recursive = TRUE)
     
     lines = readLines(glue::glue('{tmp}/DESCRIPTION'))
-    lines[grepl('Package:',lines)] = paste0('Package: ',pkg,'.',version)
+    lines[grepl('Package:',lines)] = paste0('Package: ',name)
     
     files = list.files( glue::glue('{tmp}'))
     git2r::add(tmp,path = files)

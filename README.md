@@ -20,10 +20,10 @@ separated by category.
 `getVersion`, `setVersion` and `setDate` functions allow manipulation of
 DESCRIPTION files. I use them for auto updating packages.
 
-`forkOldCRAN` allows you to create a github repository for an older
-version of a cran package which can be followed up by `install_github`
-or `Remotes` in your DESCRIPTION file if you really need an older
-version to make things work.
+`forkCRAN` allows you to create a github repository for a current or
+older version of a cran package which can be followed up by
+`install_github` or `Remotes` in your DESCRIPTION file if you really
+need an older version of a package or want to make some changes yourself
 
 ### List unpacking
 
