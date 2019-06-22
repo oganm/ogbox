@@ -88,6 +88,8 @@ forkCRAN = function(pkg, version = NULL, newname = NULL, token = NULL, private =
     
     lines = readLines(glue::glue('{tmp}/DESCRIPTION'))
     lines[grepl('Package:',lines)] = paste0('Package: ',name)
+    writeLines(lines,glue::glue('{tmp}/DESCRIPTION'))
+    
     
     files = list.files( glue::glue('{tmp}'))
     git2r::add(tmp,path = files)
