@@ -90,8 +90,25 @@ forkCRAN = function(pkg, version = NULL, newname = NULL, token = NULL, private =
     lines[grepl('Package:',lines)] = paste0('Package: ',name)
     writeLines(lines,glue::glue('{tmp}/DESCRIPTION'))
     
+    namespace = readLines(glue::glue('{tmp}/NAMESPACE'),encoding = 'UTF-8')
+    namespace[grepl('useDynLib',namespace)] %<>% 
+        gsub(glue::glue('useDynLib({pkg}'),
+             glue::glue('useDynLib({name}'),
+             x = .,fixed = TRUE)
+    writeLines(namespace,glue::glue('{tmp}/NAMESPACE'))
     
-    files = list.files( glue::glue('{tmp}'))
+    rFiles = list.files(glue::glue('{tmp}/R'),full.names = TRUE)
+    rFiles %>% lapply(function(x){
+        rfile = readLines(x,encoding = 'UTF-8')
+        rfile[grepl('useDynLib',rfile)] %<>% 
+            gsub(glue::glue('@useDynLib {pkg}'),
+                 glue::glue('@useDynLib {name}'),
+                 x = ., fixed = TRUE)
+        writeLines(rfile,x)
+    })
+    
+    
+    files = list.files(tmp)
     git2r::add(tmp,path = files)
     git2r::commit(tmp,glue::glue('Copying version {version} of package {pkg} from CRAN'))
     git2r::push(tmp,credentials = cred)
