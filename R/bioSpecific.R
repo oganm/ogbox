@@ -17,7 +17,7 @@
 #' 
 #' @export
 sepExpr = function(data){
-    if (class(data)[1] %in% c('data.frame','tbl_df')){
+    if (class(data)[1] %in% c('data.frame','tbl_df','spec_tbl_df')){
         # unlist is there to enable tbl_df to work
         for (i in 1:ncol(data)){
             if ('double'==typeof(data[,i] %>% unlist)){
