@@ -579,7 +579,7 @@ col2rn = function(frame){
 # }
 
 
-#' Non standardly evaluated %in%
+#' Non standardly evaluated \%in\%
 #' @description First value provided is non standardly evaluated and searched within the second value
 #' @export
 `%tin%` = function(x,y){

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ogbox.R
 \name{\%tin\%}
 \alias{\%tin\%}
-\title{Non standardly evaluated %in%}
+\title{Non standardly evaluated \%in\%}
 \usage{
 x \%tin\% y
 }
