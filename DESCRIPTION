@@ -8,6 +8,7 @@ Imports:
     RCurl (>= 1.95),
     stringr (>= 1.0.0),
     parallel,
+    remotes,
     ggplot2,
     tools,
     cowplot,

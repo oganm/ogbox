@@ -113,3 +113,29 @@ forkCRAN = function(pkg, version = NULL, newname = NULL, token = NULL, private =
     git2r::commit(tmp,glue::glue('Copying version {version} of package {pkg} from CRAN'))
     git2r::push(tmp,credentials = cred)
 }
+
+
+#' Install generic remote package
+#' 
+#' Better version of the original by jimhester
+#' https://github.com/r-lib/remotes/issues/383
+generic_install <- function(x,
+                             dependencies = NA,
+                             upgrade = c("default", "ask", "always", "never"),
+                             force = FALSE,
+                             quiet = FALSE,
+                             build = TRUE, build_opts = c("--no-resave-data", "--no-manual", "--no-build-vignettes"),
+                             build_manual = FALSE, build_vignettes = FALSE,
+                             repos = getOption("repos"),
+                             type = getOption("pkgType"),
+                             ...) {
+    # add cran:: to bare package names
+    is_remote <- grepl("::|/", x)
+    x[!is_remote] <- paste0("cran::", x[!is_remote])
+    remotes <- lapply(x, remotes:::parse_one_remote, repos = repos, type = type)
+    remotes:::install_remotes(remotes, dependencies = dependencies,
+                              upgrade = upgrade, force = force, quiet = quiet,
+                              build = build, build_opts = build_opts,
+                              build_manual = build_manual, build_vignettes = build_vignettes,
+                              repos = repos, type = type, ...)
+}
