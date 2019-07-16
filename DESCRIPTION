@@ -18,7 +18,8 @@ Imports:
     R.utils,
     gh,
     openssl,
-    git2r
+    git2r,
+    rstudioapi
 Suggests:
     testthat
 Enhances: 
@@ -27,9 +28,9 @@ Enhances:
 Date: 2015-06-16
 Author: Ogan Mancarci
 Maintainer: Ogan Mancarci <ogan.mancarci@gmail.com>
-Description: A package primarily for personal use. Has many functions dealing
-    with gene expression databases GEO and Gemma. Also Some shorthands to do minor
-    stuff.
+Description: 
+    A package primarily for personal use. Tools for package development, 
+    dealing with gene expression data, ways to interact with data and code in github etc.
 LazyData: true
 License: GPL-2
 RoxygenNote: 6.1.1

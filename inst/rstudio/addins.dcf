@@ -1,0 +1,9 @@
+Name: Word count
+Description: Counts words in the selection
+Binding: countWords
+Interactive: false
+
+Name: Character count
+Description: Counts characters in the selection
+Binding: countCharacters
+Interactive:false
