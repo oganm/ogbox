@@ -119,6 +119,7 @@ forkCRAN = function(pkg, version = NULL, newname = NULL, token = NULL, private =
 #' 
 #' Better version of the original by jimhester
 #' https://github.com/r-lib/remotes/issues/383
+#' @export
 generic_install <- function(x,
                              dependencies = NA,
                              upgrade = c("default", "ask", "always", "never"),
