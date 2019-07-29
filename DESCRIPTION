@@ -19,7 +19,8 @@ Imports:
     gh,
     openssl,
     git2r,
-    rstudioapi
+    rstudioapi,
+    zeallot
 Suggests:
     testthat
 Enhances: 
