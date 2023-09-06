@@ -140,3 +140,46 @@ generic_install <- function(x,
                               build_manual = build_manual, build_vignettes = build_vignettes,
                               repos = repos, type = type, ...)
 }
+
+
+#' Replace assignment operators
+#' 
+#' @param file_in input file
+#' @param file_out output file
+#' @param good_assign which operator should be used to replace
+#' 
+#' @export
+replace_assigns <- function(file_in,file_out = file_in,good_assign =  c('<-','=')){
+    file <- readLines(file_in)
+    data <- file %>% paste(collapse='\n') %>% parse(text = .,keep.source = TRUE) %>% getParseData
+    
+    good_assign <- match.arg(good_assign,choices =  c('<-','='))
+    
+    if(good_assign == '<-'){
+        to_replace <- data %>% filter(token == 'EQ_ASSIGN')
+        out <- file
+        for (i in rev(seq_len(nrow(to_replace)))){
+            line <- file[to_replace[i,]$line1]
+            out[to_replace[i,]$line1] <- 
+                paste0(substr(line,1,to_replace[i,]$col1-1),
+                       '<-',
+                       substr(line,to_replace[i,]$col2+1,nchar(line)))
+        }
+    } else if(good_assign == '='){
+        to_replace <- data %>% filter(token == 'LEFT_ASSIGN')
+        out <- file
+        for (i in rev(seq_len(nrow(to_replace)))){
+            line <- file[to_replace[i,]$line1]
+            out[to_replace[i,]$line1] <- 
+                paste0(substr(line,1,to_replace[i,]$col1-1),
+                       '=',
+                       substr(line,to_replace[i,]$col2+1,nchar(line)))
+        }
+        
+    }
+    
+    
+    file_out <- file(file_out,open = 'w')
+    writeLines(out, file_out)
+    close(file_out)
+}
