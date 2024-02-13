@@ -4,8 +4,7 @@
 \alias{replaceElement}
 \title{Replaces elements of a vector based on the dictonary provided}
 \usage{
-replaceElement(vector, dictionary = NULL, labels = NULL,
-  NAreplace = NA)
+replaceElement(vector, dictionary = NULL, labels = NULL, NAreplace = NA)
 }
 \arguments{
 \item{vector}{a vector}

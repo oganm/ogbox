@@ -4,8 +4,14 @@
 \alias{gseDown}
 \title{Download multiple cel files from GSE}
 \usage{
-gseDown(GSE, regex = NULL, outDir, extension = ".cel", overwrite = F,
-  unzip = T)
+gseDown(
+  GSE,
+  regex = NULL,
+  outDir,
+  extension = ".cel",
+  overwrite = F,
+  unzip = T
+)
 }
 \arguments{
 \item{GSE}{GSE identifier of the dataset}

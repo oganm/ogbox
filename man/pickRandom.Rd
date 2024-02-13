@@ -4,8 +4,14 @@
 \alias{pickRandom}
 \title{Select random elements based on a criteria}
 \usage{
-pickRandom(labels, allValues, tolerance, allowSelf = TRUE,
-  invalids = c(), n = 500)
+pickRandom(
+  labels,
+  allValues,
+  tolerance,
+  allowSelf = TRUE,
+  invalids = c(),
+  n = 500
+)
 }
 \arguments{
 \item{labels}{Character vector. Labels to randomize}

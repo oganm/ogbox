@@ -4,8 +4,13 @@
 \alias{bioGender}
 \title{Detects gender of microarray samples}
 \usage{
-bioGender(x, geneColName = "Gene.Symbol", probeColName = "Probe",
-  maleGenes = c("RPS4Y1", "KDM5D"), femaleGenes = "XIST")
+bioGender(
+  x,
+  geneColName = "Gene.Symbol",
+  probeColName = "Probe",
+  maleGenes = c("RPS4Y1", "KDM5D"),
+  femaleGenes = "XIST"
+)
 }
 \arguments{
 \item{x}{Expression data frame with gene symbol and probename information in the first columns}

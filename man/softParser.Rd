@@ -4,8 +4,12 @@
 \alias{softParser}
 \title{A parser for soft files}
 \usage{
-softParser(softFile, mergeFrame = c("intersect", "union"), n = NULL,
-  expression = F)
+softParser(
+  softFile,
+  mergeFrame = c("intersect", "union"),
+  n = NULL,
+  expression = F
+)
 }
 \arguments{
 \item{softFile}{soft file to be parsed}

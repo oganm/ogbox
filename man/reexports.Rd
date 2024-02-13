@@ -14,8 +14,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{magrittr}{\code{\link[magrittr]{\%>\%}}, \code{\link[magrittr]{\%<>\%}}}
+  \item{magrittr}{\code{\link[magrittr:compound]{\%<>\%}}, \code{\link[magrittr:pipe]{\%>\%}}}
 
-  \item{zeallot}{\code{\link[zeallot]{\%<-\%}}, \code{\link[zeallot]{\%->\%}}}
+  \item{zeallot}{\code{\link[zeallot:operator]{\%->\%}}, \code{\link[zeallot:operator]{\%<-\%}}}
 }}
 

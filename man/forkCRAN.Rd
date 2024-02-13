@@ -4,8 +4,15 @@
 \alias{forkCRAN}
 \title{Make a github repository from a specific version of a pacakge}
 \usage{
-forkCRAN(pkg, version = NULL, newname = NULL, token = NULL,
-  private = FALSE, has_issues = FALSE, has_wiki = FALSE)
+forkCRAN(
+  pkg,
+  version = NULL,
+  newname = NULL,
+  token = NULL,
+  private = FALSE,
+  has_issues = FALSE,
+  has_wiki = FALSE
+)
 }
 \arguments{
 \item{pkg}{Name of the package}

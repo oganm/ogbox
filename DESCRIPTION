@@ -34,4 +34,6 @@ Description:
     dealing with gene expression data, ways to interact with data and code in github etc.
 LazyData: true
 License: GPL-2
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.3
+Encoding: UTF-8
+
