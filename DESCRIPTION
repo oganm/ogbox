@@ -20,7 +20,8 @@ Imports:
     openssl,
     git2r,
     rstudioapi,
-    zeallot
+    zeallot,
+    bit64
 Suggests:
     testthat
 Enhances: 
